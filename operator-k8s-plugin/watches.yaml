@@ -1,5 +1,0 @@
----
-- version: v1
-  group: purestorage.com
-  kind: PSOPlugin
-  chart: /opt/helm/helm-charts/pure-k8s-plugin

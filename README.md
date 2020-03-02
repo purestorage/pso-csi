@@ -1,4 +1,4 @@
-# Pure Service Orchestrator (PSO) Helm Charts
+# Pure Service Orchestrator (PSO) CSI Driver
 
 ## What is PSO?
 
@@ -42,18 +42,15 @@ PSO can be used with any of the following hardware appliances and associated min
 
 ## Installation
 
-PSO can be deployed via an Operator or from the Helm chart.
+PSO can be deployed via an Operator or from the Helm chart. Looking for legacy FlexVolume driver and older version CSI driver? Check [here](https://github.com/purestorage/helm-charts).
 
 ### PSO Operator
 
-PSO has Operator-based install available for both its FlexVolume plugin and CSI plugin. This install method does not need Helm installation. 
-The Pure Flex Operator is supported for OpenShift and Kubernetes.
-Pure Flex Operator is now the preferred installation method for FlexVolume on OpenShift version 3.11 and higher.<br/>
-For installation, see the [Flex Operator Documentation](./operator-k8s-plugin/README.md#overview) or the [CSI Operator Documentation](./operator-csi-plugin/README.md#overview)..
+PSO has Operator-based install available for CSI plugin. This install method does not need Helm installation.
+For installation, see the [CSI Operator Documentation](./operator-csi-plugin/README.md#overview).
 
 ### Helm Chart
 
-**pure-k8s-plugin** deploys PSO FlexVolume plugin on your Kubernetes cluster.</br> 
 **pure-csi** deploys PSO CSI plugin on your Kubernetes cluster. 
 
 #### Helm Setup
@@ -66,10 +63,10 @@ https://docs.helm.sh/using_helm#install-helm
 **In OpenShift 3.11 the Red Hat preferred installation method is using an Operator. Follow the instructions in the [PSO operator directory](./operator/README.md).**
 
 
-Refer to the [k8s-plugin README](./pure-k8s-plugin/README.md) or the [csi-plugin README](./pure-csi/README.md) for further installation steps.
+Refer to the [csi-plugin README](./pure-csi/README.md) for further installation steps.
 
 ## Contributing
-We welcome contributions. The PSO Helm Charts project is under [Apache 2.0 license](https://github.com/purestorage/helm-charts/blob/master/LICENSE). We accept contributions via GitHub pull requests.
+We welcome contributions. The PSO Helm Charts project is under [Apache 2.0 license](https://github.com/purestorage/pure-csi-driver/blob/master/LICENSE). We accept contributions via GitHub pull requests.
 
 ## Report a Bug
-For filing bugs, suggesting improvements, or requesting new features, please open an [issue](https://github.com/purestorage/helm-charts/issues).
+For filing bugs, suggesting improvements, or requesting new features, please open an [issue](https://github.com/purestorage/pure-csi-driver/issues).

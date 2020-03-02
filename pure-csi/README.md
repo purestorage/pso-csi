@@ -213,13 +213,9 @@ helm search repo pure-csi -l
 helm upgrade pure-storage-driver pure/pure-csi --namespace <namespace> -f <your_own_dir>/yourvalues.yaml --version <target chart version>
 ```
 
-## How to upgrade from the flexvolume to CSI
-
-Upgrade from flexvolume to CSI is not currently supported and is being considered for an upcoming release.
-
 # Release Notes
 
-Release notes can be found [here](https://github.com/purestorage/helm-charts/releases)
+Release notes can be found [here](https://github.com/purestorage/pure-csi-driver/releases)
 
 ## Known Vulnerabilities 
 None

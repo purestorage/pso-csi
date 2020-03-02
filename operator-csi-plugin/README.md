@@ -4,7 +4,7 @@
 ## Overview
 
 The Pure CSI Operator packages and deploys the Pure Service Orchestrator (PSO) CSI plugin on Kubernetes for dynamic provisioning of persistent volumes on FlashArray and FlashBlade storage appliances. 
-This Operator is created as a [Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions) from the [pure-csi Helm chart](https://github.com/purestorage/helm-charts#purestorage-helm-charts-and-helm-operator) using the [Operator-SDK](https://github.com/operator-framework/operator-sdk#overview).
+This Operator is created as a [Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions) from the [pure-csi Helm chart](https://github.com/purestorage/pure-csi-driver/tree/master/pure-csi) using the [Operator-SDK](https://github.com/operator-framework/operator-sdk#overview).
 This installation process does not require Helm installation.
 
 ## Platform and Software Dependencies

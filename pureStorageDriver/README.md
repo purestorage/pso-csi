@@ -19,8 +19,10 @@ performing `helm uninstall`.
 - #### Environments Supported*:
   - Kubernetes 1.13+
     - NOTE: for Kubernetes 1.17, there is an [issue](https://github.com/kubernetes/kubernetes/issues/87852) using vxlan with Flannel or Calico 
-  - Minimum Helm version required is 3.0.2
-  - OpenShift 3.11
+  - Minimum Helm version required is 3.1.0.
+  - Google Anthos 1.2.x, 1.3.x
+  - Docker Kuberenetes Service (DKS) - based on Docker EE 3.0 with Kubernetes 1.14.3
+  - Platform9 Managed Kubernetes (PMK) - Privileged mode only
 - #### Other software dependencies:
   - Latest linux multipath software package for your operating system (Required)
   - Latest Filesystem utilities/drivers (XFS by default, Required)
@@ -51,6 +53,10 @@ More details on using the snapshot and clone functionality can be found [here](.
 
 More details on using customized filesystem options can be found [here](../docs/csi-filesystem-options.md).
 
+## Using Read-Write-Many (RWX) volumes with Kubernetes
+
+More details on using Read-Write-Many (RWX) volumes with Kubernetes can be found [here](../docs/csi-read-write-many.md)
+
 ## PSO use of StorageClass
 
 Whilst there are some default `StorageClass` definitions provided by the PSO installation, refer [here](../docs/custom-storageclasses.md) for more details on these default storage classes and how to create your own custom storage classes that can be used by PSO.
@@ -60,15 +66,15 @@ Whilst there are some default `StorageClass` definitions provided by the PSO ins
 Add the Pure Storage helm repo
 
 ```bash
-helm repo add pure https://purestorage.github.io/helm-charts
+helm repo add pure https://purestorage.github.io/pure-csi-driver
 helm repo update
-helm search repo pure-csi -l
+helm search repo pureStorageDriver -l
 ```
 
 Optional (offline installation): Download the helm chart
 
 ```bash
-git clone https://github.com/purestorage/helm-charts.git
+git clone https://github.com/purestorage/pure-csi-driver.git
 ```
 
 Create your own values.yaml and install the helm chart with it, and keep it. Easiest way is to copy
@@ -127,23 +133,15 @@ arrays:
   FlashArrays:
     - MgmtEndPoint: "1.2.3.4"
       APIToken: "a526a4c6-18b0-a8c9-1afa-3499293574bb"
-      Labels:
-        rack: "22"
-        env: "prod"
     - MgmtEndPoint: "1.2.3.5"
       APIToken: "b526a4c6-18b0-a8c9-1afa-3499293574bb"
   FlashBlades:
     - MgmtEndPoint: "1.2.3.6"
       APIToken: "T-c4925090-c9bf-4033-8537-d24ee5669135"
       NfsEndPoint: "1.2.3.7"
-      Labels:
-        rack: "7b"
-        env: "dev"
     - MgmtEndPoint: "1.2.3.8"
       APIToken: "T-d4925090-c9bf-4033-8537-d24ee5669135"
       NfsEndPoint: "1.2.3.9"
-      Labels:
-        rack: "6a"
 ```
 
 ## Assigning Pods to Nodes
@@ -172,7 +170,7 @@ volumesnapshots.snapshot.storage.k8s.io          2019-11-21T17:25:23Z
 To install the VolumeSnapshotClass:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/purestorage/helm-charts/master/pure-csi/snapshotclass.yaml
+kubectl apply -f https://raw.githubusercontent.com/purestorage/pure-csi-driver/master/pureStorageDriver/snapshotclass.yaml
 ```
 
 ## Configure NTP
@@ -196,21 +194,21 @@ Customize your values.yaml including arrays info (replacement for pure.json), an
 Dry run the installation, and make sure your values.yaml is working correctly.
 
 ```bash
-helm install --name pure-storage-driver pure/pure-csi --namespace <namespace> -f <your_own_dir>/yourvalues.yaml --dry-run --debug
+helm install --name pure-storage-driver pure/pureStorageDriver --namespace <namespace> -f <your_own_dir>/yourvalues.yaml --dry-run --debug
 ```
 
 Run the Install
 
 ```bash
 # Install the plugin 
-helm install pure-storage-driver pure/pure-csi --namespace <namespace> -f <your_own_dir>/yourvalues.yaml
+helm install pure-storage-driver pure/pureStorageDriver --namespace <namespace> -f <your_own_dir>/yourvalues.yaml
 ```
 
-The values in your values.yaml overwrite the ones in pure-csi/values.yaml, but any specified with the `--set`
+The values in your values.yaml overwrite the ones in pureStorageDriver/values.yaml, but any specified with the `--set`
 option will take precedence.
 
 ```bash
-helm install pure-storage-driver pure/pure-csi --namespace <namespace> -f <your_own_dir>/yourvalues.yaml \
+helm install pure-storage-driver pure/pureStorageDriver --namespace <namespace> -f <your_own_dir>/yourvalues.yaml \
             --set flasharray.sanType=fc \
             --set namespace.pure=k8s_xxx \
 ```
@@ -267,7 +265,7 @@ Update your values.yaml with the correct arrays info, and then upgrade the helm 
 to use the values.yaml and not specify options with `--set` to make this easier.
 
 ```bash
-helm upgrade pure-storage-driver pure/pure-csi --namespace <namespace> -f <your_own_dir>/yourvalues.yaml --set ...
+helm upgrade pure-storage-driver pure/pureStorageDriver --namespace <namespace> -f <your_own_dir>/yourvalues.yaml --set ...
 ```
 
 ## Uninstall
@@ -298,10 +296,10 @@ the helm repository with the tag version required. This ensures the supporting c
 ```bash
 # list the avaiable version of the plugin
 helm repo update
-helm search repo pure-csi -l
+helm search repo pureStorageDriver -l
 
 # select a target chart version to upgrade as
-helm upgrade pure-storage-driver pure/pure-csi --namespace <namespace> -f <your_own_dir>/yourvalues.yaml --version <target chart version>
+helm upgrade pure-storage-driver pure/pureStorageDriver --namespace <namespace> -f <your_own_dir>/yourvalues.yaml --version <target chart version>
 ```
 
 ## How to upgrade from the flexvolume to CSI
@@ -310,7 +308,7 @@ Upgrade from flexvolume to CSI is not currently supported and is being considere
 
 ## Release Notes
 
-Release notes can be found [here](https://github.com/purestorage/helm-charts/releases)
+Release notes can be found [here](https://github.com/purestorage/pure-csi-driver/releases)
 
 ## Known Vulnerabilities 
 None

@@ -1,0 +1,68 @@
+apiVersion: {{ template "deployment.apiVersion" . }}
+kind: Deployment
+metadata:
+  name: pso-db-cockroach-operator
+  namespace: {{ .Release.Namespace }}
+  labels:
+{{ include "pure-csi.labels" . | indent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+{{ include "pure-csi.matchlabels" . | indent 6 }}
+  template:
+    metadata:
+      labels:
+{{ include "pure-csi.labels" . | indent 8 }}
+    spec:
+      serviceAccountName: {{ .Values.clusterrolebinding.serviceAccount.name }}
+      containers:
+        - name: cockroach-operator
+          image: "{{ .Values.images.database.cockroachOperator.name }}:{{ .Values.images.database.cockroachOperator.tag }}"
+          command:
+            - cockroach-operator
+          imagePullPolicy: "{{ .Values.images.database.cockroachOperator.pullPolicy }}"
+          env:
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: OPERATOR_NAME
+              value: "cockroach-operator"
+            - name: COCKROACH_MAX_STARTUP_SECONDS
+              value: "{{ .Values.database.maxStartupSeconds | default 300}}"
+            - name: COCKROACH_MAX_SUSPECT_SECONDS
+              value: "{{ .Values.database.maxSuspectSeconds | default 300}}"
+            - name: PURE_K8S_NAMESPACE
+              value: {{ .Values.clusterID }}
+            - name: PURE_FLASHARRAY_SAN_TYPE
+              value: {{ .Values.flasharray.sanType }}
+          volumeMounts:
+            - name: certs
+              mountPath: /cockroach/cockroach-certs
+            - name: pso-db-config
+              mountPath: /pso/db/config
+      volumes:
+        - name: certs
+          secret:
+            secretName: pso-cockroach-client-certs
+            defaultMode: 0600
+        - name: pso-db-config
+          configMap:
+            name: pso-db-config
+      {{- with .Values.database.nodeSelector | default .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+      {{- end }}
+      {{- with .Values.database.affinity | default .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+      {{- end }}
+      {{- with .Values.database.tolerations | default .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+      {{- end }}

@@ -1,0 +1,70 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: pure
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "{{ .Values.storageclass.isPureDefault }}"
+  labels:
+    kubernetes.io/cluster-service: "true"
+{{ include "pure-csi.labels" . | indent 4}}
+provisioner: pure-csi # This must match the name of the CSIDriver. And the name of the CSI plugin from the RPC 'GetPluginInfo'
+parameters:
+  backend: {{ .Values.storageclass.pureBackend | default "block" | quote }}
+  csi.storage.k8s.io/fstype: {{ .Values.flasharray.defaultFSType | default "xfs" | quote }}
+  createoptions: {{ .Values.flasharray.defaultFSOpt | default "-q" | quote }}
+# PSO requires K8s 1.16+ for CSI VolumeExpansion
+{{ if and (eq .Capabilities.KubeVersion.Major "1") (gt .Capabilities.KubeVersion.Minor "15") }}
+allowVolumeExpansion: true
+{{ end }}
+# support either string or list for .Values.flasharray.defaultMountOpt
+{{- if or (kindIs "array" .Values.flasharray.defaultMountOpt) (kindIs "slice" .Values.flasharray.defaultMountOpt) }}
+mountOptions:
+  {{- range .Values.flasharray.defaultMountOpt }}
+  - {{ . }}
+  {{- end }}
+{{- else if kindIs "string" .Values.flasharray.defaultMountOpt}}
+mountOptions:
+  - {{ .Values.flasharray.defaultMountOpt }}
+{{- end }}
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: pure-file
+  labels:
+    kubernetes.io/cluster-service: "true"
+{{ include "pure-csi.labels" . | indent 4}}
+provisioner: pure-csi # This must match the name of the CSIDriver. And the name of the CSI plugin from the RPC 'GetPluginInfo'
+parameters:
+    backend: file
+# PSO requires K8s 1.16+ for CSI VolumeExpansion
+{{ if and (eq .Capabilities.KubeVersion.Major "1") (gt .Capabilities.KubeVersion.Minor "15") }}
+allowVolumeExpansion: true
+{{ end }}
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: pure-block
+  labels:
+    kubernetes.io/cluster-service: "true"
+{{ include "pure-csi.labels" . | indent 4}}
+provisioner: pure-csi # This must match the name of the CSIDriver. And the name of the CSI plugin from the RPC 'GetPluginInfo'
+parameters:
+  backend: block
+  csi.storage.k8s.io/fstype: xfs
+  createoptions: -q
+# PSO requires K8s 1.16+ for CSI VolumeExpansion
+{{ if and (eq .Capabilities.KubeVersion.Major "1") (gt .Capabilities.KubeVersion.Minor "15") }}
+allowVolumeExpansion: true
+{{ end }}
+# support either string or list for .Values.flasharray.defaultMountOpt
+{{- if or (kindIs "array" .Values.flasharray.defaultMountOpt) (kindIs "slice" .Values.flasharray.defaultMountOpt) }}
+mountOptions:
+  {{- range .Values.flasharray.defaultMountOpt }}
+  - {{ . }}
+  {{- end }}
+{{- else if kindIs "string" .Values.flasharray.defaultMountOpt}}
+mountOptions:
+  - {{ .Values.flasharray.defaultMountOpt }}
+{{- end }}

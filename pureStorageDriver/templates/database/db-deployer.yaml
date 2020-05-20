@@ -1,0 +1,47 @@
+apiVersion: {{ template "deployment.apiVersion" . }}
+kind: Deployment
+metadata:
+  name: pso-db-deployer
+  namespace: {{ .Release.Namespace }}
+  labels:
+{{ include "pure-csi.labels" . | indent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+{{ include "pure-csi.matchlabels" . | indent 6 }}
+  template:
+    metadata:
+      labels:
+{{ include "pure-csi.labels" . | indent 8 }}
+    spec:
+      serviceAccountName: {{ .Values.clusterrolebinding.serviceAccount.name }}
+      containers:
+        - name: db-deployer
+          image: "{{ .Values.images.database.deployer.name }}:{{ .Values.images.database.deployer.tag }}"
+          command:
+          - dbdeployer
+          imagePullPolicy: "{{ .Values.images.database.deployer.pullPolicy }}"
+          env:
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: PURE_K8S_NAMESPACE
+              value: {{ .Values.clusterID }}
+      {{- with .Values.database.nodeSelector | default .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+      {{- end }}
+      {{- with .Values.database.affinity | default .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+      {{- end }}
+      {{- with .Values.database.tolerations | default .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+      {{- end }}

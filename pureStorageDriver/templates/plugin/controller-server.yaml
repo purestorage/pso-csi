@@ -1,0 +1,210 @@
+# Service defined here, plus serviceName below in StatefulSet,
+# are needed only because of condition explained in
+# https://github.com/kubernetes/kubernetes/issues/69608
+kind: Service
+apiVersion: v1
+metadata:
+  name: pso-csi-controller
+  labels:
+    app: pso-csi-controller
+spec:
+  selector:
+    app: pso-csi-controller
+  ports:
+    - name: dummy
+      port: 12345
+---
+# Why does this need to be a statefulset?
+# Because we need only one copy of the controller running
+kind: StatefulSet
+apiVersion: {{ template "statefulset.apiVersion" . }}
+metadata:
+  name: pso-csi-controller
+  namespace: {{ .Release.Namespace }}
+  labels:
+{{ include "pure-csi.labels" . | indent 4}}
+
+spec:
+  serviceName: "pso-csi-controller"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pso-csi-controller
+  template:
+    metadata:
+      labels:
+        app: pso-csi-controller
+{{ include "pure-csi.labels" . | indent 8}}
+    spec:
+      serviceAccountName: {{ .Values.clusterrolebinding.serviceAccount.name }}
+      containers:
+        - name: pso-csi-container
+          image: "{{ .Values.images.plugin.name }}:{{ .Values.images.plugin.tag }}"
+          imagePullPolicy: {{ .Values.images.plugin.pullPolicy }}
+          command:
+            - "/csi-server"
+            - "-endpoint=$(CSI_ENDPOINT)"
+            - "-nodeid=$(KUBE_NODE_NAME)"
+            - "-servertype=controller"
+{{- if eq .Values.app.debug true}}
+            - "-debug"
+{{- end}}
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /csi
+            - name: config
+              mountPath: /etc/pure
+              readOnly: true
+            - name: certs
+              mountPath: /cockroach/cockroach-certs
+            - name: configmap-volume
+              mountPath: /etc/config
+          env:
+          - name: CSI_ENDPOINT
+            value: unix:///csi/csi.sock
+          - name: PURE_DISCOVERY_CONF
+            value: /etc/pure/pure.json
+          - name: PURE_K8S_NAMESPACE
+            value: {{ .Values.clusterID }}
+          - name: PURE_DEFAULT_BLOCK_FS_TYPE
+            value: {{ .Values.flasharray.defaultFSType }}
+          - name: PURE_DEFAULT_ENABLE_FB_NFS_SNAPSHOT
+            value: {{ quote .Values.flashblade.snapshotDirectoryEnabled }}
+          - name: PURE_DATASTORE_HOST
+            value: {{ printf "pso-db-public.%s" .Release.Namespace }}
+          - name: PURE_DATASTORE_CERTS_DIR
+            value: /cockroach/cockroach-certs
+          - name: PURE_FLASHARRAY_SAN_TYPE
+            value: {{ .Values.flasharray.sanType | upper }}
+          ports:
+          - containerPort: 9899
+            name: healthz
+            protocol: TCP
+          # We want both a liveness and readiness probe: the readiness probe will prevent Helm from thinking it's ready
+          # too early, and the liveness probe will restart the pod if it gets too far gone.
+          livenessProbe:
+            failureThreshold: 10
+            httpGet:
+              path: /healthz
+              port: healthz
+            initialDelaySeconds: 10
+            timeoutSeconds: 3
+            periodSeconds: 2
+          readinessProbe:
+            failureThreshold: 1
+            httpGet:
+              path: /healthz
+              port: healthz
+            initialDelaySeconds: 10
+            timeoutSeconds: 3
+            periodSeconds: 2
+        # This is the external provisioner sidecar
+        - name: csi-provisioner
+          {{- with .Values.images.csi.provisioner }}
+          image: {{ .name | default "quay.io/k8scsi/csi-provisioner" }}:v1.4.0
+          imagePullPolicy: {{ .pullPolicy }}
+          {{- end }}
+          args:
+            - --csi-address=/csi/csi.sock
+            - --connection-timeout=15s
+            - --feature-gates=Topology={{ .Values.storagetopology.enable }}
+{{- if and .Values.storagetopology.strictTopology .Values.storagetopology.enable}}
+            - --strict-topology
+{{- end}}
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /csi
+        - name: csi-snapshotter
+          {{- with .Values.images.csi.snapshotter }}
+          image: {{ .name | default "quay.io/k8scsi/csi-snapshotter" }}:v1.2.2
+          imagePullPolicy: {{ .pullPolicy }}
+          {{- end }}
+          args:
+            - "--csi-address=/csi/csi.sock"
+            - "--connection-timeout=15s"
+            - "--leader-election=false"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /csi
+        - name: csi-attacher
+          {{- with .Values.images.csi.attacher }}
+          image: {{ .name | default "quay.io/k8scsi/csi-attacher" }}:v2.2.0
+          imagePullPolicy: {{ .pullPolicy }}
+          {{- end }}
+          args:
+            - "--csi-address=/csi/csi.sock"
+            - "--timeout=15s"
+            - "--leader-election=false"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /csi
+# The csi-resizer sidecar that watches the Kubernetes API server for PersistentVolumeClaim updates.
+# Does not scale with more replicas, only one is elected as leader and running.
+# PSO requires K8s 1.16+ for CSI VolumeExpansion
+{{ if and (eq .Capabilities.KubeVersion.Major "1") (gt .Capabilities.KubeVersion.Minor "15") }}
+        - name: csi-resizer
+          {{- with .Values.images.csi.resizer }}
+          image: {{ .name | default "quay.io/k8scsi/csi-resizer" }}:v0.5.0
+          imagePullPolicy: {{ .pullPolicy }}
+          {{- end }}
+          args:
+            - "--csi-address=/csi/csi.sock"
+            - "--csiTimeout=15s"
+            - "--leader-election=false"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /csi
+{{ end }}
+# This is the cluster-driver-registrar sidecar that allows helm-install without CRD-hooks for the CSIDriver CRD
+# The reason we do not want a crd-hook with helm-chart is to avoid upgrade issues like: https://github.com/helm/helm/issues/4489
+{{ if and (eq .Capabilities.KubeVersion.Major "1") (eq .Capabilities.KubeVersion.Minor "13") }}
+        - name: cluster-driver-registrar
+          {{- with .Values.images.csi.clusterDriverRegistrar }}
+          image: {{ .name | default "quay.io/k8scsi/csi-cluster-driver-registrar" }}:v1.0.1
+          imagePullPolicy: {{ .pullPolicy }}
+          {{- end }}
+          args:
+            - "--csi-address=/csi/csi.sock"
+            - "--driver-requires-attachment=true"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /csi
+{{ end }}
+        - name: liveness-probe
+          volumeMounts:
+          - mountPath: /csi
+            name: socket-dir
+          {{- with .Values.images.csi.livenessProbe }}
+          image: {{ .name | default "quay.io/k8scsi/livenessprobe" }}:v2.0.0
+          imagePullPolicy: {{ .pullPolicy }}
+          {{- end }}
+          args:
+          - --csi-address=/csi/csi.sock
+          - --probe-timeout=3s
+          - --health-port=9899
+          - --v=0
+      volumes:
+        - name: socket-dir
+          emptyDir: {}
+        - name: config
+          secret:
+            secretName: pure-provisioner-secret
+        - name: certs
+          secret:
+            secretName: pso-cockroach-client-certs
+            defaultMode: 0600
+        - name: configmap-volume
+          configMap:
+            name: pure-csi-container-configmap
+    {{- with .Values.controllerServer.nodeSelector | default .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.controllerServer.affinity | default .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.controllerServer.tolerations | default .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}

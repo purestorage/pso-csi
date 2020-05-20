@@ -1,0 +1,178 @@
+# Default values for pureStorageDriver.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# clusterID is added as a prefix for all volumes created by this PSO installation.
+# clusterID is also used to identify the volumes used by the datastore, pso-db.
+# clusterID MUST BE UNIQUE for multiple k8s clusters running on top of the same storage arrays.
+# NOTE: in previous versions, this property was called "namespace.pure"
+clusterID: REPLACE_CLUSTER_ID_WITH_A_UNIQUE_VALUE_FOR_YOUR_CLUSTER
+
+# support k8s or openshift
+orchestrator:
+  # name is either 'k8s' or 'openshift'
+  name: k8s
+
+# this option is to enable/disable the debug mode of this app
+# for pure-csi-driver
+app:
+  debug: false
+
+# do you want to set pure as the default storageclass?
+storageclass:
+  isPureDefault: false
+  # set the type of backend you want for the 'pure' storageclass
+  # pureBackend: file
+
+# this option is to enable/disable the csi topology feature
+# for pure-csi-driver
+storagetopology:
+  enable: false
+  strictTopology: false
+
+# arrays specify what storage arrays should be managed by the plugin, this is
+# required to be set upon installation. For FlashArrays you must set the "MgmtEndPoint"
+# and "APIToken", and for FlashBlades you need the additional "NfsEndPoint" parameter.
+# The labels are optional, and can be any key-value pair for use with the "fleet"
+# provisioner. An example is shown below:
+# arrays:
+#   FlashArrays:
+#   - MgmtEndPoint: "1.2.3.4"
+#     APIToken: "a526a4c6-18b0-a8c9-1afa-3499293574bb"
+#     Labels:
+#   - MgmtEndPoint: "1.2.3.5"
+#     APIToken: "b526a4c6-18b0-a8c9-1afa-3499293574bb"
+#   FlashBlades:
+#   - MgmtEndPoint: "1.2.3.6"
+#     APIToken: "T-c4925090-c9bf-4033-8537-d24ee5669135"
+#     NfsEndPoint: "1.2.3.7"
+#     Labels:
+#   - MgmtEndPoint: "1.2.3.8"
+#     APIToken: "T-d4925090-c9bf-4033-8537-d24ee5669135"
+#     NfsEndPoint: "1.2.3.9"
+
+flasharray:
+  # support ISCSI or FC, not case sensitive
+  sanType: ISCSI
+  defaultFSType: xfs
+  defaultFSOpt: "-q"
+  defaultMountOpt:
+    - discard
+  preemptAttachments: "true"
+  iSCSILoginTimeout: 20
+
+flashblade:
+  snapshotDirectoryEnabled: "false"
+  exportRules: ""
+images:
+  plugin:
+    name: pc2-dtr.dev.purestorage.com/purestorage/k8s
+    tag: 6.0.0-beta1
+    pullPolicy: Always
+  csi:
+    provisioner:
+      name: quay.io/k8scsi/csi-provisioner
+      pullPolicy: Always
+    snapshotter:
+      name: quay.io/k8scsi/csi-snapshotter
+      pullPolicy: Always
+    attacher:
+      name: quay.io/k8scsi/csi-attacher
+      pullPolicy: Always
+    resizer:
+      name: quay.io/k8scsi/csi-resizer
+      pullPolicy: Always
+    clusterDriverRegistrar:
+      name: quay.io/k8scsi/csi-cluster-driver-registrar
+      pullPolicy: Always
+    nodeDriverRegistrar:
+      name: quay.io/k8scsi/csi-node-driver-registrar
+      pullPolicy: Always
+    livenessProbe:
+      name: quay.io/k8scsi/livenessprobe
+      pullPolicy: Always
+  database:
+    deployer:
+      name: pc2-dtr.dev.purestorage.com/purestorage/dbdeployer
+      tag: 1.0.0-beta4
+      pullPolicy: Always
+    cockroachOperator:
+      name: pc2-dtr.dev.purestorage.com/purestorage/cockroach-operator
+      tag: 1.0.0-beta4
+      pullPolicy: Always
+
+# specify the service account name for this app
+clusterrolebinding:
+  serviceAccount:
+    name: pure
+
+# Top-level nodeSelector, tolerations, and affinity will be applied to all PSO pods
+# Use the nodeSelector, tolerations, and affinity variables in the specific sections to override the top-level values
+# for each respective component
+
+# nodeSelector is the simplest way to limit which kubernetes nodes can be used for the pod
+nodeSelector: {}
+# disktype: ssd
+
+# tolerations allow pods to run on tainted kubernetes nodes
+tolerations: []
+# - operator: Exists
+
+# affinity provides more granular control of which kubernetes nodes will run the pod
+affinity: {}
+# nodeAffinity:
+#   requiredDuringSchedulingIgnoredDuringExecution:
+#     nodeSelectorTerms:
+#     - matchExpressions:
+#       - key: e2e-az-NorthSouth
+#         operator: In
+#         values:
+#         - e2e-az-North
+#         - e2e-az-South
+
+nodeServer:
+  # nodeSelector is the simplest way to limit which kubernetes nodes will run the CSI node server
+  # Please refer to the top-level description of nodeSelector for an example
+  nodeSelector: {}
+  # tolerations allow CSI node servers to run on tainted kubernetes nodes
+  # Please refer to the top-level description of tolerations for an example
+  tolerations: []
+  # affinity provides more granular control of which kubernetes nodes will run the CSI node servers
+  # Please refer to the top-level description of affinity for an example
+  affinity: {}
+
+controllerServer:
+  # nodeSelector is the simplest way to limit which kubernetes node will run the CSI controller server
+  # Please refer to the top-level description of nodeSelector for an example
+  nodeSelector: {}
+  # tolerations allows the CSI controller servers to run on a tainted kubernetes node
+  # Please refer to the top-level description of tolerations for an example
+  tolerations: []
+  # affinity provides more granular control of which kubernetes node will run the CSI controller server
+  # Please refer to the top-level description of affinity for an example
+  affinity: {}
+
+database:
+  # nodeSelector is the simplest way to limit which kubernetes nodes will run the database-related pods
+  # Please refer to the top-level description of nodeSelector for an example
+  nodeSelector: {}
+  # tolerations allows the database-related pods to run on tainted kubernetes nodes
+  # Please refer to the top-level description of tolerations for an example
+  tolerations: []
+  # affinity provides more granular control of which kubernetes nodes will run the database-related pods
+  # Please refer to the top-level description of affinity for an example
+  affinity: {}
+
+  # resources is used specifically for the database pods
+  # Change these to appropriate values for the hardware that you're running. You can see
+  # the amount of allocatable resources on each of your Kubernetes nodes by running:
+  #   kubectl describe nodes
+  resources: {}
+  # requests:
+  #   cpu: "16"
+  #   memory: "8Gi"
+
+  # The length of time a db node is considered Suspect before being marked as Down
+  maxSuspectSeconds: 300
+  # The length of time a db node is allowed to be in Startup before being marked as Down
+  maxStartupSeconds: 300

@@ -1,4 +1,12 @@
-# Pure Service Orchestrator (PSO) Helm Charts
+# Under Construction
+
+**!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!**
+
+**This is the new home for Pure Service Orchestrator. While we are putting the bolts and nuts together, please use our [official product page](https://github.com/purestorage/helm-charts).**
+
+**!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!**
+
+# Pure Service Orchestrator (PSO) CSI Driver
 
 ## What is PSO?
 
@@ -50,25 +58,11 @@ PSO can be used with any of the following hardware appliances and associated min
 
 ## Installation
 
-PSO can be deployed via an Operator or from the Helm chart.
-
-### PSO Operator
-
-PSO has Operator-based install available for both its FlexVolume plugin and CSI plugin. This install method does not need Helm installation. 
-
-The Pure Flex Operator is supported for OpenShift and Kubernetes (note that the Flex driver is deprecated in favour of the CSI driver)
-
-Pure Flex Operator is the preferred installation method for FlexVolume on OpenShift version 3.11. The CSI Operator should be used for OpenShift 4.1 and 4.2. 
-
-**Note** Use the CSI Helm install method for OpenShift 4.3 and higher with the adoption of Helm3 in OpenShift.
-
-For installation, see the [Flex Operator Documentation](./operator-k8s-plugin/README.md#overview) or the [CSI Operator Documentation](./operator-csi-plugin/README.md#overview)..
+PSO can be deployed from the Helm chart. Looking for legacy FlexVolume driver and older version CSI driver? Check [here](https://github.com/purestorage/helm-charts).
 
 ### Helm Chart
 
-**pure-k8s-plugin** deploys PSO FlexVolume plugin on your Kubernetes cluster - the Flex Driver is now deprecated 
-
-**pure-csi** deploys PSO CSI plugin on your Kubernetes cluster. 
+**pureStorageDriver** deploys PSO CSI plugin on your Kubernetes cluster.
 
 #### Helm Setup
 
@@ -80,14 +74,14 @@ https://docs.helm.sh/using_helm#install-helm
 **In OpenShift 3.11 the Red Hat preferred installation method is using an Operator. Follow the instructions in the [PSO operator directory](./operator/README.md).**
 
 
-Refer to the [k8s-plugin README](./pure-k8s-plugin/README.md) or the [csi-plugin README](./pure-csi/README.md) for further installation steps.
+Refer to the [csi-plugin README](./pureStorageDriver/README.md) for further installation steps.
 
 ## PSO on the Internet
 
 [Checkout a list of some blogs related to Pure Service Orchestrator](./docs/blog_posts.md)
 
 ## Contributing
-We welcome contributions. The PSO Helm Charts project is under [Apache 2.0 license](https://github.com/purestorage/helm-charts/blob/master/LICENSE). We accept contributions via GitHub pull requests.
+We welcome contributions. The PSO Helm Charts project is under [Apache 2.0 license](https://github.com/purestorage/pure-csi-driver/blob/master/LICENSE). We accept contributions via GitHub pull requests.
 
 ## Report a Bug
-For filing bugs, suggesting improvements, or requesting new features, please open an [issue](https://github.com/purestorage/helm-charts/issues).
+For filing bugs, suggesting improvements, or requesting new features, please open an [issue](https://github.com/purestorage/pure-csi-driver/issues).

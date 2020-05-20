@@ -34,8 +34,8 @@ FlashArrays can only be used for RWX volumes with [raw block mounts](https://kub
 
 To apply:
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/purestorage/helm-charts/master/docs/examples/rwx/pvc-block-many.yaml
-kubectl apply -f https://raw.githubusercontent.com/purestorage/helm-charts/master/docs/examples/rwx/pod-block-many.yaml
+kubectl apply -f https://raw.githubusercontent.com/purestorage/pure-csi-driver/master/docs/examples/rwx/pvc-block-many.yaml
+kubectl apply -f https://raw.githubusercontent.com/purestorage/pure-csi-driver/master/docs/examples/rwx/pod-block-many.yaml
 # The raw block device will be mounted at /dev/pure-block-device
 ```
 
@@ -55,7 +55,7 @@ FlashBlade shares can be easily used for RWX volumes since they use NFS, as show
 
 To apply:
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/purestorage/helm-charts/master/docs/examples/rwx/pvc-file-many.yaml
-kubectl apply -f https://raw.githubusercontent.com/purestorage/helm-charts/master/docs/examples/rwx/pod-file-many.yaml
+kubectl apply -f https://raw.githubusercontent.com/purestorage/pure-csi-driver/master/docs/examples/rwx/pvc-file-many.yaml
+kubectl apply -f https://raw.githubusercontent.com/purestorage/pure-csi-driver/master/docs/examples/rwx/pod-file-many.yaml
 # The NFS volume will be mounted at /data
 ```

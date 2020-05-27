@@ -20,7 +20,7 @@ performing `helm uninstall`.
   - Kubernetes 1.13+
     - NOTE: for Kubernetes 1.17, there is an [issue](https://github.com/kubernetes/kubernetes/issues/87852) using vxlan with Flannel or Calico 
   - Minimum Helm version required is 3.1.0.
-  - Google Anthos 1.2.x, 1.3.x
+  - Google Anthos 1.2.x, 1.3.x (to be verified)
   - Docker Kuberenetes Service (DKS) - based on Docker EE 3.0 with Kubernetes 1.14.3
   - Platform9 Managed Kubernetes (PMK) - Privileged mode only
 - #### Other software dependencies:
@@ -69,6 +69,8 @@ Add the Pure Storage helm repo
 helm repo add pure https://purestorage.github.io/pure-csi-driver
 helm repo update
 helm search repo pureStorageDriver -l
+# for beta releases
+helm search repo pureStorageDriver -l --devel
 ```
 
 Optional (offline installation): Download the helm chart
@@ -193,22 +195,26 @@ Customize your values.yaml including arrays info (replacement for pure.json), an
 
 Dry run the installation, and make sure your values.yaml is working correctly.
 
+**Note: chart name is case sensitive.**
+
 ```bash
-helm install --name pure-storage-driver pure/pureStorageDriver --namespace <namespace> -f <your_own_dir>/yourvalues.yaml --dry-run --debug
+helm install pure-storage-driver pure/pureStorageDriver --version <version> --namespace <namespace> -f <your_own_dir>/yourvalues.yaml --dry-run --debug
 ```
 
 Run the Install
 
+**Note: '--version' flag is required for helm to pickup beta releases, not required for the latest GA release**
+
 ```bash
 # Install the plugin 
-helm install pure-storage-driver pure/pureStorageDriver --namespace <namespace> -f <your_own_dir>/yourvalues.yaml
+helm install pure-storage-driver pure/pureStorageDriver --version <version> --namespace <namespace> -f <your_own_dir>/yourvalues.yaml
 ```
 
 The values in your values.yaml overwrite the ones in pureStorageDriver/values.yaml, but any specified with the `--set`
 option will take precedence.
 
 ```bash
-helm install pure-storage-driver pure/pureStorageDriver --namespace <namespace> -f <your_own_dir>/yourvalues.yaml \
+helm install pure-storage-driver pure/pureStorageDriver --version <version> --namespace <namespace> -f <your_own_dir>/yourvalues.yaml \
             --set flasharray.sanType=fc \
             --set namespace.pure=k8s_xxx \
 ```
@@ -265,7 +271,7 @@ Update your values.yaml with the correct arrays info, and then upgrade the helm 
 to use the values.yaml and not specify options with `--set` to make this easier.
 
 ```bash
-helm upgrade pure-storage-driver pure/pureStorageDriver --namespace <namespace> -f <your_own_dir>/yourvalues.yaml --set ...
+helm upgrade pure-storage-driver pure/pureStorageDriver --version <version> --namespace <namespace> -f <your_own_dir>/yourvalues.yaml --set ...
 ```
 
 ## Uninstall
@@ -297,6 +303,8 @@ the helm repository with the tag version required. This ensures the supporting c
 # list the avaiable version of the plugin
 helm repo update
 helm search repo pureStorageDriver -l
+# For beta releases
+helm search repo pureStorageDriver -l --devel
 
 # select a target chart version to upgrade as
 helm upgrade pure-storage-driver pure/pureStorageDriver --namespace <namespace> -f <your_own_dir>/yourvalues.yaml --version <target chart version>

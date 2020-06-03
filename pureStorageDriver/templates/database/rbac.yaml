@@ -5,6 +5,8 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
 {{ include "pure-csi.labels" . | indent 4 }}
+  annotations:
+    "helm.sh/resource-policy": keep  # THIS IS IMPORTANT: it's what allows the cockroach operator to clean itself up
 rules:
 - apiGroups:
   - ""
@@ -58,6 +60,41 @@ rules:
   - '*'
   verbs: ["create", "list", "watch", "delete", "get", "update"]
 
+# Post-delete RBAC cleanup stuff: whatever MUST remain around after helm delete should be added here so our pods can
+# clean it up right before cleaning up themselves
+
+# Enable listing of all necessary RBAC resources
+- apiGroups:
+    - ""  # ServiceAccounts
+    - rbac.authorization.k8s.io  # Roles and RoleBindings
+  resources:
+    - serviceaccounts
+    - roles
+    - rolebindings
+  verbs: ["list"]
+
+# Updating of ServiceAccounts
+- apiGroups:
+    - ""
+  resources:
+    - serviceaccounts
+  verbs: ["get", "update"]
+  resourceNames:
+    - {{ .Values.clusterrolebinding.serviceAccount.name }}
+- apiGroups:
+    - rbac.authorization.k8s.io
+  resources:
+    - roles
+  verbs: ["get", "update"]
+  resourceNames:
+    - pso-db-runner
+- apiGroups:
+    - rbac.authorization.k8s.io
+  resources:
+    - rolebindings
+  verbs: ["get", "update"]
+  resourceNames:
+    - pso-db-role
 ---
 
 kind: RoleBinding
@@ -67,6 +104,8 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
 {{ include "pure-csi.labels" . | indent 4 }}
+  annotations:
+    "helm.sh/resource-policy": keep  # THIS IS IMPORTANT: it's what allows the cockroach operator to clean itself up
 subjects:
 - kind: ServiceAccount
   name: {{ .Values.clusterrolebinding.serviceAccount.name }}

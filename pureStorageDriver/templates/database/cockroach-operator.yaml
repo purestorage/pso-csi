@@ -23,6 +23,14 @@ spec:
             - cockroach-operator
           imagePullPolicy: "{{ .Values.images.database.cockroachOperator.pullPolicy }}"
           env:
+            - name: DEPLOYMENT_NAME
+              value: pso-db-cockroach-operator  # Must match the metadata.name of the deployment in this file
+            - name: SERVICE_ACCOUNT_NAME
+              value: {{ .Values.clusterrolebinding.serviceAccount.name }}
+            - name: ROLE_NAME
+              value: pso-db-runner
+            - name: ROLE_BINDING_NAME
+              value: pso-db-role
             - name: WATCH_NAMESPACE
               valueFrom:
                 fieldRef:

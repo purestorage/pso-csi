@@ -7,6 +7,6 @@ data:
     appconfig.json:  |-
         {
         {{- if .Values.flashblade.exportRules }}
-           exportRules: {{ .Values.flashblade.exportRules | toJson}}
+           "exportRules": {{ .Values.flashblade.exportRules | toJson}}
         {{- end}}
         }

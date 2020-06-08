@@ -114,6 +114,7 @@ spec:
           volumeMounts:
             - name: socket-dir
               mountPath: /csi
+# Google Anthos (which is built on GKE) prohibits alpha snapshotters
         - name: csi-snapshotter
           {{- with .Values.images.csi.snapshotter }}
           image: {{ .name | default "quay.io/k8scsi/csi-snapshotter" }}:v1.2.2
@@ -138,21 +139,6 @@ spec:
           volumeMounts:
             - name: socket-dir
               mountPath: /csi
-# Google Anthos (which is built on GKE) prohibits alpha snapshotters
-{{- if not (.Capabilities.KubeVersion.GitVersion | regexMatch "gke") }}
-        - name: csi-snapshotter
-          {{- with .Values.csi.snapshotter.image }}
-          image: {{ .name | default "quay.io/k8scsi/csi-snapshotter" }}:v1.2.2
-          imagePullPolicy: {{ .pullPolicy }}
-          {{- end }}
-          args:
-            - "--csi-address=/csi/csi.sock"
-            - "--connection-timeout=15s"
-            - "--leader-election=false"
-          volumeMounts:
-            - name: socket-dir
-              mountPath: /csi
-{{- end }}
 # The csi-resizer sidecar that watches the Kubernetes API server for PersistentVolumeClaim updates.
 # Does not scale with more replicas, only one is elected as leader and running.
 # PSO requires K8s 1.16+ for CSI VolumeExpansion

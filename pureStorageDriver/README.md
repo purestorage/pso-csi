@@ -20,7 +20,7 @@ performing `helm uninstall`.
   - Kubernetes 1.13+
     - NOTE: for Kubernetes 1.17, there is an [issue](https://github.com/kubernetes/kubernetes/issues/87852) using vxlan with Flannel or Calico 
   - Minimum Helm version required is 3.1.0.
-  - Google Anthos 1.2.x, 1.3.x
+  - Google Anthos 1.2.x, 1.3.x (to be verified)
   - Docker Kuberenetes Service (DKS) - based on Docker EE 3.0 with Kubernetes 1.14.3
   - Platform9 Managed Kubernetes (PMK) - Privileged mode only
 - #### Other software dependencies:
@@ -69,6 +69,8 @@ Add the Pure Storage helm repo
 helm repo add pure https://purestorage.github.io/pure-csi-driver
 helm repo update
 helm search repo pureStorageDriver -l
+# for beta releases
+helm search repo pureStorageDriver -l --devel
 ```
 
 Optional (offline installation): Download the helm chart
@@ -83,48 +85,46 @@ the default [./values.yaml](./values.yaml).
 ### Configuration
 The following table lists the configurable parameters and their default values.
 
-|             Parameter       |            Description             |                    Default                |
-|-----------------------------|------------------------------------|-------------------------------------------|
-| `app.debug`                 | Enable/disable debug mode for app  | `false`                                   |
-| `storageclass.isPureDefault`| Set `pure` storageclass to the default | `false`                               |
-| `storageclass.pureBackend`  | Set `pure` storageclass' default backend type | `block`                               |
-| `clusterID`            | Prefix for backend volume names  | No default                                     |
-| `clusterrolebinding.serviceAccount.name`| Name of K8s/openshift service account for installing the plugin | `pure`                    |
-| `flasharray.defaultFSType`  | Block volume default filesystem type. *Not recommended to change!* | `xfs`     |
-| `flasharray.defaultFSOpt`  | Block volume default mkfs options. *Not recommended to change!* | `-q`          |
-| `flasharray.defaultMountOpt`  | Block volume default filesystem mount options. *Not recommended to change!* |     ""    |
-| `flasharray.iSCSILoginTimeout`  | iSCSI login timeout in seconds. *Not recommended to change!* |     `20sec`    |
-| `flasharray.iSCSIAllowedCIDR`  | List of CIDR blocks allowed as iSCSI targets, e.g. 10.0.0.0/24,10.1.0.0/16. Use comma (,) as the separator, and empty string means allowing all addresses. |     ""    |
-| `flasharray.preemptAttachments`  | Enable/Disable attachment preemption! |     `true`    |
-| `flasharray.sanType`        | Block volume access protocol, either ISCSI or FC | `ISCSI`                     |
-| `flashblade.snapshotDirectoryEnabled`  | Enable/Disable FlashBlade snapshots |     `false`    |
-| `orchestrator.name`         | Orchestrator type, such as openshift, k8s | `k8s`                              |
-| *`arrays`                    | Array list of all the backend FlashArrays and FlashBlades | must be set by user, see an example below                |
-| `nodeSelector`              | [NodeSelectors](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector) Select node-labels to schedule all PSO CSI pods. | `{}` |
-| `tolerations`               | [Tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/#concepts)  | `[]` |
-| `affinity`                  | [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) | `{}` |
-| `nodeServer.nodeSelector`              | [NodeSelectors](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector) Select node-labels to schedule CSI node server. | `{}` |
-| `nodeServer.tolerations`               | [Tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/#concepts)  | `[]` |
-| `nodeServer.affinity`                  | [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) | `{}` |
-| `controllerServer.nodeSelector`              | [NodeSelectors](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector) Select node-labels to schedule CSI controller server. | `{}` |
-| `controllerServer.tolerations`               | [Tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/#concepts)  | `[]` |
-| `controllerServer.affinity`                  | [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) | `{}` |
-| `database.nodeSelector`              | [NodeSelectors](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector) Select node-labels to schedule database-related pods. | `{}` |
-| `database.tolerations`               | [Tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/#concepts)  | `[]` |
-| `database.affinity`                  | [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) | `{}` |
-| `images.plugin.name`                | The image name       to pull from  | `purestorage/k8s`                         |
-| `images.plugin.tag`                 | The image tag to pull              | `6.0.0-beta1`                                   |
-| `images.plugin.pullPolicy`          | Image pull policy                  | `Always      `                            |
-| `images.csi.provisioner.name` | The image name of the csi-provisioner | `quay.io/k8scsi/csi-provisioner` |
-| `images.csi.provisioner.pullPolicy` | Image pull policy | `Always      ` |
-| `images.csi.clusterDriverRegistrar.name` | The image name of the csi-cluster-driver-registrar | `quay.io/k8scsi/csi-cluster-driver-registrar` |
-| `images.csi.clusterDriverRegistrar.pullPolicy` | Image pull policy | `Always      ` |
-| `images.csi.nodeDriverRegistrar.name` | The image name of the csi-node-driver-registrar | `quay.io/k8scsi/csi-node-driver-registrar` |
-| `images.csi.nodeDriverRegistrar.pullPolicy` | Image pull policy | `Always      ` |
-| `images.csi.livenessProbe.name` | The image name of the csi livenessprobe | `quay.io/k8scsi/livenessprobe` |
-| `images.csi.livenessProbe.pullPolicy` | Image pull policy | `Always      ` |
-| `images.csi.snapshotter.name` | The image name of the csi snapshotter | `quay.io/k8scsi/csi-snapshotter` |
-| `images.csi.snapshotter.pullPolicy` | Image pull policy | `Always      ` |
+| Parameter                                      | Description                                                                                                                                                | Default                                       |
+|------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------|
+| `app.debug`                                    | Enable/disable debug mode for app                                                                                                                          | `false`                                       |
+| `clusterID`                                    | Prefix for backend volume names                                                                                                                            | No default                                    |
+| `clusterrolebinding.serviceAccount.name`       | Name of K8s/openshift service account for installing the plugin                                                                                            | `pure`                                        |
+| `flasharray.defaultFSType`                     | Block volume default filesystem type. *Not recommended to change!*                                                                                         | `xfs`                                         |
+| `flasharray.defaultFSOpt`                      | Block volume default mkfs options. *Not recommended to change!*                                                                                            | `-q`                                          |
+| `flasharray.defaultMountOpt`                   | Block volume default filesystem mount options. *Not recommended to change!*                                                                                | ""                                            |
+| `flasharray.iSCSILoginTimeout`                 | iSCSI login timeout in seconds. *Not recommended to change!*                                                                                               | `20sec`                                       |
+| `flasharray.iSCSIAllowedCIDR`                  | List of CIDR blocks allowed as iSCSI targets, e.g. 10.0.0.0/24,10.1.0.0/16. Use comma (,) as the separator, and empty string means allowing all addresses. | ""                                            |
+| `flasharray.preemptAttachments`                | Enable/Disable attachment preemption!                                                                                                                      | `true`                                        |
+| `flasharray.sanType`                           | Block volume access protocol, either ISCSI or FC                                                                                                           | `ISCSI`                                       |
+| `flashblade.snapshotDirectoryEnabled`          | Enable/Disable FlashBlade snapshots                                                                                                                        | `false`                                       |
+| `orchestrator.name`                            | Orchestrator type, such as openshift, k8s                                                                                                                  | `k8s`                                         |
+| *`arrays`                                      | Array list of all the backend FlashArrays and FlashBlades                                                                                                  | must be set by user, see an example below     |
+| `nodeSelector`                                 | [NodeSelectors](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector) Select node-labels to schedule all PSO CSI pods.          | `{}`                                          |
+| `tolerations`                                  | [Tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/#concepts)                                                            | `[]`                                          |
+| `affinity`                                     | [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)                                                  | `{}`                                          |
+| `nodeServer.nodeSelector`                      | [NodeSelectors](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector) Select node-labels to schedule CSI node server.           | `{}`                                          |
+| `nodeServer.tolerations`                       | [Tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/#concepts)                                                            | `[]`                                          |
+| `nodeServer.affinity`                          | [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)                                                  | `{}`                                          |
+| `controllerServer.nodeSelector`                | [NodeSelectors](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector) Select node-labels to schedule CSI controller server.     | `{}`                                          |
+| `controllerServer.tolerations`                 | [Tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/#concepts)                                                            | `[]`                                          |
+| `controllerServer.affinity`                    | [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)                                                  | `{}`                                          |
+| `database.nodeSelector`                        | [NodeSelectors](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector) Select node-labels to schedule database-related pods.     | `{}`                                          |
+| `database.tolerations`                         | [Tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/#concepts)                                                            | `[]`                                          |
+| `database.affinity`                            | [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)                                                  | `{}`                                          |
+| `images.plugin.name`                           | The image name to pull from                                                                                                                          | `purestorage/k8s`                             |
+| `images.plugin.tag`                            | The image tag to pull                                                                                                                                      | `6.0.0-rc1`                                   |
+| `images.plugin.pullPolicy`                     | Image pull policy                                                                                                                                          | `Always      `                                |
+| `images.csi.provisioner.name`                  | The image name of the csi-provisioner                                                                                                                      | `quay.io/k8scsi/csi-provisioner`              |
+| `images.csi.provisioner.pullPolicy`            | Image pull policy                                                                                                                                          | `Always      `                                |
+| `images.csi.clusterDriverRegistrar.name`       | The image name of the csi-cluster-driver-registrar                                                                                                         | `quay.io/k8scsi/csi-cluster-driver-registrar` |
+| `images.csi.clusterDriverRegistrar.pullPolicy` | Image pull policy                                                                                                                                          | `Always      `                                |
+| `images.csi.nodeDriverRegistrar.name`          | The image name of the csi-node-driver-registrar                                                                                                            | `quay.io/k8scsi/csi-node-driver-registrar`    |
+| `images.csi.nodeDriverRegistrar.pullPolicy`    | Image pull policy                                                                                                                                          | `Always      `                                |
+| `images.csi.livenessProbe.name`                | The image name of the csi livenessprobe                                                                                                                    | `quay.io/k8scsi/livenessprobe`                |
+| `images.csi.livenessProbe.pullPolicy`          | Image pull policy                                                                                                                                          | `Always      `                                |
+| `images.csi.snapshotter.name`                  | The image name of the csi snapshotter                                                                                                                      | `quay.io/k8scsi/csi-snapshotter`              |
+| `images.csi.snapshotter.pullPolicy`            | Image pull policy                                                                                                                                          | `Always      `                                |
 
 *Examples:
 
@@ -193,22 +193,26 @@ Customize your values.yaml including arrays info (replacement for pure.json), an
 
 Dry run the installation, and make sure your values.yaml is working correctly.
 
+**Note: chart name is case sensitive.**
+
 ```bash
-helm install --name pure-storage-driver pure/pureStorageDriver --namespace <namespace> -f <your_own_dir>/yourvalues.yaml --dry-run --debug
+helm install pure-storage-driver pure/pureStorageDriver --version <version> --namespace <namespace> -f <your_own_dir>/yourvalues.yaml --dry-run --debug
 ```
 
 Run the Install
 
+**Note: '--version' flag is required for helm to pickup beta releases, not required for the latest GA release**
+
 ```bash
 # Install the plugin 
-helm install pure-storage-driver pure/pureStorageDriver --namespace <namespace> -f <your_own_dir>/yourvalues.yaml
+helm install pure-storage-driver pure/pureStorageDriver --version <version> --namespace <namespace> -f <your_own_dir>/yourvalues.yaml
 ```
 
 The values in your values.yaml overwrite the ones in pureStorageDriver/values.yaml, but any specified with the `--set`
 option will take precedence.
 
 ```bash
-helm install pure-storage-driver pure/pureStorageDriver --namespace <namespace> -f <your_own_dir>/yourvalues.yaml \
+helm install pure-storage-driver pure/pureStorageDriver --version <version> --namespace <namespace> -f <your_own_dir>/yourvalues.yaml \
             --set flasharray.sanType=fc \
             --set namespace.pure=k8s_xxx \
 ```
@@ -265,7 +269,7 @@ Update your values.yaml with the correct arrays info, and then upgrade the helm 
 to use the values.yaml and not specify options with `--set` to make this easier.
 
 ```bash
-helm upgrade pure-storage-driver pure/pureStorageDriver --namespace <namespace> -f <your_own_dir>/yourvalues.yaml --set ...
+helm upgrade pure-storage-driver pure/pureStorageDriver --version <version> --namespace <namespace> -f <your_own_dir>/yourvalues.yaml --set ...
 ```
 
 ## Uninstall
@@ -297,6 +301,8 @@ the helm repository with the tag version required. This ensures the supporting c
 # list the avaiable version of the plugin
 helm repo update
 helm search repo pureStorageDriver -l
+# For beta releases
+helm search repo pureStorageDriver -l --devel
 
 # select a target chart version to upgrade as
 helm upgrade pure-storage-driver pure/pureStorageDriver --namespace <namespace> -f <your_own_dir>/yourvalues.yaml --version <target chart version>

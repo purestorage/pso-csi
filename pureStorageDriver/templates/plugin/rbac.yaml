@@ -16,6 +16,10 @@ kind: ServiceAccount
 metadata:
   name: {{ .Values.clusterrolebinding.serviceAccount.name }}
   namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/resource-policy": keep  # THIS IS IMPORTANT: it's what allows the cockroach operator to clean itself up
+  labels:
+{{ include "pure-csi.labels" . | indent 4}}
 
 ---
 kind: ClusterRole

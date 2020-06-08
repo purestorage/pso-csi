@@ -18,12 +18,6 @@ orchestrator:
 app:
   debug: false
 
-# do you want to set pure as the default storageclass?
-storageclass:
-  isPureDefault: false
-  # set the type of backend you want for the 'pure' storageclass
-  # pureBackend: file
-
 # this option is to enable/disable the csi topology feature
 # for pure-csi-driver
 storagetopology:
@@ -66,8 +60,8 @@ flashblade:
   exportRules: ""
 images:
   plugin:
-    name: pc2-dtr.dev.purestorage.com/purestorage/k8s
-    tag: 6.0.0-beta1
+    name: purestorage/k8s
+    tag: 6.0.0-rc1
     pullPolicy: Always
   csi:
     provisioner:
@@ -93,12 +87,12 @@ images:
       pullPolicy: Always
   database:
     deployer:
-      name: pc2-dtr.dev.purestorage.com/purestorage/dbdeployer
-      tag: 1.0.0-beta4
+      name: purestorage/dbdeployer
+      tag: 1.0.0-rc1
       pullPolicy: Always
     cockroachOperator:
-      name: pc2-dtr.dev.purestorage.com/purestorage/cockroach-operator
-      tag: 1.0.0-beta4
+      name: purestorage/cockroach-operator
+      tag: 1.0.0-rc1
       pullPolicy: Always
 
 # specify the service account name for this app

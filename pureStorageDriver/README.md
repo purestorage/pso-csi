@@ -3,11 +3,10 @@
 This helm chart installs the Pure Service Orchestrator CSI plugin on a Kubernetes cluster.
 
 ## Important Notes
-1. Starting at version 1.0.0, PSO deploys a datastore replicated across the provided storage backends.
+1. Starting at version 6.0.0, PSO deploys a datastore replicated across the provided storage backends.
 1. Currently, there is **no upgrade supported** from previous versions that do not deploy the datastore.
-1. You **MUST** supply a unique `clusterID` in values.yaml. This was previously called `namespace.pure`.
-1. To uninstall, you **MUST** first delete the secret `pure-provisioner-secret` and wait a couple minutes before
-performing `helm uninstall`.
+1. You **MUST** supply a unique `clusterID` in values.yaml. This was previously called `namespace.pure`. `clusterID` must be less than or equal to 22 characters in length. `clusterID` must be unique between **all** Kubernetes clusters using your Pure devices or naming conflicts will result.
+1. `helm uninstall` will perform the initial uninstallation, but some pods will continue to clean up post-installation. They should go away after cleanup is complete.
 
 ## Platform and Software Dependencies
 - #### Operating Systems Supported*:
@@ -113,7 +112,7 @@ The following table lists the configurable parameters and their default values.
 | `database.nodeSelector`                        | [NodeSelectors](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector) Select node-labels to schedule database-related pods.     | `{}`                                          |
 | `database.tolerations`                         | [Tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/#concepts)                                                            | `[]`                                          |
 | `database.affinity`                            | [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)                                                  | `{}`                                          |
-| `images.plugin.name`                           | The image name to pull from                                                                                                                          | `purestorage/k8s`                             |
+| `images.plugin.name`                           | The image name to pull from                                                                                                                                | `purestorage/k8s`                             |
 | `images.plugin.tag`                            | The image tag to pull                                                                                                                                      | `6.0.0-rc1`                                   |
 | `images.plugin.pullPolicy`                     | Image pull policy                                                                                                                                          | `Always      `                                |
 | `images.csi.provisioner.name`                  | The image name of the csi-provisioner                                                                                                                      | `quay.io/k8scsi/csi-provisioner`              |
@@ -262,35 +261,10 @@ NAME     STATUS   READY   RANGES   UNDER-REPLICATED   UNAVAILABLE   AS-OF
 pso-db   Live     3/3     31       0                  0             2020-03-05T00:40:38Z
 ```
 
-## How to update `arrays` info
-
-Update your values.yaml with the correct arrays info, and then upgrade the helm as below.
-
-**Note**: Ensure that the values for `--set` options match when run with the original install step. It is highly recommended
-to use the values.yaml and not specify options with `--set` to make this easier.
-
-```bash
-helm upgrade pure-storage-driver pure/pureStorageDriver --version <version> --namespace <namespace> -f <your_own_dir>/yourvalues.yaml --set ...
-```
-
 ## Uninstall
 
-To uninstall, first delete `pure-provisioner-secret`
-
-```bash
-kubectl delete secret -n <namespace> pure-provisioner-secret
-```
-
-Once the secret is deleted, `pso-db-cockroach-operator` will begin detaching the database volumes from the compute nodes.
-
-Verify that all of the database volumes were cleaned up by running:
-```bash
-kubectl get intrusion -n <namespace>
-```
-If no intrusion is returned, it is now safe to helm uninstall:
-```bash
-helm uninstall pure-storage-driver --namespace <namespace>
-```
+To uninstall, run `helm delete -n <namespace> pure-storage-driver`. Most resources will be immediately removed, but
+the `cockroach-operator` pod will remain to do more cleanup. Once cleanup is complete, it will remove itself.
 
 ## Upgrading
 ### How to upgrade the driver version

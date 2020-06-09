@@ -8,5 +8,5 @@ provisioner: pure-csi
 parameters:
     backend: file
 mountOptions:
-      - nfsvers=3
+      - nfsvers=4.1
       - tcp

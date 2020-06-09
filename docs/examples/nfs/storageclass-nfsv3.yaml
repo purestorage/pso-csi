@@ -2,11 +2,6 @@ kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
   name: pure-file-nfsv3
-  labels:
-    kubernetes.io/cluster-service: "true"
-    generator: helm
-    chart: pure-csi
-    release: "pure-storage-driver"
 provisioner: pure-csi
 parameters:
     backend: file

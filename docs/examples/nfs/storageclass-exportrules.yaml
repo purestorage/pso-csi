@@ -6,6 +6,3 @@ provisioner: pure-csi
 parameters:
     backend: file
     exportrules: "*(rw)"
-mountOptions:
-      - tcp
-      - nfsvers=4.1

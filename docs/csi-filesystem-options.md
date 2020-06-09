@@ -59,7 +59,7 @@ It may take a few seconds to let PSO apply the new values.
 In addition, PSO can also set the `ExportRules` via `StorageClass` to customize the `ExportRules` for volumes. The example of the StorageClass is here [storageclass-exportules.yaml](./examples/nfs/storageclass-exportrules.yaml)
 Please refer the FlashBlade User Guide to learn how to write export rules.
 
-Please note that PSO is responsible for checking the correctness of the rules, failure to provide the correct rules may result in failing to create the volume or unable to access it. 
+Please note that PSO is **NOT** responsible for checking the correctness of the rules, failure to provide the correct rules may result in failing to create a volume or unable to access it. 
 
 **Notes:**
 
@@ -72,7 +72,7 @@ For **FlashBlade**, make sure your worker nodes have NFS utilities package insta
  yum install -y nfs-utils
 ```
 
-2. _**FlashBlade support:**_ When you backend storage type is FB, PSO will ignore the `FsType` and `CreateOptions` parameters by default since FB does not allow users to format the filesystem when you attach volumes. The default filesystem for FB is `nfs`. However, users can still specify the `MountOptions` to mount volumes.
+2. _**FlashBlade support:**_ When your backend storage type is FB, PSO will ignore the `FsType` and `CreateOptions` parameters by default since FB does not allow users to format the filesystem when you attach volumes. The default filesystem for FB is `nfs`. However, users can still specify the `MountOptions` to mount volumes.
 By default, PSO uses NFS4.1 portocol to connect the FlashBlade backend store, please make sure your host node(s) NFS client supports NFS 4.1. If your node does not support NFS 4.1, PSO will fall back to use NFS 3.0 automatically.
 
 3. _**Kubenetes default Filesystem:**_ 
@@ -134,12 +134,9 @@ provisioner: pure-csi
 parameters:
     backend: file
     exportrules: "*(rw)"
-mountOptions:
-      - tcp
-      - nfsvers=4.1
 
 ```
 To apply:
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/purestorage/helm-charts/master/docs/examples/nfs/storageclass-exportrules.yaml
+kubectl apply -f https://raw.githubusercontent.com/purestorage/pure-csi/master/docs/examples/nfs/storageclass-exportrules.yaml
 ```

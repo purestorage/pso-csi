@@ -81,7 +81,7 @@ Refer to the [csi-plugin README](./pureStorageDriver/README.md) for further inst
 [Checkout a list of some blogs related to Pure Service Orchestrator](./docs/blog_posts.md)
 
 ## Contributing
-We welcome contributions. The PSO Helm Charts project is under [Apache 2.0 license](https://github.com/purestorage/pure-csi-driver/blob/master/LICENSE). We accept contributions via GitHub pull requests.
+We welcome contributions. The PSO Helm Charts project is under [Apache 2.0 license](https://github.com/purestorage/pso-csi/blob/master/LICENSE). We accept contributions via GitHub pull requests.
 
 ## Report a Bug
-For filing bugs, suggesting improvements, or requesting new features, please open an [issue](https://github.com/purestorage/pure-csi-driver/issues).
+For filing bugs, suggesting improvements, or requesting new features, please open an [issue](https://github.com/purestorage/pso-csi/issues).

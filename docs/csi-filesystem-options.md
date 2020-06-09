@@ -19,7 +19,7 @@ The following dependencies must be true before the customized filesystem options
 
 * Kubernetes already running, deployed, configured, etc
 * For the `MountOptions` feature, ensure you have Kubernetes 1.8+ installed.
-* PSO correctly installed and using [Pure CSI Driver v6.0.0](https://github.com/purestorage/pure-csi/releases/tag/6.0.0)+.
+* PSO correctly installed and using [Pure CSI Driver v6.0.0](https://github.com/purestorage/pso-csi/releases/tag/6.0.0)+.
 * For FlashBlade, ensure you have **Purity 2.3.0**+ installed. You need REST API 1.6+ to support NFS 4.1.
 
 ##  FileSystem Options
@@ -100,7 +100,7 @@ mountOptions:
 ```
 To apply:
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/purestorage/pure-csi-driver/master/docs/examples/fsoptions/pure-block-xfs.yaml
+kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/docs/examples/fsoptions/pure-block-xfs.yaml
 ```
 ## Example of StorageClass for FlashBlade
 
@@ -120,7 +120,7 @@ mountOptions:
 ```
 To apply:
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/purestorage/pure-csi-driver/master/docs/examples/fsoptions/pure-file-nfs.yaml
+kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/docs/examples/fsoptions/pure-file-nfs.yaml
 ```
 
 ## Example of using ExportRules in StorageClass

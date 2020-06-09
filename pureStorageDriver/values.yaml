@@ -14,12 +14,12 @@ orchestrator:
   name: k8s
 
 # this option is to enable/disable the debug mode of this app
-# for pure-csi-driver
+# for pso-csi
 app:
   debug: false
 
 # this option is to enable/disable the csi topology feature
-# for pure-csi-driver
+# for pso-csi
 storagetopology:
   enable: false
   strictTopology: false

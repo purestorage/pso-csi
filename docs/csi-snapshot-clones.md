@@ -158,9 +158,9 @@ spec:
 ```
 To give it a try:
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/purestorage/pure-csi-driver/master/pure-csi/snapshotclass.yaml
-kubectl apply -f https://raw.githubusercontent.com/purestorage/pure-csi-driver/master/docs/examples/snapshot/pvc.yaml
-kubectl apply -f https://raw.githubusercontent.com/purestorage/pure-csi-driver/master/docs/examples/snapshot/snapshot.yaml
+kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/pureStorageDriver/snapshotclass.yaml
+kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/docs/examples/snapshot/pvc.yaml
+kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/docs/examples/snapshot/snapshot.yaml
 ```
 This will create a snapshot called `volumesnapshot-1` which can check the status of with
 
@@ -192,7 +192,7 @@ spec:
 ```
 To give it a try:
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/purestorage/pure-csi-driver/master/docs/examples/snapshot/restore-snapshot.yaml
+kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/docs/examples/snapshot/restore-snapshot.yaml
 ```
 **NOTE:** Recovery of a volume snapshot to overwite its parent persistant volume is not supported in the CSI specification, however this can be achieved with a FlashArray based PVC and snapshot using the following steps:
 
@@ -223,8 +223,8 @@ spec:
 ```
 To give it a try:
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/purestorage/pure-csi-driver/master/docs/examples/clone/pvc.yaml
-kubectl apply -f https://raw.githubusercontent.com/purestorage/pure-csi-driver/master/docs/examples/clone/clone.yaml
+kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/docs/examples/clone/pvc.yaml
+kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/docs/examples/clone/clone.yaml
 ```
 **Notes:**
 

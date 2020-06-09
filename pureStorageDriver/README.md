@@ -66,7 +66,7 @@ Whilst there are some default `StorageClass` definitions provided by the PSO ins
 Add the Pure Storage helm repo
 
 ```bash
-helm repo add pure https://purestorage.github.io/pure-csi-driver
+helm repo add pure https://purestorage.github.io/pso-csi
 helm repo update
 helm search repo pureStorageDriver -l
 # for beta releases
@@ -76,7 +76,7 @@ helm search repo pureStorageDriver -l --devel
 Optional (offline installation): Download the helm chart
 
 ```bash
-git clone https://github.com/purestorage/pure-csi-driver.git
+git clone https://github.com/purestorage/pso-csi.git
 ```
 
 Create your own values.yaml and install the helm chart with it, and keep it. Easiest way is to copy
@@ -171,7 +171,7 @@ volumesnapshots.snapshot.storage.k8s.io          2019-11-21T17:25:23Z
 To install the VolumeSnapshotClass:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/purestorage/pure-csi-driver/master/pureStorageDriver/snapshotclass.yaml
+kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/pureStorageDriver/snapshotclass.yaml
 ```
 
 ## Configure NTP
@@ -315,7 +315,7 @@ Upgrade from flexvolume to CSI is not currently supported and is being considere
 
 ## Release Notes
 
-Release notes can be found [here](https://github.com/purestorage/pure-csi-driver/releases)
+Release notes can be found [here](https://github.com/purestorage/pso-csi/releases)
 
 ## Known Vulnerabilities 
 None

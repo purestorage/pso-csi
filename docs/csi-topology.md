@@ -112,7 +112,7 @@ parameters:
 ```
 To apply:
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/purestorage/pure-csi-driver/master/docs/examples/topology/pure-block-delay-binding.yaml
+kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/docs/examples/topology/pure-block-delay-binding.yaml
 ```
 ### Example of PVC using Delay Binding StorageClass
 ```yaml
@@ -132,7 +132,7 @@ spec:
 ```
 To apply:
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/purestorage/pure-csi-driver/master/docs/examples/topology/pvc-delay-binding.yaml
+kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/docs/examples/topology/pvc-delay-binding.yaml
 ```
 Once you apply the delay-binding PVC yaml, you should see the PVC is in pending state and wait for the scheduler for further signal.
 ```
@@ -160,7 +160,7 @@ allowedTopologies:
 ```
 To apply:
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/purestorage/pure-csi-driver/master/docs/examples/topology/pure-block-restrict-provisioning.ymal
+kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/docs/examples/topology/pure-block-restrict-provisioning.ymal
 ```
 
 ### Example of POD with NodeAffinity
@@ -198,7 +198,7 @@ spec:
 ```
 To apply:
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/purestorage/pure-csi-driver/master/docs/examples/topology/pod-delay-binding.yaml
+kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/docs/examples/topology/pod-delay-binding.yaml
 ```
 This example demonstrates how to restrict the topology of provisioned volumes to specific zones and should be used as a replacement for the zone and zones parameters for the supported plugins.
 ## Example of StatefulSet For High Availability
@@ -276,5 +276,5 @@ spec:
 ```
 To apply:
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/purestorage/pure-csi-driver/master/docs/examples/topology/statefulset-topology.yaml
+kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/docs/examples/topology/statefulset-topology.yaml
 ```

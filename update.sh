@@ -12,5 +12,5 @@ for CHART_FILE in $(find "${SCRIPT_DIR}" -name Chart.yaml); do
     mv "${SCRIPT_DIR}"/"${CHART_NAME}"*.tgz "${SCRIPT_DIR}/docs/"
 done
 
-helm repo index docs --url https://purestorage.github.io/pure-csi-driver
+helm repo index docs --url https://purestorage.github.io/pso-csi
 echo "Updated ${SCRIPT_DIR}/docs/index.yaml"

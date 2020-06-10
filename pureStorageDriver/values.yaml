@@ -57,7 +57,7 @@ flasharray:
 
 flashblade:
   snapshotDirectoryEnabled: "false"
-  exportRules: ""
+  exportRules: "*(rw,no_root_squash)"
 images:
   plugin:
     name: purestorage/k8s

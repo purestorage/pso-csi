@@ -6,7 +6,7 @@ metadata:
 data:
     appconfig.json:  |-
         {
-        {{- if .Values.flashblade.exportRules }}
+        {{- if not (kindIs "invalid" .Values.flashblade.exportRules) }}
            "exportRules": {{ .Values.flashblade.exportRules | toJson}}
         {{- end}}
         }

@@ -3,9 +3,9 @@ entries:
   pureStorageDriver:
   - apiVersion: v1
     appVersion: 6.0.0-rc1
-    created: "2020-06-09T13:13:48.006366-07:00"
+    created: "2020-06-10T15:29:10.899191-07:00"
     description: A Helm chart for Pure Service Orchestrator CSI driver
-    digest: 272d3bcf1f8d0f3d4298546dd17695143bdea0ecb2d563387a3a16777ceaabff
+    digest: ce49de6b4a03c35c9838eda5a255f6177f8027574b7be90f20e74eda25b3e8db
     icon: https://raw.githubusercontent.com/purestorage/pso-csi/master/pureStorageDriver/pure-storage.png
     keywords:
     - purestorage
@@ -16,4 +16,4 @@ entries:
     urls:
     - https://purestorage.github.io/pso-csi/pureStorageDriver-6.0.0-rc1.tgz
     version: 6.0.0-rc1
-generated: "2020-06-09T13:13:48.001499-07:00"
+generated: "2020-06-10T15:29:10.895098-07:00"

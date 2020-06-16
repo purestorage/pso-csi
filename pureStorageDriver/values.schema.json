@@ -1178,7 +1178,7 @@
                                     "$id": "#/properties/images/properties/csi/properties/attacher/properties/pullPolicy",
                                     "type": "string",
                                     "title": "The pullPolicy schema",
-                                    "pattern": "^(Always)$",
+                                    "enum": ["Always", "IfNotPresent", "Never"],
                                     "default": "",
                                     "examples": [
                                         "Always"
@@ -1216,7 +1216,7 @@
                                     "$id": "#/properties/images/properties/csi/properties/clusterDriverRegistrar/properties/pullPolicy",
                                     "type": "string",
                                     "title": "The pullPolicy schema",
-                                    "pattern": "^(Always)$",
+                                    "enum": ["Always", "IfNotPresent", "Never"],
                                     "default": "",
                                     "examples": [
                                         "Always"
@@ -1254,7 +1254,7 @@
                                     "$id": "#/properties/images/properties/csi/properties/livenessProbe/properties/pullPolicy",
                                     "type": "string",
                                     "title": "The pullPolicy schema",
-                                    "pattern": "^(Always)$",
+                                    "enum": ["Always", "IfNotPresent", "Never"],
                                     "default": "",
                                     "examples": [
                                         "Always"
@@ -1292,7 +1292,7 @@
                                     "$id": "#/properties/images/properties/csi/properties/nodeDriverRegistrar/properties/pullPolicy",
                                     "type": "string",
                                     "title": "The pullPolicy schema",
-                                    "pattern": "^(Always)$",
+                                    "enum": ["Always", "IfNotPresent", "Never"],
                                     "default": "",
                                     "examples": [
                                         "Always"
@@ -1330,7 +1330,7 @@
                                     "$id": "#/properties/images/properties/csi/properties/provisioner/properties/pullPolicy",
                                     "type": "string",
                                     "title": "The pullPolicy schema",
-                                    "pattern": "^(Always)$",
+                                    "enum": ["Always", "IfNotPresent", "Never"],
                                     "default": "",
                                     "examples": [
                                         "Always"
@@ -1369,7 +1369,7 @@
                                     "type": "string",
                                     "title": "The pullPolicy schema",
                                     "default": "",
-                                    "pattern": "^(Always)$",
+                                    "enum": ["Always", "IfNotPresent", "Never"],
                                     "examples": [
                                         "Always"
                                     ]
@@ -1406,7 +1406,7 @@
                                     "$id": "#/properties/images/properties/csi/properties/snapshotter/properties/pullPolicy",
                                     "type": "string",
                                     "title": "The pullPolicy schema",
-                                    "pattern": "^(Always)$",
+                                    "enum": ["Always", "IfNotPresent", "Never"],
                                     "default": "",
                                     "examples": [
                                         "Always"
@@ -1473,7 +1473,7 @@
                                     "$id": "#/properties/images/properties/database/properties/cockroachOperator/properties/pullPolicy",
                                     "type": "string",
                                     "title": "The pullPolicy schema",
-                                    "pattern": "^(Always)$",
+                                    "enum": ["Always", "IfNotPresent", "Never"],
                                     "default": "",
                                     "examples": [
                                         "Always"
@@ -1522,7 +1522,7 @@
                                     "$id": "#/properties/images/properties/database/properties/deployer/properties/pullPolicy",
                                     "type": "string",
                                     "title": "The pullPolicy schema",
-                                    "pattern": "^(Always)$",
+                                    "enum": ["Always", "IfNotPresent", "Never"],
                                     "default": "",
                                     "examples": [
                                         "Always"
@@ -1572,7 +1572,7 @@
                         "pullPolicy": {
                             "$id": "#/properties/images/properties/plugin/properties/pullPolicy",
                             "type": "string",
-                            "pattern": "^(Always)$",
+                            "enum": ["Always", "IfNotPresent", "Never"],
                             "title": "The pullPolicy schema",
                             "default": "",
                             "examples": [

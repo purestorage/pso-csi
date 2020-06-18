@@ -170,6 +170,9 @@ database:
   #   memory: "8Gi"
 
   # The length of time a db node is considered Suspect before being marked as Down
-  maxSuspectSeconds: 300
-  # The length of time a db node is allowed to be in Startup before being marked as Down
+  # This value is recommended to be larger than Kubernetes liveness probe setting time in our db pod, 
+  # so K8S gets chance to restart the pod if it's unhealthy before we take it down.
+  # https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes
+  maxSuspectSeconds: 600
+  # The length of time a db node is allowed to be in Startup before being suspect
   maxStartupSeconds: 300

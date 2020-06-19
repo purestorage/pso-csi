@@ -32,7 +32,7 @@ To ensure your services stay robust, PSO self-heals – so you’re protected ag
 - #### Environments Supported*:
   - Refer to the README for the type of PSO installation required
 - #### Other software dependencies:
-  - Latest linux multipath software package for your operating system (Required)
+  - Latest linux multipath software package for your operating system (Required) [Note: Multipath on Amazon EKS](docs/eks-multipathd-fix.md)
   - Latest Filesystem utilities/drivers (XFS by default, Required)
   - Latest iSCSI initiator software for your operating system (Optional, required for iSCSI connectivity)
   - Latest NFS software package for your operating system (Optional, required for NFS connectivity)

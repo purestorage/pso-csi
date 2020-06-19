@@ -31,19 +31,19 @@ storagetopology:
 # provisioner. An example is shown below:
 # arrays:
 #   FlashArrays:
-#   - MgmtEndPoint: "1.2.3.4"
-#     APIToken: "a526a4c6-18b0-a8c9-1afa-3499293574bb"
-#     Labels:
-#   - MgmtEndPoint: "1.2.3.5"
-#     APIToken: "b526a4c6-18b0-a8c9-1afa-3499293574bb"
+#     - MgmtEndPoint: "1.2.3.4"
+#       APIToken: "a526a4c6-18b0-a8c9-1afa-3499293574bb"
+#       Labels:
+#     - MgmtEndPoint: "1.2.3.5"
+#       APIToken: "b526a4c6-18b0-a8c9-1afa-3499293574bb"
 #   FlashBlades:
-#   - MgmtEndPoint: "1.2.3.6"
-#     APIToken: "T-c4925090-c9bf-4033-8537-d24ee5669135"
-#     NfsEndPoint: "1.2.3.7"
-#     Labels:
-#   - MgmtEndPoint: "1.2.3.8"
-#     APIToken: "T-d4925090-c9bf-4033-8537-d24ee5669135"
-#     NfsEndPoint: "1.2.3.9"
+#     - MgmtEndPoint: "1.2.3.6"
+#       APIToken: "T-c4925090-c9bf-4033-8537-d24ee5669135"
+#       NfsEndPoint: "1.2.3.7"
+#       Labels:
+#     - MgmtEndPoint: "1.2.3.8"
+#       APIToken: "T-d4925090-c9bf-4033-8537-d24ee5669135"
+#       NfsEndPoint: "1.2.3.9"
 arrays:
   FlashArrays: []
   FlashBlades: []

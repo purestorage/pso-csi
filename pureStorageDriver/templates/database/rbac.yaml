@@ -76,7 +76,7 @@ rules:
     - serviceaccounts
     - roles
     - rolebindings
-  verbs: ["list"]
+  verbs: ["list", "watch"]
 
 # Updating of ServiceAccounts
 - apiGroups:

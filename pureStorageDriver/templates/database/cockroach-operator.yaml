@@ -31,6 +31,8 @@ spec:
               value: pso-db-runner
             - name: ROLE_BINDING_NAME
               value: pso-db-role
+            - name: SECRET_NAMES
+              value: pso-cockroach-node-certs,pso-cockroach-client-certs
             - name: WATCH_NAMESPACE
               valueFrom:
                 fieldRef:

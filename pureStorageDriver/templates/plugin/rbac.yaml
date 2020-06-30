@@ -70,6 +70,9 @@ rules:
   - apiGroups: [""]
     resources: ["pods", "nodes"]
     verbs: ["get", "watch", "list"]
+  - apiGroups: ["snapshot.storage.k8s.io"]
+    resources: ["volumesnapshotcontents/status"]
+    verbs: ["update"]
 
 ---
 # Attacher must be able to work with PVs, CSINodes and VolumeAttachments

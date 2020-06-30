@@ -101,12 +101,11 @@ spec:
         # This is the external provisioner sidecar
         - name: csi-provisioner
           {{- with .Values.images.csi.provisioner }}
-          image: {{ .name | default "quay.io/k8scsi/csi-provisioner" }}:v1.4.0
+          image: {{ .name | default "quay.io/k8scsi/csi-provisioner" }}:v1.6.0
           imagePullPolicy: {{ .pullPolicy }}
           {{- end }}
           args:
             - --csi-address=/csi/csi.sock
-            - --connection-timeout=15s
             - --feature-gates=Topology={{ .Values.storagetopology.enable }}
 {{- if and .Values.storagetopology.strictTopology .Values.storagetopology.enable}}
             - --strict-topology
@@ -117,12 +116,11 @@ spec:
 # Google Anthos (which is built on GKE) prohibits alpha snapshotters
         - name: csi-snapshotter
           {{- with .Values.images.csi.snapshotter }}
-          image: {{ .name | default "quay.io/k8scsi/csi-snapshotter" }}:v1.2.2
+          image: {{ .name | default "quay.io/k8scsi/csi-snapshotter" }}:v2.1.1
           imagePullPolicy: {{ .pullPolicy }}
           {{- end }}
           args:
             - "--csi-address=/csi/csi.sock"
-            - "--connection-timeout=15s"
             - "--leader-election=false"
           volumeMounts:
             - name: socket-dir

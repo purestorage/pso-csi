@@ -4,5 +4,5 @@ metadata:
    name: pure-snapshotclass
    annotations:
       snapshot.storage.kubernetes.io/is-default-class: "true"
-snapshotter: pure-csi
-reclaimPolicy: Delete
+driver: pure-csi
+deletionPolicy: Delete

@@ -6,6 +6,9 @@
 # clusterID is also used to identify the volumes used by the datastore, pso-db.
 # clusterID MUST BE UNIQUE for multiple k8s clusters running on top of the same storage arrays.
 # NOTE: in previous versions, this property was called "namespace.pure"
+# RESTRICTIONS: 
+#  max length: 22
+#  characters allowed: alphanumeric and underscores
 clusterID: REPLACE_CLUSTER_ID_WITH_A_UNIQUE_VALUE_FOR_YOUR_CLUSTER
 
 # support k8s or openshift

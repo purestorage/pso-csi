@@ -697,6 +697,7 @@
             "title": "The clusterID schema",
             "default": "",
             "maxLength": 22,
+            "pattern": "^[a-zA-Z0-9_]+$",
             "examples": [
                 "choose_your_own_ID"
             ]

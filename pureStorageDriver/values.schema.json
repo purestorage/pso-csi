@@ -1682,6 +1682,7 @@
                 "name": {
                     "$id": "#/properties/orchestrator/properties/name",
                     "type": "string",
+                    "enum": ["k8s", "openshift"],
                     "title": "The name schema",
                     "default": "",
                     "examples": [

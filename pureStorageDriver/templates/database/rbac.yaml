@@ -22,6 +22,11 @@ rules:
 - apiGroups:
   - ""
   resources:
+  - secrets/finalizers
+  verbs: ["update"]
+- apiGroups:
+  - ""
+  resources:
   - pods/exec
   verbs: ["create"]
 - apiGroups:
@@ -83,21 +88,21 @@ rules:
     - ""
   resources:
     - serviceaccounts
-  verbs: ["get", "update"]
+  verbs: ["get", "update", "delete"]
   resourceNames:
     - {{ .Values.clusterrolebinding.serviceAccount.name }}
 - apiGroups:
     - rbac.authorization.k8s.io
   resources:
     - roles
-  verbs: ["get", "update"]
+  verbs: ["get", "update", "delete"]
   resourceNames:
     - pso-db-runner
 - apiGroups:
     - rbac.authorization.k8s.io
   resources:
     - rolebindings
-  verbs: ["get", "update"]
+  verbs: ["get", "update", "delete"]
   resourceNames:
     - pso-db-role
 ---

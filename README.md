@@ -59,6 +59,22 @@ PSO can be used with any of the following hardware appliances and associated min
 ## Installation
 
 PSO can be deployed from the Helm chart. Looking for legacy FlexVolume driver and older version CSI driver? Check [here](https://github.com/purestorage/helm-charts).
+### Fresh install for new clusters
+
+Please make sure the following dependencies are already installed in your enviornment for all nodes within the cluster or simply run them to make sure all requirements are up-to-date.
+```
+    sudo apt-get update -y
+    sudo DEBIAN_FRONTEND=noninteractive UCF_FORCE_CONFFNEW=1 apt-get -o DPkg::Options::=--force-confnew install -y \
+        git \
+        default-jre \
+        multipath-tools \
+        open-iscsi \
+        nfs-common \
+        util-linux \
+        jq \
+        python \
+        ntp
+```
 
 ### Helm Chart
 

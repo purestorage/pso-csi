@@ -70,6 +70,9 @@ helm repo update
 helm search repo pureStorageDriver -l
 # for beta releases
 helm search repo pureStorageDriver -l --devel
+# Note: chart name (pureStorageDriver) is case-sensitive
+# Note: '--version' flag is required for helm to pickup beta releases, not required for the latest GA release
+helm install pure-storage-driver pure/pureStorageDriver --version <version> --namespace <namespace> -f <your_own_dir>/yourvalues.yaml
 ```
 
 Optional (offline installation): Download the helm chart
@@ -138,10 +141,10 @@ arrays:
   FlashBlades:
     - MgmtEndPoint: "1.2.3.6"
       APIToken: "T-c4925090-c9bf-4033-8537-d24ee5669135"
-      NfsEndPoint: "1.2.3.7"
+      NFSEndPoint: "1.2.3.7"
     - MgmtEndPoint: "1.2.3.8"
       APIToken: "T-d4925090-c9bf-4033-8537-d24ee5669135"
-      NfsEndPoint: "1.2.3.9"
+      NFSEndPoint: "1.2.3.9"
 ```
 
 ## Assigning Pods to Nodes

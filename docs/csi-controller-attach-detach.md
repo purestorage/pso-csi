@@ -126,3 +126,12 @@ nodeSelector: {
   "allow-pso": "true"
 }
 ```
+## Debugging
+### Pods stuck in "Pending" state
+If pods are stuck in a pending state, you've most likely either:
+* Specified an invalid node selector or affinity that doesn't exist on any nodes
+* Specified a node selector but those nodes have taints on them
+
+Please double-check that you've typed/copied everything correctly, that you're aware of all taints on your nodes, etc.
+If you want more debugging information, `kubectl describe pod <pending pod name>` will give more information into what
+is causing the scheduling error.

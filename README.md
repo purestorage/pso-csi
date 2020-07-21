@@ -37,6 +37,7 @@ To ensure your services stay robust, PSO self-heals – so you’re protected ag
   - Latest iSCSI initiator software for your operating system (Optional, required for iSCSI connectivity)
   - Latest NFS software package for your operating system (Optional, required for NFS connectivity)
   - Latest FC initiator software for your operating system (Optional, required for FC connectivity, *FC Supported on Bare-metal K8s installations only*)
+  - An NTP implementation (such as `ntpd` or `chronyd`) is installed and running on all Kubernetes cluster nodes.
 - #### FlashArray and FlashBlade:
   - The FlashArray and/or FlashBlade should be connected to the compute nodes using [Pure's best practices](https://support.purestorage.com/Solutions/Linux/Reference/Linux_Recommended_Settings)
 - #### FlashArray User Privilages
@@ -53,8 +54,9 @@ _* Please see release notes for details_
 ## Hardware Pre-Requisites
 
 PSO can be used with any of the following hardware appliances and associated minimum version of appliance code:
-  * Pure Storage FlashArray (minimum Purity code version 4.8)
-  * Pure Storage FlashBlade (minimum Purity version 2.2.0)
+  - Pure Storage FlashArray (minimum Purity code version 4.8)
+      - minimum Purity v5.3.0 required to support the Storage QoS featureset
+  - Pure Storage FlashBlade (minimum Purity version 2.2.0)
 
 ## Installation
 

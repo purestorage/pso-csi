@@ -17,7 +17,7 @@ This helm chart installs the Pure Service Orchestrator CSI plugin on a Kubernete
   - Ubuntu 18.04
 - #### Environments Supported*:
   - Kubernetes 1.13+
-    - NOTE: for Kubernetes 1.17, there is an [issue](https://github.com/kubernetes/kubernetes/issues/87852) using vxlan with Flannel or Calico 
+    - NOTE: for Kubernetes 1.17, there is an [issue](https://github.com/kubernetes/kubernetes/issues/87852) using vxlan with Flannel or Calico, the issue has been fixed after 18.5
   - Minimum Helm version required is 3.1.0.
   - Google Anthos 1.2.x, 1.3.x support the [stateless PSO CSI plugin](https://github.com/purestorage/helm-charts/tree/master/pure-csi) only
   - Docker Kuberenetes Service (DKS) - based on Docker EE 3.0 with Kubernetes 1.14.3
@@ -169,6 +169,8 @@ volumesnapshotclasses.snapshot.storage.k8s.io    2019-11-21T17:25:23Z
 volumesnapshotcontents.snapshot.storage.k8s.io   2019-11-21T17:25:23Z
 volumesnapshots.snapshot.storage.k8s.io          2019-11-21T17:25:23Z
 ```
+Note that PSO CSI has upgraded its sidecars to support BETA version snapshotter APIs. The snapshotter CRDs for Beta version APIs have been upgraded, make sure for 1.17 and later versions, apply release-2.0 CRDs as shown
+in the Deployment sectino in [this](https://kubernetes-csi.github.io/docs/snapshot-controller.html) page. In addition, Snapshot controller is also required for snapshotter BETA APIs, since this is a one per cluster installation, PSO CSI does not include the controller as part of the helm install, please be sure to install it separately before attempting the snapshot functionality. The default snapshotclass below has has been updated, if user is creating custom snapshotclasses, please make sure to use the BETA version of the APIs in the yaml file. 
 
 To install the VolumeSnapshotClass:
 
@@ -231,6 +233,8 @@ pso-csi-node-sx6kp                          3/3     Running   0          52s
 pso-db-0-0                                  1/1     Running   0          23s
 pso-db-1-0                                  1/1     Running   0          23s
 pso-db-2-0                                  1/1     Running   0          23s
+pso-db-3-0                                  1/1     Running   0          23s
+pso-db-4-0                                  1/1     Running   0          23s
 pso-db-cockroach-operator-5dbbc8855-sr2ks   1/1     Running   0          52s
 pso-db-deployer-56444bbb78-2tbsx            1/1     Running   0          52s
 ```
@@ -261,7 +265,7 @@ To see an overview of the status of the database, run:
 ```bash
 > kubectl get intrusion -n <namespace>
 NAME     STATUS   READY   RANGES   UNDER-REPLICATED   UNAVAILABLE   AS-OF
-pso-db   Live     3/3     31       0                  0             2020-03-05T00:40:38Z
+pso-db   Live     5/5     31       0                  0             2020-03-05T00:40:38Z
 ```
 
 ## Uninstall

@@ -7,6 +7,8 @@ This helm chart installs the Pure Service Orchestrator CSI plugin on a Kubernete
 1. Currently, there is **no upgrade supported** from previous versions that do not deploy the datastore.
 1. You **MUST** supply a unique `clusterID` in values.yaml. This was previously called `namespace.pure`. `clusterID` must be less than or equal to 22 characters in length. `clusterID` must be unique between **all** Kubernetes clusters using your Pure devices or naming conflicts will result.
 1. `helm uninstall` will perform the initial uninstallation, but some pods will continue to clean up post-installation. They should go away after cleanup is complete.
+1. Note that PSO CSI has upgraded its sidecars to support BETA version snapshotter APIs. The snapshotter CRDs for BETA version APIs have been upgraded, make sure for 1.17 and later versions, apply release-2.0 CRDs as shown
+in the Deployment section in [this](https://kubernetes-csi.github.io/docs/snapshot-controller.html) page. In addition, Snapshot controller is also required for snapshotter BETA APIs, since this is a one per cluster installation, PSO CSI does not include the controller as part of the helm install, please be sure to install it separately before attempting the snapshot functionality. The default snapshotclass has has been updated, if user is creating custom snapshotclasses, please make sure to use the BETA version of the APIs in the yaml file. 
 
 ## Platform and Software Dependencies
 - #### Operating Systems Supported*:
@@ -169,8 +171,6 @@ volumesnapshotclasses.snapshot.storage.k8s.io    2019-11-21T17:25:23Z
 volumesnapshotcontents.snapshot.storage.k8s.io   2019-11-21T17:25:23Z
 volumesnapshots.snapshot.storage.k8s.io          2019-11-21T17:25:23Z
 ```
-Note that PSO CSI has upgraded its sidecars to support BETA version snapshotter APIs. The snapshotter CRDs for Beta version APIs have been upgraded, make sure for 1.17 and later versions, apply release-2.0 CRDs as shown
-in the Deployment sectino in [this](https://kubernetes-csi.github.io/docs/snapshot-controller.html) page. In addition, Snapshot controller is also required for snapshotter BETA APIs, since this is a one per cluster installation, PSO CSI does not include the controller as part of the helm install, please be sure to install it separately before attempting the snapshot functionality. The default snapshotclass below has has been updated, if user is creating custom snapshotclasses, please make sure to use the BETA version of the APIs in the yaml file. 
 
 To install the VolumeSnapshotClass:
 
@@ -226,7 +226,7 @@ After installing, you should see pods like the following:
 ```bash
 > kubectl get pods -n <namespace>
 NAME                                        READY   STATUS    RESTARTS   AGE
-pso-csi-controller-0                        6/6     Running   0          52s
+pso-csi-controller-0                        5/5     Running   0          52s
 pso-csi-node-bdr4m                          3/3     Running   0          52s
 pso-csi-node-fr9c9                          3/3     Running   0          52s
 pso-csi-node-sx6kp                          3/3     Running   0          52s

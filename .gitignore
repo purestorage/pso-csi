@@ -4,3 +4,4 @@
 *.swo
 *~
 .idea
+.DS_Store

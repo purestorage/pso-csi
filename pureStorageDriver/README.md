@@ -226,7 +226,7 @@ After installing, you should see pods like the following:
 ```bash
 > kubectl get pods -n <namespace>
 NAME                                        READY   STATUS    RESTARTS   AGE
-pso-csi-controller-0                        5/5     Running   0          52s
+pso-csi-controller-0                        6/6     Running   0          52s
 pso-csi-node-bdr4m                          3/3     Running   0          52s
 pso-csi-node-fr9c9                          3/3     Running   0          52s
 pso-csi-node-sx6kp                          3/3     Running   0          52s

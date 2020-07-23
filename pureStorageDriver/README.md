@@ -19,7 +19,7 @@ in the Deployment section in [this](https://kubernetes-csi.github.io/docs/snapsh
   - Ubuntu 18.04
 - #### Environments Supported*:
   - Kubernetes 1.13+
-    - NOTE: for Kubernetes 1.17, there is an [issue](https://github.com/kubernetes/kubernetes/issues/87852) using vxlan with Flannel or Calico, the issue has been fixed after 18.5
+    - NOTE: for Kubernetes 1.17, there is an [issue](https://github.com/kubernetes/kubernetes/issues/87852) using vxlan with Flannel or Calico, the issue has been fixed in 1.18.5 release.
   - Minimum Helm version required is 3.1.0.
   - Google Anthos 1.2.x, 1.3.x support the [stateless PSO CSI plugin](https://github.com/purestorage/helm-charts/tree/master/pure-csi) only
   - Docker Kuberenetes Service (DKS) - based on Docker EE 3.0 with Kubernetes 1.14.3

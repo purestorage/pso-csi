@@ -10,4 +10,4 @@ spec:
     requests:
       storage: 10Gi
   # Matches the name defined in deployment/storageclass.yaml
-  storageClassName: pure
+  storageClassName: pure-block

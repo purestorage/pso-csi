@@ -5,7 +5,7 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
-  storageClassName: pure
+  storageClassName: pure-block
   resources:
     requests:
       storage: 10Gi

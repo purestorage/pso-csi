@@ -1,48 +1,14 @@
-# pure-csi
+# pureStorageDriver
 
 This helm chart installs the Pure Service Orchestrator CSI plugin on a Kubernetes cluster.
 
 ## Important Notes
-1. Starting at version 6.0.0, PSO deploys a datastore replicated across the provided storage backends.
-1. Currently, there is **no upgrade supported** from previous versions that do not deploy the datastore.
-1. You **MUST** supply a unique `clusterID` in values.yaml. This was previously called `namespace.pure`. `clusterID` must be less than or equal to 22 characters in length. `clusterID` must be unique between **all** Kubernetes clusters using your Pure devices or naming conflicts will result.
-1. `helm uninstall` will perform the initial uninstallation, but some pods will continue to clean up post-installation. They should go away after cleanup is complete.
-
-## Platform and Software Dependencies
-- #### Operating Systems Supported*:
-  - CentOS 7
-  - CoreOS (Ladybug 1298.6.0 and above)
-  - RHEL 7
-  - Ubuntu 16.04
-  - Ubuntu 18.04
-- #### Environments Supported*:
-  - Kubernetes 1.13+
-    - NOTE: for Kubernetes 1.17, there is an [issue](https://github.com/kubernetes/kubernetes/issues/87852) using vxlan with Flannel or Calico 
-  - Minimum Helm version required is 3.1.0.
-  - Google Anthos 1.2.x, 1.3.x support the [stateless PSO CSI plugin](https://github.com/purestorage/helm-charts/tree/master/pure-csi) only
-  - Docker Kuberenetes Service (DKS) - based on Docker EE 3.0 with Kubernetes 1.14.3
-  - Platform9 Managed Kubernetes (PMK) - Privileged mode only
-- #### Other software dependencies:
-  - Latest linux multipath software package for your operating system (Required)
-  - Latest Filesystem utilities/drivers (XFS by default, Required)
-  - Latest iSCSI initiator software for your operating system (Optional, required for iSCSI connectivity)
-  - Latest NFS software package for your operating system (Optional, required for NFS connectivity)
-  - Latest FC initiator software for your operating system (Optional, required for FC connectivity, *FC Supported on Bare-metal K8s installations only*)
-- #### FlashArray and FlashBlade:
-  - The FlashArray and/or FlashBlade should be connected to the compute nodes using [Pure's best practices](https://support.purestorage.com/Solutions/Linux/Reference/Linux_Recommended_Settings)
-
-_* Please see release notes for details_
-
-## Additional configuration for Kubernetes 1.13 Only
-For details see the [CSI documentation](https://kubernetes-csi.github.io/docs/csi-driver-object.html). 
-In Kubernetes 1.12 and 1.13 CSI was alpha and is disabled by default. To enable the use of a CSI driver on these versions, do the following:
-
-1. Ensure the feature gate is enabled via the following Kubernetes feature flag: ```--feature-gates=CSIDriverRegistry=true```
-2. Either ensure the CSIDriver CRD is installed cluster with the following command:
-
-```bash
-kubectl create -f https://raw.githubusercontent.com/kubernetes/csi-api/master/pkg/crd/manifests/csidriver.yaml
-```
+1. Pure Service Orchestrator deploys a CockroachDB datastore replicated across the provided storage backends. **Note: All licensing issues regarding this are covered by Pure Storage**
+2. Currently, there is **no upgrade supported** from previous versions that do not deploy the datastore.
+3. You **MUST** supply a unique `clusterID` in values.yaml. This was previously called `namespace.pure`. `clusterID` must be less than or equal to 22 characters in length. `clusterID` must be unique between **all** Kubernetes clusters using your Pure devices or naming conflicts will result.
+4. `helm uninstall` will perform the initial uninstallation, but some pods will continue to clean up post-installation. They should go away after cleanup is complete.
+5. Note that PSO CSI only supports the Beta version snapshotter APIs. The snapshotter CRDs for the Beta version APIs have been upgraded, therefore use only release-2.0 CRDs as detailed below.
+6. An implementation of the Network Time Protocol **MUST** be running on all nodes in the Kubernetes cluster.
 
 ## CSI Snapshot and Clone features for Kubernetes
 
@@ -60,31 +26,78 @@ More details on using Read-Write-Many (RWX) volumes with Kubernetes can be found
 
 Whilst there are some default `StorageClass` definitions provided by the PSO installation, refer [here](../docs/custom-storageclasses.md) for more details on these default storage classes and how to create your own custom storage classes that can be used by PSO.
 
-## How to install
+## Installation
 
-Add the Pure Storage helm repo
+### Configure NTP
+
+PSO CSI driver requires all compute node clocks to be within 500ms.
+
+Ensure that an implementation of NTP is installaed and running on all cluster members, even those running as virtual machines.
+
+Example implementations include `ntp`, `chronyd`, `kvm-clock` and `system-timed`
+
+### Install the plugin in a separate namespace (i.e. project)
+
+For security reason, it is strongly recommended to install the plugin in a separate namespace/project. **Do not use the `default` namespace.**
+
+Make sure the namespace exists, otherwise create it before installing the plugin.
+
+```bash
+kubectl create namespace <pso-namespace>
+```
+
+### Configure Helm
+
+Add the Pure Storage PSO helm repository to your helm installation.
 
 ```bash
 helm repo add pure https://purestorage.github.io/pso-csi
 helm repo update
 helm search repo pureStorageDriver -l
-# for beta releases
-helm search repo pureStorageDriver -l --devel
-# Note: chart name (pureStorageDriver) is case-sensitive
-# Note: '--version' flag is required for helm to pickup beta releases, not required for the latest GA release
-helm install pure-storage-driver pure/pureStorageDriver --version <version> --namespace <namespace> -f <your_own_dir>/yourvalues.yaml
 ```
 
-Optional (offline installation): Download the helm chart
+**Note: The chart name is case sensitive.**
+
+### Optional (for offline installations)
+
+Download the PSO helm chart
 
 ```bash
 git clone https://github.com/purestorage/pso-csi.git
 ```
 
-Create your own values.yaml and install the helm chart with it, and keep it. Easiest way is to copy
-the default [./values.yaml](./values.yaml).
+Create and customize your own `values.yaml` and install the helm chart using this, and keep the file for future use. The easiest way is to copy
+the default [./values.yaml](./values.yaml) provided in the helm chart.
+
+### Dry run the installation
+
+This will validate your `values.yaml` and check it is working correctly.
+
+```bash
+helm install pure-storage-driver pure/pureStorageDriver --version <version> --namespace <pso-namespace> -f <your_own_dir>/values.yaml --dry-run --debug
+```
+
+**Note: The `--version` flag is optional. Not providing this will install the latest GA version.**
+
+### Run the Install
+
+```bash
+helm install pure-storage-driver pure/pureStorageDriver --version <version> --namespace <pso-namespace> -f <your_own_dir>/values.yaml
+```
+
+**Note: The `--version` flag is optional. Not providing this will install the latest GA version.**
+
+The settings in your `values.yaml` overwrite the ones in `pureStorageDriver/values.yaml` file, but any specified with the `--set`
+option applied to the install command will take precedence. For example
+
+```bash
+helm install pure-storage-driver pure/pureStorageDriver --version <version> --namespace <pso-namespace> -f <your_own_dir>/values.yaml \
+            --set flasharray.sanType=fc \
+            --set clusterID=k8s_xxx
+```
 
 ### Configuration
+
 The following table lists the configurable parameters and their default values.
 
 | Parameter                                      | Description                                                                                                                                                | Default                                       |
@@ -128,6 +141,10 @@ The following table lists the configurable parameters and their default values.
 | `images.csi.livenessProbe.pullPolicy`          | Image pull policy                                                                                                                                          | `Always      `                                |
 | `images.csi.snapshotter.name`                  | The image name of the csi snapshotter                                                                                                                      | `quay.io/k8scsi/csi-snapshotter`              |
 | `images.csi.snapshotter.pullPolicy`            | Image pull policy                                                                                                                                          | `Always      `                                |
+| `images.database.cockroachOperator.name`       | The image name of the cockroach operator                                                                                                                   | `purestorage/cockroach-operator`              |
+| `images.database.cockroachOperator.pullPolicy` | Image pull policy                                                                                                                                          | `Always      `                                |
+| `images.database.deployer.name`                | The image name of the cockroach db deployer                                                                                                                | `purestorage/dbdeployer           `           |
+| `images.database.deployer.pullPolicy`          | Image pull policy                                                                                                                                          | `Always      `                                |
 
 *Examples:
 
@@ -147,15 +164,24 @@ arrays:
       NFSEndPoint: "1.2.3.9"
 ```
 
+### Dark-Site Installation
+
+The PSO pulls a number of images from the main `quay.io` repository. If your cluster is air-gapped you must ensure that the `images` parameters point to a local repository
+with local copies of the images. 
+
+Strict attention must be paid to the versions of image you provide locally as PSO only supports the exact combination of image versions listed in [`plugin`](templates/plugin) and [`database`](templates/database) YAML files. For more details please contact Pure Stoage Support.
+
 ## Assigning Pods to Nodes
 
 It is possible to make CSI Node Plugin and CSI Controller Plugin to run on specific nodes
 using `nodeSelector`, `toleration`, and `affinity`. You can set these config
 separately for Node Plugin and Controller Plugin using `nodeServer.nodeSelector`, and `controllerServer.nodeSelector` respectively.
 
-## Install the VolumeSnapshotClass
+## Install the PSO VolumeSnapshotClass
 
-Make sure you have related CRDs in your system before installing the PSO CSI driver:
+Make sure you have related CRDs in your system before installing the PSO CSI volume snapshot class. 
+
+For more details refer [here](../docs/csi-snapshot-clones.md)
 
 ```bash
 kubectl get crds
@@ -170,67 +196,26 @@ volumesnapshotcontents.snapshot.storage.k8s.io   2019-11-21T17:25:23Z
 volumesnapshots.snapshot.storage.k8s.io          2019-11-21T17:25:23Z
 ```
 
-To install the VolumeSnapshotClass:
+To install the PSO VolumeSnapshotClass:
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/pureStorageDriver/snapshotclass.yaml
 ```
 
-## Configure NTP
-PSO CSI driver requires all compute node clocks to be within 500ms.
-If `ntp` is installed, you can run the following on all compute nodes to ensure they are in sync:
-```bash
-sudo service ntp stop
-sudo ntpd -gq
-sudo service ntp start
-```
-
-## Install the plugin in a separate namespace (i.e. project)
-For security reason, it is strongly recommended to install the plugin in a separate namespace/project. Make sure the namespace is existing, otherwise create it before installing the plugin.
-
-```bash
-kubectl create namespace <namespace>
-```
-
-Customize your values.yaml including arrays info (replacement for pure.json), and then install with your values.yaml.
-
-Dry run the installation, and make sure your values.yaml is working correctly.
-
-**Note: chart name is case sensitive.**
-
-```bash
-helm install pure-storage-driver pure/pureStorageDriver --version <version> --namespace <namespace> -f <your_own_dir>/yourvalues.yaml --dry-run --debug
-```
-
-Run the Install
-
-**Note: '--version' flag is required for helm to pickup beta releases, not required for the latest GA release**
-
-```bash
-# Install the plugin 
-helm install pure-storage-driver pure/pureStorageDriver --version <version> --namespace <namespace> -f <your_own_dir>/yourvalues.yaml
-```
-
-The values in your values.yaml overwrite the ones in pureStorageDriver/values.yaml, but any specified with the `--set`
-option will take precedence.
-
-```bash
-helm install pure-storage-driver pure/pureStorageDriver --version <version> --namespace <namespace> -f <your_own_dir>/yourvalues.yaml \
-            --set flasharray.sanType=fc \
-            --set namespace.pure=k8s_xxx \
-```
-
 After installing, you should see pods like the following:
+
 ```bash
-> kubectl get pods -n <namespace>
+> kubectl get pods -n <pso-namespace>
 NAME                                        READY   STATUS    RESTARTS   AGE
-pso-csi-controller-0                        5/5     Running   0          52s
+pso-csi-controller-0                        6/6     Running   0          52s
 pso-csi-node-bdr4m                          3/3     Running   0          52s
 pso-csi-node-fr9c9                          3/3     Running   0          52s
 pso-csi-node-sx6kp                          3/3     Running   0          52s
 pso-db-0-0                                  1/1     Running   0          23s
 pso-db-1-0                                  1/1     Running   0          23s
 pso-db-2-0                                  1/1     Running   0          23s
+pso-db-3-0                                  1/1     Running   0          23s
+pso-db-4-0                                  1/1     Running   0          23s
 pso-db-cockroach-operator-5dbbc8855-sr2ks   1/1     Running   0          52s
 pso-db-deployer-56444bbb78-2tbsx            1/1     Running   0          52s
 ```
@@ -258,37 +243,33 @@ is removed, `pso-db-cockroach-operator` will create a "volume unpublish" job to 
 
 The CRD `pso.purestorage.com.intrusions` was created to define the database configuration.
 To see an overview of the status of the database, run:
+
 ```bash
 > kubectl get intrusion -n <namespace>
 NAME     STATUS   READY   RANGES   UNDER-REPLICATED   UNAVAILABLE   AS-OF
-pso-db   Live     3/3     31       0                  0             2020-03-05T00:40:38Z
+pso-db   Live     5/5     31       0                  0             2020-03-05T00:40:38Z
 ```
 
 ## Uninstall
 
-To uninstall, run `helm delete -n <namespace> pure-storage-driver`. Most resources will be immediately removed, but
+To uninstall, run `helm delete -n <pso-namespace> pure-storage-driver`. Most resources will be immediately removed, but
 the `cockroach-operator` pod will remain to do more cleanup. Once cleanup is complete, it will remove itself.
 
 ## Upgrading
+
 ### How to upgrade the driver version
 
-It is not recommended to upgrade by setting the `images.plugin.tag` in the image section of values.yaml. Use the version of
-the helm repository with the tag version required. This ensures the supporting changes are present in the templates.
+**It is not recommended to upgrade by setting the `images.plugin.tag` in the image section of values.yaml. Use the version of
+the helm repository with the tag version required. This ensures the supporting changes are present in the templates.**
 
 ```bash
 # list the avaiable version of the plugin
 helm repo update
 helm search repo pureStorageDriver -l
-# For beta releases
-helm search repo pureStorageDriver -l --devel
 
 # select a target chart version to upgrade as
-helm upgrade pure-storage-driver pure/pureStorageDriver --namespace <namespace> -f <your_own_dir>/yourvalues.yaml --version <target chart version>
+helm upgrade pure-storage-driver pure/pureStorageDriver --namespace <pso-namespace> -f <your_own_dir>/values.yaml --version <target chart version>
 ```
-
-## How to upgrade from the flexvolume to CSI
-
-Upgrade from flexvolume to CSI is not currently supported and is being considered for an upcoming release.
 
 ## Release Notes
 

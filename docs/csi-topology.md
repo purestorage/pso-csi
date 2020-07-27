@@ -6,15 +6,6 @@ The Pure Service Orchestrator Kubernetes CSI driver includes support for storage
 For example, in multi-zone clusters, volumes will get provisioned in an appropriate zone that can run your pod, allowing you to quickly deploy and scale your stateful workloads to provide high availability and better fault tolerance.
 
 It also allows topology to be further specified or constrained for both pre-provisioned and dynamically provisioned PersistentVolumes (PV) so that the Kubernetes scheduler can correctly place a Pod using such a volume to an appropriate node.
-  
-
-## Dependencies
-
-The following dependencies must be true before the storage topology functionality can be used:
-
-* Kubernetes already running, deployed, configured, etc
-* PSO correctly installed and using [Pure CSI Driver v5.1.0](https://github.com/purestorage/helm-charts/releases/tag/5.1.0)+.
-* Ensure you have Kubernetes 1.13+ installed, if you are using a version less than 1.13, please make sure the `VolumeScheduling` feature gate is enabled
 
 ## Caveats
 * Please make sure your backend arrays support all topologies defined in your system. Failing to do so will potentially leak volumes.

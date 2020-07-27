@@ -5,11 +5,6 @@
 - Disaster recovery from backup volume
 - Containerize legacy application
 
-## Dependencies
-* Kubernetes v1.15+ (Lower version might work however not tested)
-* Pure CSI driver 5.2.0+
-* Support both FA (raw block and file system) and FB (file system)
-
 ## Import Guidance
 The beauty of volume import feature is that there are no changes or additional annotations to persistent volume objects.  Take the scenario of migrating volumes from one Kubernetes cluster to another cluster: users can export persistent volume objects (and persistent volume claim objects) from the old cluster and deploy to a new Kubernetes cluster, with no additional changes.
 

@@ -20,14 +20,6 @@ The following prerequisites must be true to ensure the function can work properl
 
 Any PVC creted using a StorageClass where the `parameters.backend=block` will only be resized upon a (re)start of the pod bound to the PVC. 
 
-## Dependencies
-
-* Kubernetes already running, deployed, configured, etc.
-* Kubernetes supports CSI Volume Expansion as beta since 1.16 and GA since Kubernetes 1.19,
-  ensure you have Kubernetes 1.17+ (required by PSO  6.0+) installed.
-  [More Info](https://kubernetes-csi.github.io/docs/volume-expansion.html)
-* PSO 6.0+ is correctly installed.
-
 ## Example usages
 
 PSO CSI driver supports `ONLINE` volume expansion capability, i.e. expanding an in-use PersistentVolumeClaim.

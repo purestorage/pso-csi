@@ -25,21 +25,28 @@ To ensure your services stay robust, PSO self-heals – so you’re protected ag
 
 - #### Operating Systems Supported*:
   - CentOS 7
-  - CoreOS (Ladybug 1298.6.0 and above)
+  - Red Hat CoreOS 4.4+
   - RHEL 7
   - Ubuntu 16.04
   - Ubuntu 18.04
+  - Ubuntu 20.04
 - #### Environments Supported*:
-  - Refer to the README for the type of PSO installation required
-- #### Other software dependencies:
+  - Kubernetes 1.17+
+    - [Note: For version less then 1.17.6/1.18.6 please refer to this issue using vxlan with Flannel or Calico](https://github.com/kubernetes/kubernetes/issues/87852)
+  - Minimum Helm version required is 3.1.0.
+  - Amazon EKS 1.17.6
+  - Platform9 Managed Kubernetes (PMK) 4.4+
+  - OpenShift 4.4+
+- #### Other software dependencies for all cluster nodes:
   - Latest linux multipath software package for your operating system (Required) [Note: Multipath on Amazon EKS](docs/eks-multipathd-fix.md)
   - Latest Filesystem utilities/drivers (XFS by default, Required)
   - Latest iSCSI initiator software for your operating system (Optional, required for iSCSI connectivity)
   - Latest NFS software package for your operating system (Optional, required for NFS connectivity)
   - Latest FC initiator software for your operating system (Optional, required for FC connectivity, *FC Supported on Bare-metal K8s installations only*)
   - An NTP implementation (such as `ntpd` or `chronyd`) is installed and running on all Kubernetes cluster nodes.
+  - File system utilities required to support `GetNodeVolumeStats` functionality.
 - #### FlashArray and FlashBlade:
-  - The FlashArray and/or FlashBlade should be connected to the compute nodes using [Pure's best practices](https://support.purestorage.com/Solutions/Linux/Reference/Linux_Recommended_Settings)
+  - The FlashArray and/or FlashBlade should be connected to the worker nodes using [Pure's best practices](https://support.purestorage.com/Solutions/Linux/Reference/Linux_Recommended_Settings)
 - #### FlashArray User Privilages
   - It is recommend to use a specific FlashArray user, and associated API token, for PSO access control to enable easier array auditing.
   - The PSO user can be local or based on a Directory Service controlled account (assuming DS is configured on the array).
@@ -60,30 +67,24 @@ PSO can be used with any of the following hardware appliances and associated min
 
 ## Installation
 
-PSO can be deployed from the Helm chart. Looking for legacy FlexVolume driver and older version CSI driver? Check [here](https://github.com/purestorage/helm-charts).
+PSO is deployed using Helm chart. Looking for the old PSO 5.x version? Check [here](https://github.com/purestorage/helm-charts).
 
-### Helm Chart
+### Helm
 
-**pureStorageDriver** deploys PSO CSI plugin on your Kubernetes cluster.
+If your Kubernetes deployment does not include Helm3 by default, then refer to the [Helm Installation](https://helm.sh/docs/intro/install/) documentation.
 
-#### Helm Setup
+#### PSO Helm Chart
 
-Install Helm by following the official documents:
-1. For Kubernetes<br/>
-https://docs.helm.sh/using_helm#install-helm
+The **pureStorageDriver** helm chart deploys PSO CSI plugin on your Kubernetes cluster.
 
-2. For OpenShift<br/>
-**In OpenShift 3.11 the Red Hat preferred installation method is using an Operator. Follow the instructions in the [PSO operator directory](./operator/README.md).**
-
-
-Refer to the [csi-plugin README](./pureStorageDriver/README.md) for further installation steps.
+Refer to the [pureStorageDriver README](./pureStorageDriver/README.md) for the full installation process.
 
 ## PSO on the Internet
 
 [Checkout a list of some blogs related to Pure Service Orchestrator](./docs/blog_posts.md)
 
 ## Contributing
-We welcome contributions. The PSO Helm Charts project is under [Apache 2.0 license](https://github.com/purestorage/pso-csi/blob/master/LICENSE). We accept contributions via GitHub pull requests.
+The PSO Helm Charts project is issued under the [Apache 2.0 license](https://github.com/purestorage/pso-csi/blob/master/LICENSE). We accept contributions via GitHub pull requests.
 
 ## Report a Bug
 For filing bugs, suggesting improvements, or requesting new features, please open an [issue](https://github.com/purestorage/pso-csi/issues).

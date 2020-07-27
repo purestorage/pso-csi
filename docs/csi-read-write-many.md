@@ -3,8 +3,8 @@
 
 ## Introduction
 
-The Pure Service Orchestrator Kubernetes CSI driver includes support for Read-Write-Many (RWX) block volumes on FlashArray
-starting with version 5.1.0. This feature allows Kubernetes end-users to create persistent block volumes that may be mounted into
+The Pure Service Orchestrator Kubernetes CSI driver includes support for Read-Write-Many (RWX) block volumes on FlashArray.
+This feature allows Kubernetes end-users to create persistent block volumes that may be mounted into
 multiple pods simultaneously. Persistent volume claims created this way can be mounted exactly the same as a normal pod, only
 requiring that `accessModes` contains `ReadWriteMany`.
 

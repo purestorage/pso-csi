@@ -2,7 +2,7 @@
 
 ## Introduction
 Pure Service Orchestrator has three main components: the controller (1 per deployment), the nodes (1 per every
-Kubernetes node you are deploying storage on), and the database (cockroach-operator and db-deployer pods, plus 3 to 7
+Kubernetes node you are deploying storage on), and the database (cockroach-operator and db-deployer pods, plus 5 to 7
 pso-db pods). The controller and database orchestrators require REST access to the management endpoints of your Pure
 Storage devices. For security reasons, it may be desirable to restrict these pods to run only on specific nodes (such as
 master nodes) to limit API access.

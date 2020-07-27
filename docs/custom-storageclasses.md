@@ -1,7 +1,5 @@
 # Using StorageClasses with Pure Service Orchestrator
 
-***NOTE THAT THIS ONLY APPLIES TO THE CSI VERSION OF PSO***
-
 PSO creates persistent volumes within the federated storage pool of backend appliances defined using criteria defined in the `StorageClass` used to request the persistent volume.
 
 ## What is a `StorageClass`

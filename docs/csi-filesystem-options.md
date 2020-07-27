@@ -9,7 +9,7 @@ Users can customize the filesystem type (`FsType`) with create options (`CreateO
 For FlashBlade, users can customize NFS Export Rules (`ExportRules`) starting with version 6.0.0.
 
 The feature leverages Kubernetes `StorageClass` to carry the customized FS options to the underlying storage backend. 
-Before this feature, users could only set up these parameters via [configuration](../README.md) in the values.yaml file.
+Before this feature, users could only set up these parameters via [configuration](../README.md) in the `values.yaml` file.
 Then all persistent volumes used the same options, and the settings could not be changed after PSO had loaded.
 With this feature, users can customize the FS options for persistent volumes on-the-fly through various StorageClass settings to meet different application needs.
 
@@ -17,14 +17,12 @@ With this feature, users can customize the FS options for persistent volumes on-
 
 The following dependencies must be true before the customized filesystem options can be used:
 
-* Kubernetes 1.17+ already running, deployed, configured, etc.
-* PSO correctly installed and using [Pure CSI Driver v6.0.0](https://github.com/purestorage/pso-csi/releases/tag/6.0.0)+.
 * For FlashBlade, ensure you have **Purity 2.3.0**+ installed. You need REST API 1.6+ to support NFS 4.1.
 
 ##  FileSystem Options
 
 PSO leverages Kubernetes `StorageClass` to pass the customized FS options to the underlying storage backend.
-If the FS options are specified in the `StorageClass`, it will override the default values from the values.yaml.
+If the FS options are specified in the `StorageClass`, it will override the default values from the `values.yaml`.
 The default values will only apply when no FS options in the `StorageClass`.
 
 ### FsType
@@ -60,7 +58,7 @@ mountOptions:
 
 ### NFS Export Rules
 
-PSO allows users to set the `ExportRules` via `flashblade.exportRules` parameter in the values.yaml.
+PSO allows users to set the `ExportRules` via `flashblade.exportRules` parameter in the `values.yaml`.
 This will be the default value for all NFS volumes.
 The parameter will pass to the [configmap.yaml](../pureStorageDriver/templates/plugin/configmap.yaml).
 User can directly edit the configmap to dynamically override the default value without reload PSO:

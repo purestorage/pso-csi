@@ -2,20 +2,23 @@
 # Apply Storage Quality-of-Service (QoS) Control on PSO StorageClass
 
 ## Summary
+
 Pure Storage FlashArray Quality-of-Service (QoS) allows users to impose QoS limits on their persistent volumes created and managed by PSO on Kubernetes clusters. QoS limits are applied on a per volume basis - these are **not** cumulative for all volumes created using a specific StorageClass. Whenever throughput exceeds the limit specified, throttling occurs. Specifically, PSO enables users to control their volumes' bandwidth limit and/or IOPS limit. The two parameters are passed in through parameter fields in `StorageClasses` or `PersistentVolumes`. 
 
 This feature is only supported on Pure Storage FlashArray block storage.
 
 #### Usecases:
+
 1. New volume provisioning
 2. Cloning from existing volume
 3. Importing a volume to k8s
 
 ## Dependencies
-* Pure CSI driver 6.0.0+. **Estimated release date 7/2020.**
+
 * At least one FlashArray with Purity Version 5.3.0+ (REST API version 1.17+)
 
 ## General guidance
+
 For new volume provisioning:
 1. If the user does not own any FlashArray that supports QoS (5.3 and above), the volume will NOT be provisioned successfully. 
 2. If the user owns multiple devices, PSO will look for the FlashArray that supports QoS and provision the volume on that device. If multiple arrays support QoS, the existing algorithm is leveraged to determine the array to provision the volume. If storage topology is being used for provisioning, these rules will apply first before checks are made for QoS support.
@@ -26,12 +29,14 @@ For importing:
 1. Both `bandwidth_limit` and `iops_limit` parameters are passed in as properties under `volumeAttributes` in PVs. 
 
 ## Restrictions
+
 * Both parameters must be passed as string types, i.e., they need to have double quotation marks around them. See examples below.
 * If the iops limit is set, it must be between 100 and 100 million. 
 * If the bandwidth limit is set, it must be between 1 MB/s and 512 GB/s. Enter the size as a number (bytes) or number with a single character unit symbol. Valid unit symbols are K, M, G, representing KiB, MiB, and GiB, respectively, where "Ki" denotes 2^10, "Mi" denotes 2^20, and so on. If the unit symbol is not specified, the unit defaults to bytes and must be between 1048576 and 549755813888 and must be multiple of 512. 
 
 
 ## Example - new volume and cloning
+
 1. Create a new StorageClass
 
     Here is an example, but more examples can be found [here](../pure-csi/templates):
@@ -99,10 +104,13 @@ For importing:
     ```
     kubectl apply -f {PVC_yaml_file_name}
     ```
+
 ## Example - importing
+
 For full documentation of importing, please see [here](/docs/csi-volume-import.md), and examples [here](./examples/volumeimport).
 
 To impose QoS limits during importing, since the volume to be imported already exists, simply add the QoS parameters in the `PersistentVolume`under `VolumeAttributes`, other steps as shown in the importing doc remain the same. 
+
 ```yaml
 apiVersion: v1
 kind: PersistentVolume
@@ -138,7 +146,9 @@ spec:
   storageClassName: pure-file
   volumeMode: Filesystem
 ```
+
 The QoS only gets applied when the volume is being used by a pod. Again please make sure both parameters are passed in as strings. 
+
 ## Validation
 
 After a PVC is created it will be bound to a new FlashArray based Persistent Volume with QoS limits set. To verify the QoS limits are set correctly, please use the following steps:

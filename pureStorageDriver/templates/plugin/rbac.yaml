@@ -160,7 +160,7 @@ apiVersion: {{ template "rbac.apiVersion" . }}
 metadata:
   name: external-resizer-runner
   labels:
-{{ include "pure-csi.labels" . | indent 4}}
+{{ include "pure-csi.labels" . | indent 4 }}
 rules:
   # The following rule should be uncommented for plugins that require secrets
   # for provisioning.
@@ -186,7 +186,7 @@ apiVersion: {{ template "rbac.apiVersion" . }}
 metadata:
   name: csi-resizer-role
   labels:
-{{ include "pure-csi.labels" . | indent 4}}
+{{ include "pure-csi.labels" . | indent 4 }}
 subjects:
   - kind: ServiceAccount
     name: {{ .Values.clusterrolebinding.serviceAccount.name }}
@@ -195,3 +195,44 @@ roleRef:
   kind: ClusterRole
   name: external-resizer-runner
   apiGroup: rbac.authorization.k8s.io
+
+---
+# Updating of pso-scc SecurityContextConstraints (if OpenShift)
+{{ - if eq .Values.orchestrator.name "openshift" }}
+kind: ClusterRole
+apiVersion: {{ template "rbac.apiVersion" . }}
+metadata:
+  name: pso-scc-owner
+  labels:
+{{ include "pure-csi.labels" . | indent 4 }}
+rules:
+  - apiGroups:
+      - security.openshift.io
+    resources:
+      - securitycontextconstraints
+    verbs: ["get", "watch", "update", "patch", "delete"]
+    resourceNames:
+      - pso-scc
+  - apiGroups:
+      - security.openshift.io
+    resources:
+      - securitycontextconstraints
+    verbs: ["list"]
+
+---
+kind: ClusterRoleBinding
+apiVersion: {{ template "rbac.apiVersion" . }}
+metadata:
+  name: pso-scc-owner-role
+  labels:
+{{ include "pure-csi.labels" . | indent 4 }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ .Values.clusterrolebinding.serviceAccount.name }}
+    namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: ClusterRole
+  name: pso-scc-owner
+  apiGroup: rbac.authorization.k8s.io
+
+{{ - end }}

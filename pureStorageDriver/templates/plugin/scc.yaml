@@ -1,4 +1,4 @@
-{{ - if eq .Values.orchestrator.name "openshift" }}
+{{- if eq .Values.orchestrator.name "openshift" }}
 apiVersion: security.openshift.io/v1
 kind: SecurityContextConstraints
 metadata:
@@ -33,4 +33,4 @@ users:
 volumes:
   # Allow all volume types (we specifically use hostPath and secrets)
   - '*'
-{{ - end }}
+{{- end }}

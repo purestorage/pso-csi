@@ -33,10 +33,10 @@ spec:
               value: pso-db-role
             - name: SECRET_NAMES
               value: pso-cockroach-node-certs,pso-cockroach-client-certs
-{{ - if eq .Values.orchestrator.name "openshift" }}
+{{- if eq .Values.orchestrator.name "openshift" }}
             - name: SCC_NAME
               value: pso-scc
-{{ - end }}
+{{- end }}
             - name: WATCH_NAMESPACE
               valueFrom:
                 fieldRef:

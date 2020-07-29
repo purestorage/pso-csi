@@ -198,7 +198,7 @@ roleRef:
 
 ---
 # Updating of pso-scc SecurityContextConstraints (if OpenShift)
-{{ - if eq .Values.orchestrator.name "openshift" }}
+{{- if eq .Values.orchestrator.name "openshift" }}
 kind: ClusterRole
 apiVersion: {{ template "rbac.apiVersion" . }}
 metadata:
@@ -235,4 +235,4 @@ roleRef:
   name: pso-scc-owner
   apiGroup: rbac.authorization.k8s.io
 
-{{ - end }}
+{{- end }}

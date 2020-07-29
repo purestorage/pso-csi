@@ -21,6 +21,9 @@ spec:
           image: "{{ .Values.images.database.deployer.name }}:{{ .Values.images.database.deployer.tag }}"
           command:
           - dbdeployer
+          volumeMounts:
+          - name: configmap-volume
+            mountPath: /etc/config
           imagePullPolicy: "{{ .Values.images.database.deployer.pullPolicy }}"
           env:
             - name: WATCH_NAMESPACE
@@ -33,6 +36,10 @@ spec:
                   fieldPath: metadata.name
             - name: PURE_K8S_NAMESPACE
               value: {{ .Values.clusterID }}
+      volumes:
+      - name: configmap-volume
+        configMap:
+          name: pure-csi-container-configmap
       {{- with .Values.database.nodeSelector | default .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}

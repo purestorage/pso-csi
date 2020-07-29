@@ -89,10 +89,6 @@ spec:
              value: {{ .Values.flasharray.defaultFSType }}
            - name: PURE_DEFAULT_BLOCK_FS_OPT
              value: "{{ .Values.flasharray.defaultFSOpt }}"
-          volumes:
-            - name: configmap-volume
-              configMap:
-                name: pure-csi-container-configmap
 {{- $defaultMountOptString := "" }}
 # support either string or list for .Values.flasharray.defaultMountOpt
 {{- if kindIs "string" .Values.flasharray.defaultMountOpt }}
@@ -171,6 +167,9 @@ spec:
           - --v=0
 
       volumes:
+        - name: configmap-volume
+          configMap:
+            name: pure-csi-container-configmap
         - hostPath:
             path: /dev
           name: dev

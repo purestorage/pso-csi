@@ -89,9 +89,6 @@ spec:
              value: {{ .Values.flasharray.defaultFSType }}
            - name: PURE_DEFAULT_BLOCK_FS_OPT
              value: "{{ .Values.flasharray.defaultFSOpt }}"
-          volumeMounts:
-            - name: configmap-volume
-              mountPath: /etc/config
           volumes:
             - name: configmap-volume
               configMap:
@@ -142,6 +139,8 @@ spec:
             timeoutSeconds: 3
             periodSeconds: 2
           volumeMounts:
+            - name: configmap-volume
+              mountPath: /etc/config
             - mountPath: /dev
               name: dev
             - mountPath: /csi

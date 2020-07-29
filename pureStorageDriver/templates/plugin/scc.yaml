@@ -1,8 +1,10 @@
-{{- if eq .Values.orchestrator.name "openshift"}}
+{{ - if eq .Values.orchestrator.name "openshift" }}
 apiVersion: security.openshift.io/v1
 kind: SecurityContextConstraints
 metadata:
   name: pso-scc
+  annotations:
+    "helm.sh/resource-policy": keep  # THIS IS IMPORTANT: it's what allows the cockroach operator to clean itself up
 
 allowHostDirVolumePlugin: true
 allowHostIPC: false
@@ -31,4 +33,4 @@ users:
 volumes:
   # Allow all volume types (we specifically use hostPath and secrets)
   - '*'
-{{- end}}
+{{ - end }}

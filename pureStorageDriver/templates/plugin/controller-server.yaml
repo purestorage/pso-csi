@@ -76,6 +76,8 @@ spec:
             value: /cockroach/cockroach-certs
           - name: PURE_FLASHARRAY_SAN_TYPE
             value: {{ .Values.flasharray.sanType | upper }}
+          securityContext:
+            privileged: true
           ports:
           - containerPort: 9899
             name: healthz

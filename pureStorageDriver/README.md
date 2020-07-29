@@ -5,7 +5,7 @@ This helm chart installs the Pure Service Orchestrator CSI plugin on a Kubernete
 ## Important Notes
 1. Pure Service Orchestrator deploys a CockroachDB datastore replicated across the provided storage backends. **Note: All licensing issues regarding this are covered by Pure Storage**
 2. Currently, there is **no upgrade supported** from previous versions that do not deploy the datastore.
-3. You **MUST** supply a unique `clusterID` in values.yaml. This was previously called `namespace.pure`. `clusterID` must be less than or equal to 22 characters in length. `clusterID` must be unique between **all** Kubernetes clusters using your Pure devices or naming conflicts will result.
+3. You **MUST** supply a unique `clusterID` in values.yaml. This was previously called `namespace.pure`. `clusterID` must be less than or equal to 22 characters in length. `clusterID` must be unique between **all** Kubernetes clusters using your Pure devices or naming conflicts will result. **WARNING** Do not change `clusterID` once it has been set during the initial installation of PSO on a cluster.
 4. `helm uninstall` will perform the initial uninstallation, but some pods will continue to clean up post-installation. They should go away after cleanup is complete.
 5. Note that PSO CSI only supports the Beta version snapshotter APIs. The snapshotter CRDs for the Beta version APIs have been upgraded, therefore use only release-2.0 CRDs as detailed below.
 6. An implementation of the Network Time Protocol **MUST** be running on all nodes in the Kubernetes cluster.

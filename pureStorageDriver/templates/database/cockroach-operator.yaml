@@ -55,6 +55,8 @@ spec:
               value: {{ .Values.clusterID }}
             - name: PURE_FLASHARRAY_SAN_TYPE
               value: {{ .Values.flasharray.sanType }}
+          securityContext:
+            privileged: true
           volumeMounts:
             - name: certs
               mountPath: /cockroach/cockroach-certs

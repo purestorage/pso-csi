@@ -210,14 +210,14 @@ rules:
       - security.openshift.io
     resources:
       - securitycontextconstraints
-    verbs: ["get", "watch", "update", "patch", "delete"]
+    verbs: ["get", "update", "patch", "delete"]
     resourceNames:
       - pso-scc
   - apiGroups:
       - security.openshift.io
     resources:
       - securitycontextconstraints
-    verbs: ["list"]
+    verbs: ["list", "watch"]
 
 ---
 kind: ClusterRoleBinding

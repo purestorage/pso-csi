@@ -4,7 +4,7 @@ This helm chart installs the Pure Service Orchestrator CSI plugin on a Kubernete
 
 ## Important Notes
 1. **Please create a new values.yaml file for PSO 6.x!** The format of the values file has changed since PSO 5.x and it is imperative you account for these differences.
-2. Pure Service Orchestrator deploys a CockroachDB datastore replicated across the provided storage backends.
+2. Pure Service Orchestrator deploys a CockroachDB datastore replicated across the provided storage backends. More information on how the datastore works can be found [here](../docs/pso-datastore.md).
 3. Currently, there is **no upgrade supported** from previous versions that do not deploy the datastore (PSO 5.x and lower).
 4. You **MUST** supply a unique `clusterID` in values.yaml. This was previously called `namespace.pure`. `clusterID` must be less than or equal to 22 characters in length. `clusterID` must be unique between **all** Kubernetes clusters using your Pure devices or naming conflicts will result. **WARNING** Do not change `clusterID` once it has been set during the initial installation of PSO on a cluster.
 5. `helm uninstall` will perform the initial uninstallation, but some pods will continue to clean up post-installation. They should go away after cleanup is complete.

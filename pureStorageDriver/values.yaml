@@ -67,7 +67,7 @@ flashblade:
 images:
   plugin:
     name: purestorage/k8s
-    tag: 6.0.0-rc6
+    tag: 6.0.0-rc7
     pullPolicy: Always
   csi:
     provisioner:

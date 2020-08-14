@@ -102,10 +102,6 @@
                         "name": "quay.io/k8scsi/csi-attacher",
                         "pullPolicy": "Always"
                     },
-                    "clusterDriverRegistrar": {
-                        "name": "quay.io/k8scsi/csi-cluster-driver-registrar",
-                        "pullPolicy": "Always"
-                    },
                     "livenessProbe": {
                         "name": "quay.io/k8scsi/livenessprobe",
                         "pullPolicy": "Always"
@@ -1050,10 +1046,6 @@
                             "name": "quay.io/k8scsi/csi-attacher",
                             "pullPolicy": "Always"
                         },
-                        "clusterDriverRegistrar": {
-                            "name": "quay.io/k8scsi/csi-cluster-driver-registrar",
-                            "pullPolicy": "Always"
-                        },
                         "livenessProbe": {
                             "name": "quay.io/k8scsi/livenessprobe",
                             "pullPolicy": "Always"
@@ -1112,10 +1104,6 @@
                                 "name": "quay.io/k8scsi/csi-attacher",
                                 "pullPolicy": "Always"
                             },
-                            "clusterDriverRegistrar": {
-                                "name": "quay.io/k8scsi/csi-cluster-driver-registrar",
-                                "pullPolicy": "Always"
-                            },
                             "livenessProbe": {
                                 "name": "quay.io/k8scsi/livenessprobe",
                                 "pullPolicy": "Always"
@@ -1140,7 +1128,6 @@
                     ],
                     "required": [
                         "attacher",
-                        "clusterDriverRegistrar",
                         "livenessProbe",
                         "nodeDriverRegistrar",
                         "provisioner",
@@ -1177,44 +1164,6 @@
                                 },
                                 "pullPolicy": {
                                     "$id": "#/properties/images/properties/csi/properties/attacher/properties/pullPolicy",
-                                    "type": "string",
-                                    "title": "The pullPolicy schema",
-                                    "enum": ["Always", "IfNotPresent", "Never"],
-                                    "default": "",
-                                    "examples": [
-                                        "Always"
-                                    ]
-                                }
-                            }
-                        },
-                        "clusterDriverRegistrar": {
-                            "$id": "#/properties/images/properties/csi/properties/clusterDriverRegistrar",
-                            "type": "object",
-                            "title": "The clusterDriverRegistrar schema",
-                            "default": {},
-                            "examples": [
-                                {
-                                    "name": "quay.io/k8scsi/csi-cluster-driver-registrar",
-                                    "pullPolicy": "Always"
-                                }
-                            ],
-                            "required": [
-                                "name",
-                                "pullPolicy"
-                            ],
-                            "additionalProperties": true,
-                            "properties": {
-                                "name": {
-                                    "$id": "#/properties/images/properties/csi/properties/clusterDriverRegistrar/properties/name",
-                                    "type": "string",
-                                    "title": "The name schema",
-                                    "default": "",
-                                    "examples": [
-                                        "quay.io/k8scsi/csi-cluster-driver-registrar"
-                                    ]
-                                },
-                                "pullPolicy": {
-                                    "$id": "#/properties/images/properties/csi/properties/clusterDriverRegistrar/properties/pullPolicy",
                                     "type": "string",
                                     "title": "The pullPolicy schema",
                                     "enum": ["Always", "IfNotPresent", "Never"],

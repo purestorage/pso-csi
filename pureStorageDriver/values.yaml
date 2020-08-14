@@ -82,9 +82,6 @@ images:
     resizer:
       name: quay.io/k8scsi/csi-resizer
       pullPolicy: Always
-    clusterDriverRegistrar:
-      name: quay.io/k8scsi/csi-cluster-driver-registrar
-      pullPolicy: Always
     nodeDriverRegistrar:
       name: quay.io/k8scsi/csi-node-driver-registrar
       pullPolicy: Always

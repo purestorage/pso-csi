@@ -8,6 +8,8 @@
 
 # Pure Service Orchestrator (PSO) CSI Driver
 
+<img src="./docs/images/pso_logo.png" width="250">
+
 ## What is PSO?
 
 Pure Service Orchestrator (PSO) delivers storage-as-a-service for containers, giving developers the agility of public cloud with the reliability and security of on-premises infrastructure.

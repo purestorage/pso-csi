@@ -60,6 +60,11 @@ spec:
             - name: configmap-volume
               mountPath: /etc/config
           env:
+          - name: K8S_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
           - name: CSI_ENDPOINT
             value: unix:///csi/csi.sock
           - name: PURE_DISCOVERY_CONF

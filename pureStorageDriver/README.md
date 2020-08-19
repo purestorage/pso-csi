@@ -3,12 +3,18 @@
 This helm chart installs the Pure Service Orchestrator CSI plugin on a Kubernetes cluster.
 
 ## Important Notes
-1. Pure Service Orchestrator deploys a CockroachDB datastore replicated across the provided storage backends. **Note: All licensing issues regarding this are covered by Pure Storage**
-2. Currently, there is **no upgrade supported** from previous versions that do not deploy the datastore.
+1. Pure Service Orchestrator deploys a CockroachDB datastore replicated across the provided storage backends.
+2. Currently, there is **no upgrade supported** from previous versions that do not deploy the datastore (PSO 5.x and lower).
 3. You **MUST** supply a unique `clusterID` in values.yaml. This was previously called `namespace.pure`. `clusterID` must be less than or equal to 22 characters in length. `clusterID` must be unique between **all** Kubernetes clusters using your Pure devices or naming conflicts will result. **WARNING** Do not change `clusterID` once it has been set during the initial installation of PSO on a cluster.
 4. `helm uninstall` will perform the initial uninstallation, but some pods will continue to clean up post-installation. They should go away after cleanup is complete.
 5. Note that PSO CSI only supports the Beta version snapshotter APIs. The snapshotter CRDs for the Beta version APIs have been upgraded, therefore use only release-2.0 CRDs as detailed below.
-6. An implementation of the Network Time Protocol **MUST** be running on all nodes in the Kubernetes cluster.
+6. A Network Time Protocol implementation **MUST** be running on all nodes in the Kubernetes cluster.
+7. PSO 6.x requires at least 3+ nodes running the database, and 5+ nodes is recommended. They may run other workloads (they don't have to be dedicated), but for fault tolerance, the database will be spread across these nodes.
+
+## Using controller attach-detach or restricting plugin pods to nodes
+
+More details on setting up controller attach-detach, or on restricting various plugin components to specific pods such
+as database nodes, can be found [here](../docs/csi-controller-attach-detach.md).
 
 ## CSI Snapshot and Clone features for Kubernetes
 
@@ -20,7 +26,7 @@ More details on using customized filesystem options can be found [here](../docs/
 
 ## Using Read-Write-Many (RWX) volumes with Kubernetes
 
-More details on using Read-Write-Many (RWX) volumes with Kubernetes can be found [here](../docs/csi-read-write-many.md)
+More details on using Read-Write-Many (RWX) volumes with Kubernetes can be found [here](../docs/csi-read-write-many.md).
 
 ## PSO use of StorageClass
 
@@ -38,7 +44,7 @@ Example implementations include `ntp`, `chronyd`, `kvm-clock` and `system-timed`
 
 ### Install the plugin in a separate namespace (i.e. project)
 
-For security reason, it is strongly recommended to install the plugin in a separate namespace/project. **Do not use the `default` namespace.**
+For security reasons, it is strongly recommended to install the plugin in a separate namespace/project. **Do not use the `default` namespace.**
 
 Make sure the namespace exists, otherwise create it before installing the plugin.
 
@@ -58,7 +64,7 @@ helm search repo pureStorageDriver -l
 
 **Note: The chart name is case sensitive.**
 
-### Optional (for offline installations)
+#### For offline installations (optional)
 
 Download the PSO helm chart
 
@@ -96,7 +102,77 @@ helm install pure-storage-driver pure/pureStorageDriver --version <version> --na
             --set clusterID=k8s_xxx
 ```
 
-### Configuration
+### Post-Installation
+After installing, you should see pods like the following:
+
+```bash
+> kubectl get pods -n <pso-namespace>
+NAME                                        READY   STATUS    RESTARTS   AGE
+pso-csi-controller-0                        6/6     Running   0          52s
+pso-csi-node-bdr4m                          3/3     Running   0          52s
+pso-csi-node-fr9c9                          3/3     Running   0          52s
+pso-csi-node-sx6kp                          3/3     Running   0          52s
+pso-db-0-0                                  1/1     Running   0          23s
+pso-db-1-0                                  1/1     Running   0          23s
+pso-db-2-0                                  1/1     Running   0          23s
+pso-db-3-0                                  1/1     Running   0          23s
+pso-db-4-0                                  1/1     Running   0          23s
+pso-db-cockroach-operator-5dbbc8855-sr2ks   1/1     Running   0          52s
+pso-db-deployer-56444bbb78-2tbsx            1/1     Running   0          52s
+```
+
+#### pso-csi-controller
+
+The CSI controller server is responsible for provisioning volumes, creating snapshots, and any other user-initiated 
+action that requires a management API request to the storage arrays. Only one CSI controller should be running.
+
+#### pso-csi-node
+
+The CSI node server should be running on all compute nodes where volumes will be attached. The CSI node
+server does not make any management API requests to the storage arrays.
+
+#### pso-db
+
+The PSO database persists metadata for volumes and snapshots created by the PSO CSI driver. The data is replicated
+across the storage arrays for high availability. The `pso-db-deployer` and `pso-db-cockroach-operator` work in tandem
+to keep database volumes healthy, including moving them across backends, checking for database health, and recovering
+replicas if they go down.
+
+The CRD `pso.purestorage.com.intrusions` was created to define the database configuration.
+To see an overview of the status of the database, run:
+
+```bash
+> kubectl get intrusion -n <namespace>
+NAME     STATUS   READY   RANGES   UNDER-REPLICATED   UNAVAILABLE   AS-OF
+pso-db   Live     5/5     31       0                  0             2020-03-05T00:40:38Z
+```
+
+### Install the PSO VolumeSnapshotClass (optional, but required for snapshotting features)
+
+Make sure you have related CRDs in your system before installing the PSO CSI volume snapshot class. 
+
+For more details refer [here](../docs/csi-snapshot-clones.md)
+
+```bash
+kubectl get crds
+```
+
+You should see CRDs like this:
+
+```bash
+NAME                                             CREATED AT
+volumesnapshotclasses.snapshot.storage.k8s.io    2019-11-21T17:25:23Z
+volumesnapshotcontents.snapshot.storage.k8s.io   2019-11-21T17:25:23Z
+volumesnapshots.snapshot.storage.k8s.io          2019-11-21T17:25:23Z
+```
+
+To install the PSO VolumeSnapshotClass:
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/pureStorageDriver/snapshotclass.yaml
+```
+
+## Configuration
 
 The following table lists the configurable parameters and their default values.
 
@@ -129,7 +205,7 @@ The following table lists the configurable parameters and their default values.
 | `database.tolerations`                         | [Tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/#concepts)                                                            | `[]`                                          |
 | `database.affinity`                            | [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)                                                  | `{}`                                          |
 | `images.plugin.name`                           | The image name to pull from                                                                                                                                | `purestorage/k8s`                             |
-| `images.plugin.tag`                            | The image tag to pull                                                                                                                                      | `6.0.0-rc8`                                   |
+| `images.plugin.tag`                            | The image tag to pull                                                                                                                                      | `v6.0.0      `                                |
 | `images.plugin.pullPolicy`                     | Image pull policy                                                                                                                                          | `Always      `                                |
 | `images.csi.provisioner.name`                  | The image name of the csi-provisioner                                                                                                                      | `quay.io/k8scsi/csi-provisioner`              |
 | `images.csi.provisioner.pullPolicy`            | Image pull policy                                                                                                                                          | `Always      `                                |                                                                                                                                         | `Always      `                                |
@@ -145,8 +221,10 @@ The following table lists the configurable parameters and their default values.
 | `images.csi.livenessProbe.pullPolicy`          | Image pull policy                                                                                                                                          | `Always      `                                |
 | `images.database.cockroachOperator.name`       | The image name of the cockroach operator                                                                                                                   | `purestorage/cockroach-operator`              |
 | `images.database.cockroachOperator.pullPolicy` | Image pull policy                                                                                                                                          | `Always      `                                |
+| `images.database.cockroachOperator.tag`        | The image tag to pull                                                                                                                                      | `v1.0.0      `                                |
 | `images.database.deployer.name`                | The image name of the cockroach db deployer                                                                                                                | `purestorage/dbdeployer           `           |
 | `images.database.deployer.pullPolicy`          | Image pull policy                                                                                                                                          | `Always      `                                |
+| `images.database.cockroachOperator.tag`        | The image tag to pull                                                                                                                                      | `v1.0.0      `                                |
 
 *Examples:
 
@@ -166,91 +244,35 @@ arrays:
       NFSEndPoint: "1.2.3.9"
 ```
 
-### Dark-Site Installation
+## Dark-Site Installation
 
 The PSO pulls a number of images from the main `quay.io` repository. If your cluster is air-gapped you must ensure that the `images` parameters point to a local repository
 with local copies of the images. 
 
 Strict attention must be paid to the versions of image you provide locally as PSO only supports the exact combination of image versions listed in [`plugin`](templates/plugin) and [`database`](templates/database) YAML files. For more details please contact Pure Stoage Support.
 
+**Required images:**
+
+| Image                                    | Tag     |
+|------------------------------------------|---------|
+| quay.io/k8scsi/csi-provisioner           | v1.6.0  |
+| quay.io/k8scsi/csi-snapshotter           | v2.1.1  |
+| quay.io/k8scsi/csi-attacher              | v2.2.0  |
+| quay.io/k8scsi/csi-resizer               | v0.5.0  |
+| quay.io/k8scsi/livenessprobe             | v2.0.0  |
+| quay.io/k8scsi/csi-node-driver-registrar | v1.3.0  |
+| purestorage/cockroach-operator           | v1.0.0  |
+| purestorage/dbdeployer                   | v1.0.0  |
+| purestorage/k8s                          | v6.0.0  |
+| cockroachdb/cockroach                    | v19.2.3 |
+
 ## Assigning Pods to Nodes
 
-It is possible to make CSI Node Plugin and CSI Controller Plugin to run on specific nodes
+It is possible to make the CSI Node Plugin, CSI Controller Plugin, and PSO Database run only on specific nodes
 using `nodeSelector`, `toleration`, and `affinity`. You can set these config
 separately for Node Plugin and Controller Plugin using `nodeServer.nodeSelector`, and `controllerServer.nodeSelector` respectively.
 
-## Install the PSO VolumeSnapshotClass
-
-Make sure you have related CRDs in your system before installing the PSO CSI volume snapshot class. 
-
-For more details refer [here](../docs/csi-snapshot-clones.md)
-
-```bash
-kubectl get crds
-```
-
-You should see CRDs like this:
-
-```bash
-NAME                                             CREATED AT
-volumesnapshotclasses.snapshot.storage.k8s.io    2019-11-21T17:25:23Z
-volumesnapshotcontents.snapshot.storage.k8s.io   2019-11-21T17:25:23Z
-volumesnapshots.snapshot.storage.k8s.io          2019-11-21T17:25:23Z
-```
-
-To install the PSO VolumeSnapshotClass:
-
-```bash
-kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/pureStorageDriver/snapshotclass.yaml
-```
-
-After installing, you should see pods like the following:
-
-```bash
-> kubectl get pods -n <pso-namespace>
-NAME                                        READY   STATUS    RESTARTS   AGE
-pso-csi-controller-0                        6/6     Running   0          52s
-pso-csi-node-bdr4m                          3/3     Running   0          52s
-pso-csi-node-fr9c9                          3/3     Running   0          52s
-pso-csi-node-sx6kp                          3/3     Running   0          52s
-pso-db-0-0                                  1/1     Running   0          23s
-pso-db-1-0                                  1/1     Running   0          23s
-pso-db-2-0                                  1/1     Running   0          23s
-pso-db-3-0                                  1/1     Running   0          23s
-pso-db-4-0                                  1/1     Running   0          23s
-pso-db-cockroach-operator-5dbbc8855-sr2ks   1/1     Running   0          52s
-pso-db-deployer-56444bbb78-2tbsx            1/1     Running   0          52s
-```
-
-### pso-csi-controller
-
-The CSI controller server is responsible for provisioning volumes, creating snapshots, and any other user-initiated 
-action that requires a management API request to the storage arrays. Only one CSI controller should be running.
-
-### pso-csi-node
-
-The CSI node server should be running on all compute nodes where volumes will be attached. The CSI node
-server does not make any management API requests to the storage arrays.
-
-### pso-db
-
-The PSO database persists metadata for volumes and snapshots created by the PSO CSI driver. The data is replicated
-across the storage arrays for high availability.
-
-The database configuration is determined by `pso-db-deployer`. Next, `pso-db-cockroach-operator` takes that configuration
-and creates a StatefulSet for each database replica. The `pso-db-deployer` and `pso-db` replicas require management API
-requests to the storage arrays for provisioning and attaching volumes consumed by the database. The `pso-db` replicas
-use a privileged init container to attach and mount the database volume to the compute node. When the `pso-db` replica
-is removed, `pso-db-cockroach-operator` will create a "volume unpublish" job to unmount and detach the volume.
-
-The CRD `pso.purestorage.com.intrusions` was created to define the database configuration.
-To see an overview of the status of the database, run:
-
-```bash
-> kubectl get intrusion -n <namespace>
-NAME     STATUS   READY   RANGES   UNDER-REPLICATED   UNAVAILABLE   AS-OF
-pso-db   Live     5/5     31       0                  0             2020-03-05T00:40:38Z
-```
+More information can be found at the documentation for [controller attach-detach](../docs/csi-controller-attach-detach.md).
 
 ## Uninstall
 
@@ -258,8 +280,6 @@ To uninstall, run `helm delete -n <pso-namespace> pure-storage-driver`. Most res
 the `cockroach-operator` pod will remain to do more cleanup. Once cleanup is complete, it will remove itself.
 
 ## Upgrading
-
-### How to upgrade the driver version
 
 **It is not recommended to upgrade by setting the `images.plugin.tag` in the image section of values.yaml. Use the version of
 the helm repository with the tag version required. This ensures the supporting changes are present in the templates.**

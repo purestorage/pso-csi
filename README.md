@@ -1,14 +1,8 @@
-# Under Construction
-
-**!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!**
-
-**This is the new home for Pure Service Orchestrator. While we are putting the bolts and nuts together, please use our [official product page](https://github.com/purestorage/helm-charts).**
-
-**!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!**
-
 # Pure Service Orchestrator (PSO) CSI Driver
 
 <img src="./docs/images/pso_logo.png" width="250">
+
+_Using Google Anthos or OpenShift 3.11? Please use [PSO 5.x](https://github.com/purestorage/helm-charts) instead_
 
 ## What is PSO?
 
@@ -24,6 +18,8 @@ Uniting all your Pure FlashArray™ and FlashBlade™ arrays on a single shared 
 To ensure your services stay robust, PSO self-heals – so you’re protected against data corruption caused by issues such as node failure, array performance limits, and low disk space.
 
 ## Software Pre-Requisites
+**PLEASE READ THROUGH ALL OF THESE!**
+Some of these requirements have changed since PSO 5.x, and not following them _will_ result in a non-functional plugin installation.
 
 - #### Operating Systems Supported*:
   - CentOS 7
@@ -45,11 +41,12 @@ To ensure your services stay robust, PSO self-heals – so you’re protected ag
   - Latest iSCSI initiator software for your operating system (Optional, required for iSCSI connectivity)
   - Latest NFS software package for your operating system (Optional, required for NFS connectivity)
   - Latest FC initiator software for your operating system (Optional, required for FC connectivity, *FC Supported on Bare-metal K8s installations only*)
-  - An NTP implementation (such as `ntpd` or `chronyd`) is installed and running on all Kubernetes cluster nodes.
+  - **An NTP implementation (such as `ntpd` or `chronyd`) is installed and running on all Kubernetes cluster nodes**
+  - **Minimum 3+ nodes for database, recommended 5+** (Other workloads can use these nodes as well, they do not have to be dedicated)
   - File system utilities required to support `GetNodeVolumeStats` functionality.
 - #### FlashArray and FlashBlade:
   - The FlashArray and/or FlashBlade should be connected to the worker nodes using [Pure's best practices](https://support.purestorage.com/Solutions/Linux/Reference/Linux_Recommended_Settings)
-- #### FlashArray User Privilages
+- #### FlashArray User Privileges
   - It is recommend to use a specific FlashArray user, and associated API token, for PSO access control to enable easier array auditing.
   - The PSO user can be local or based on a Directory Service controlled account (assuming DS is configured on the array).
   - The PSO user requires a minimum role level of `storage_admin`.
@@ -67,15 +64,11 @@ PSO can be used with any of the following hardware appliances and associated min
       - minimum Purity v5.3.0 required to support the Storage QoS featureset
   - Pure Storage FlashBlade (minimum Purity version 2.2.0)
 
-## Installation
-
-PSO is deployed using Helm chart. Looking for the old PSO 5.x version? Check [here](https://github.com/purestorage/helm-charts).
-
-### Helm
+## Helm
 
 If your Kubernetes deployment does not include Helm3 by default, then refer to the [Helm Installation](https://helm.sh/docs/intro/install/) documentation.
 
-#### PSO Helm Chart
+## PSO Helm Chart
 
 The **pureStorageDriver** helm chart deploys PSO CSI plugin on your Kubernetes cluster.
 
@@ -83,7 +76,7 @@ Refer to the [pureStorageDriver README](./pureStorageDriver/README.md) for the f
 
 ## PSO on the Internet
 
-[Checkout a list of some blogs related to Pure Service Orchestrator](./docs/blog_posts.md)
+[Check out a list of some blogs related to Pure Service Orchestrator](./docs/blog_posts.md)
 
 ## Contributing
 The PSO Helm Charts project is issued under the [Apache 2.0 license](https://github.com/purestorage/pso-csi/blob/master/LICENSE). We accept contributions via GitHub pull requests.

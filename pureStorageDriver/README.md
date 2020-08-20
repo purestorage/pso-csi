@@ -246,8 +246,8 @@ arrays:
 
 ## Dark-Site Installation
 
-The PSO pulls a number of images from the main `quay.io` repository. If your cluster is air-gapped you must ensure that the `images` parameters point to a local repository
-with local copies of the images. 
+The PSO pulls a number of images from `quay.io` and Docker Hub repositories. If your cluster is air-gapped you must ensure that the `images` parameters point to a local repository
+with local copies of the images.
 
 Strict attention must be paid to the versions of image you provide locally as PSO only supports the exact combination of image versions listed in [`plugin`](templates/plugin) and [`database`](templates/database) YAML files. For more details please contact Pure Stoage Support.
 

@@ -10,6 +10,7 @@ This helm chart installs the Pure Service Orchestrator CSI plugin on a Kubernete
 5. Note that PSO CSI only supports the Beta version snapshotter APIs. The snapshotter CRDs for the Beta version APIs have been upgraded, therefore use only release-2.0 CRDs as detailed below.
 6. A Network Time Protocol implementation **MUST** be running on all nodes in the Kubernetes cluster.
 7. PSO 6.x requires at least 3+ nodes running the database, and 5+ nodes is recommended. They may run other workloads (they don't have to be dedicated), but for fault tolerance, the database will be spread across these nodes.
+8. **Please create a new values.yaml file for PSO 6.x!** The format of the values file has changed since PSO 5.x and it is imperative you account for these differences.
 
 ## Using controller attach-detach or restricting plugin pods to nodes
 

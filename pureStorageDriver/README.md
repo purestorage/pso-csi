@@ -37,7 +37,7 @@ Whilst there are some default `StorageClass` definitions provided by the PSO ins
 
 ### Configure NTP
 
-PSO CSI driver requires all compute node clocks to be within 500ms.
+The PSO CSI driver requires all compute node clocks to be within 500ms.
 
 Ensure that an implementation of NTP is installaed and running on all cluster members, even those running as virtual machines.
 
@@ -247,7 +247,7 @@ arrays:
 
 ## Dark-Site Installation
 
-The PSO pulls a number of images from `quay.io` and Docker Hub repositories. If your cluster is air-gapped you must ensure that the `images` parameters point to a local repository
+Pure Service Orchestrator pulls a number of images from `quay.io` and Docker Hub repositories. If your cluster is air-gapped you must ensure that the `images` parameters point to a local repository
 with local copies of the images.
 
 Strict attention must be paid to the versions of image you provide locally as PSO only supports the exact combination of image versions listed in [`plugin`](templates/plugin) and [`database`](templates/database) YAML files. For more details please contact Pure Stoage Support.

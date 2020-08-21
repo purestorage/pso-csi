@@ -70,9 +70,9 @@ If your Kubernetes deployment does not include Helm3 by default, then refer to t
 
 ## PSO Helm Chart
 
-The **pureStorageDriver** helm chart deploys PSO CSI plugin on your Kubernetes cluster.
+The **pure-pso** helm chart deploys PSO CSI plugin on your Kubernetes cluster.
 
-Refer to the [pureStorageDriver README](./pureStorageDriver/README.md) for the full installation process.
+Refer to the [pure-pso README](./pure-pso/README.md) for the full installation process.
 
 ## PSO on the Internet
 

@@ -1,4 +1,4 @@
-# pureStorageDriver
+# pure-pso
 
 This helm chart installs the Pure Service Orchestrator CSI plugin on a Kubernetes cluster.
 
@@ -61,7 +61,7 @@ Add the Pure Storage PSO helm repository to your helm installation.
 ```bash
 helm repo add pure https://purestorage.github.io/pso-csi
 helm repo update
-helm search repo pureStorageDriver -l
+helm search repo pure-pso -l
 ```
 
 **Note: The chart name is case sensitive.**
@@ -82,7 +82,7 @@ the default [./values.yaml](./values.yaml) provided in the helm chart.
 This will validate your `values.yaml` and check it is working correctly.
 
 ```bash
-helm install pure-storage-driver pure/pureStorageDriver --version <version> --namespace <pso-namespace> -f <your_own_dir>/values.yaml --dry-run --debug
+helm install pure-pso pure/pure-pso --version <version> --namespace <pso-namespace> -f <your_own_dir>/values.yaml --dry-run --debug
 ```
 
 **Note: The `--version` flag is optional. Not providing this will install the latest GA version.**
@@ -90,16 +90,16 @@ helm install pure-storage-driver pure/pureStorageDriver --version <version> --na
 ### Run the Install
 
 ```bash
-helm install pure-storage-driver pure/pureStorageDriver --version <version> --namespace <pso-namespace> -f <your_own_dir>/values.yaml
+helm install pure-pso pure/pure-pso --version <version> --namespace <pso-namespace> -f <your_own_dir>/values.yaml
 ```
 
 **Note: The `--version` flag is optional. Not providing this will install the latest GA version.**
 
-The settings in your `values.yaml` overwrite the ones in `pureStorageDriver/values.yaml` file, but any specified with the `--set`
+The settings in your `values.yaml` overwrite the ones in `pure-pso/values.yaml` file, but any specified with the `--set`
 option applied to the install command will take precedence. For example
 
 ```bash
-helm install pure-storage-driver pure/pureStorageDriver --version <version> --namespace <pso-namespace> -f <your_own_dir>/values.yaml \
+helm install pure-pso pure/pure-pso --version <version> --namespace <pso-namespace> -f <your_own_dir>/values.yaml \
             --set flasharray.sanType=fc \
             --set clusterID=k8s_xxx
 ```
@@ -171,7 +171,7 @@ volumesnapshots.snapshot.storage.k8s.io          2019-11-21T17:25:23Z
 To install the PSO VolumeSnapshotClass:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/pureStorageDriver/snapshotclass.yaml
+kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/pure-pso/snapshotclass.yaml
 ```
 
 ## Configuration
@@ -278,7 +278,7 @@ More information can be found at the documentation for [controller attach-detach
 
 ## Uninstall
 
-To uninstall, run `helm delete -n <pso-namespace> pure-storage-driver`. Most resources will be immediately removed, but
+To uninstall, run `helm delete -n <pso-namespace> pure-pso`. Most resources will be immediately removed, but
 the `cockroach-operator` pod will remain to do more cleanup. Once cleanup is complete, it will remove itself.
 
 ## Upgrading
@@ -289,10 +289,10 @@ the helm repository with the tag version required. This ensures the supporting c
 ```bash
 # list the avaiable version of the plugin
 helm repo update
-helm search repo pureStorageDriver -l
+helm search repo pure-pso -l
 
 # select a target chart version to upgrade as
-helm upgrade pure-storage-driver pure/pureStorageDriver --namespace <pso-namespace> -f <your_own_dir>/values.yaml --version <target chart version>
+helm upgrade pure-pso pure/pure-pso --namespace <pso-namespace> -f <your_own_dir>/values.yaml --version <target chart version>
 ```
 
 ## Release Notes

@@ -9,7 +9,7 @@ This helm chart installs the Pure Service Orchestrator CSI plugin on a Kubernete
 4. You **MUST** supply a unique `clusterID` in values.yaml. This was previously called `namespace.pure`. `clusterID` must be less than or equal to 22 characters in length. `clusterID` must be unique between **all** Kubernetes clusters using your Pure devices or naming conflicts will result. **WARNING** Do not change `clusterID` once it has been set during the initial installation of PSO on a cluster.
 5. `helm uninstall` will perform the initial uninstallation, but some pods will continue to clean up post-installation. They should go away after cleanup is complete.
 6. Note that PSO CSI only supports the Beta version snapshotter APIs. The snapshotter CRDs for the Beta version APIs have been upgraded, therefore use only release-2.0 CRDs as detailed below.
-7. A Network Time Protocol implementation **MUST** be running on all nodes in the Kubernetes cluster.
+7. **An NTP implementation (such as ntpd or chronyd) must be installed and running on all Kubernetes cluster nodes**
 8. PSO 6.x requires at least 3+ nodes running the database, and 5+ nodes is recommended. They may run other workloads (they don't have to be dedicated), but for fault tolerance, the database will be spread across these nodes. 
 9. **[For Kubernetes version less than 1.17.6/1.18.6 please refer to this link/issue when using vxlan with Flannel or Calico](https://github.com/kubernetes/kubernetes/issues/87852).** You may experience numerous `CrashLoopBackoff` problems if you encounter this issue.
 

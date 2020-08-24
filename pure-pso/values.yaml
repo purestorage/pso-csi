@@ -67,7 +67,7 @@ flashblade:
 images:
   plugin:
     name: purestorage/k8s
-    tag: v6.0.0
+    tag: v6.0.1
     pullPolicy: Always
   csi:
     provisioner:
@@ -91,11 +91,11 @@ images:
   database:
     deployer:
       name: purestorage/dbdeployer
-      tag: v1.0.0
+      tag: v1.0.1
       pullPolicy: Always
     cockroachOperator:
       name: purestorage/cockroach-operator
-      tag: v1.0.0
+      tag: v1.0.1
       pullPolicy: Always
 
 # specify the service account name for this app

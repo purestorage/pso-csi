@@ -3,7 +3,7 @@
 
 ## Introduction
 
-We allow PSO users to provide their version of values.yaml, then merging the provided key-value pairs with the default values.yaml under `pureStorageDriver` directory.
+We allow PSO users to provide their version of values.yaml, then merging the provided key-value pairs with the default values.yaml under `pure-pso` directory.
 One improvement that was identified from past experience is that by adding a validation before installation,
 some of the common errors users have encountered can be eliminated.
 For example, we rely on users to provide FlashArrays and FlashBlades properties, without validations,

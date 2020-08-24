@@ -94,8 +94,6 @@ metadata:
   name: pure-block-delay-binding
   labels:
     kubernetes.io/cluster-service: "true"
-    chart: pure-csi
-    release: "pure-storage-driver"
 provisioner: pure-csi 
 volumeBindingMode: WaitForFirstConsumer
 parameters:

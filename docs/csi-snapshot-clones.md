@@ -41,7 +41,7 @@ spec:
 To give it a try:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/pureStorageDriver/snapshotclass.yaml
+kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/pure-pso/snapshotclass.yaml
 kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/docs/examples/snapshot/pvc.yaml
 kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/docs/examples/snapshot/snapshot.yaml
 ```

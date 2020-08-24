@@ -60,7 +60,7 @@ mountOptions:
 
 PSO allows users to set the `ExportRules` via `flashblade.exportRules` parameter in the `values.yaml`.
 This will be the default value for all NFS volumes.
-The parameter will pass to the [configmap.yaml](../pureStorageDriver/templates/plugin/configmap.yaml).
+The parameter will pass to the [configmap.yaml](../pure-pso/templates/plugin/configmap.yaml).
 User can directly edit the configmap to dynamically override the default value without reload PSO:
 
 ```bash

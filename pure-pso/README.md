@@ -1,4 +1,4 @@
-# pureStorageDriver
+# pure-pso
 
 This helm chart installs the Pure Service Orchestrator CSI plugin on a Kubernetes cluster.
 
@@ -61,7 +61,7 @@ Add the Pure Storage PSO helm repository to your helm installation.
 ```bash
 helm repo add pure https://purestorage.github.io/pso-csi
 helm repo update
-helm search repo pureStorageDriver -l
+helm search repo pure-pso -l
 ```
 
 **Note: The chart name is case sensitive.**
@@ -82,7 +82,7 @@ the default [./values.yaml](./values.yaml) provided in the helm chart.
 This will validate your `values.yaml` and check it is working correctly.
 
 ```bash
-helm install pure-storage-driver pure/pureStorageDriver --version <version> --namespace <pso-namespace> -f <your_own_dir>/values.yaml --dry-run --debug
+helm install pure-pso pure/pure-pso --version <version> --namespace <pso-namespace> -f <your_own_dir>/values.yaml --dry-run --debug
 ```
 
 **Note: The `--version` flag is optional. Not providing this will install the latest GA version.**
@@ -90,16 +90,16 @@ helm install pure-storage-driver pure/pureStorageDriver --version <version> --na
 ### Run the Install
 
 ```bash
-helm install pure-storage-driver pure/pureStorageDriver --version <version> --namespace <pso-namespace> -f <your_own_dir>/values.yaml
+helm install pure-pso pure/pure-pso --version <version> --namespace <pso-namespace> -f <your_own_dir>/values.yaml
 ```
 
 **Note: The `--version` flag is optional. Not providing this will install the latest GA version.**
 
-The settings in your `values.yaml` overwrite the ones in `pureStorageDriver/values.yaml` file, but any specified with the `--set`
+The settings in your `values.yaml` overwrite the ones in `pure-pso/values.yaml` file, but any specified with the `--set`
 option applied to the install command will take precedence. For example
 
 ```bash
-helm install pure-storage-driver pure/pureStorageDriver --version <version> --namespace <pso-namespace> -f <your_own_dir>/values.yaml \
+helm install pure-pso pure/pure-pso --version <version> --namespace <pso-namespace> -f <your_own_dir>/values.yaml \
             --set flasharray.sanType=fc \
             --set clusterID=k8s_xxx
 ```
@@ -171,7 +171,7 @@ volumesnapshots.snapshot.storage.k8s.io          2019-11-21T17:25:23Z
 To install the PSO VolumeSnapshotClass:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/pureStorageDriver/snapshotclass.yaml
+kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/pure-pso/snapshotclass.yaml
 ```
 
 ## Configuration
@@ -207,7 +207,7 @@ The following table lists the configurable parameters and their default values.
 | `database.tolerations`                         | [Tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/#concepts)                                                            | `[]`                                          |
 | `database.affinity`                            | [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)                                                  | `{}`                                          |
 | `images.plugin.name`                           | The image name to pull from                                                                                                                                | `purestorage/k8s`                             |
-| `images.plugin.tag`                            | The image tag to pull                                                                                                                                      | `v6.0.0      `                                |
+| `images.plugin.tag`                            | The image tag to pull                                                                                                                                      | `v6.0.1      `                                |
 | `images.plugin.pullPolicy`                     | Image pull policy                                                                                                                                          | `Always      `                                |
 | `images.csi.provisioner.name`                  | The image name of the csi-provisioner                                                                                                                      | `quay.io/k8scsi/csi-provisioner`              |
 | `images.csi.provisioner.pullPolicy`            | Image pull policy                                                                                                                                          | `Always      `                                |                                                                                                                                         | `Always      `                                |
@@ -223,10 +223,10 @@ The following table lists the configurable parameters and their default values.
 | `images.csi.livenessProbe.pullPolicy`          | Image pull policy                                                                                                                                          | `Always      `                                |
 | `images.database.cockroachOperator.name`       | The image name of the cockroach operator                                                                                                                   | `purestorage/cockroach-operator`              |
 | `images.database.cockroachOperator.pullPolicy` | Image pull policy                                                                                                                                          | `Always      `                                |
-| `images.database.cockroachOperator.tag`        | The image tag to pull                                                                                                                                      | `v1.0.0      `                                |
+| `images.database.cockroachOperator.tag`        | The image tag to pull                                                                                                                                      | `v1.0.1      `                                |
 | `images.database.deployer.name`                | The image name of the cockroach db deployer                                                                                                                | `purestorage/dbdeployer           `           |
 | `images.database.deployer.pullPolicy`          | Image pull policy                                                                                                                                          | `Always      `                                |
-| `images.database.cockroachOperator.tag`        | The image tag to pull                                                                                                                                      | `v1.0.0      `                                |
+| `images.database.cockroachOperator.tag`        | The image tag to pull                                                                                                                                      | `v1.0.1      `                                |
 
 *Examples:
 
@@ -263,9 +263,9 @@ Strict attention must be paid to the versions of image you provide locally as PS
 | quay.io/k8scsi/csi-resizer               | v0.5.0  |
 | quay.io/k8scsi/livenessprobe             | v2.0.0  |
 | quay.io/k8scsi/csi-node-driver-registrar | v1.3.0  |
-| purestorage/cockroach-operator           | v1.0.0  |
-| purestorage/dbdeployer                   | v1.0.0  |
-| purestorage/k8s                          | v6.0.0  |
+| purestorage/cockroach-operator           | v1.0.1  |
+| purestorage/dbdeployer                   | v1.0.1  |
+| purestorage/k8s                          | v6.0.1  |
 | cockroachdb/cockroach                    | v19.2.3 |
 
 ## Assigning Pods to Nodes
@@ -278,7 +278,7 @@ More information can be found at the documentation for [controller attach-detach
 
 ## Uninstall
 
-To uninstall, run `helm delete -n <pso-namespace> pure-storage-driver`. Most resources will be immediately removed, but
+To uninstall, run `helm delete -n <pso-namespace> pure-pso`. Most resources will be immediately removed, but
 the `cockroach-operator` pod will remain to do more cleanup. Once cleanup is complete, it will remove itself.
 
 ## Upgrading
@@ -289,10 +289,10 @@ the helm repository with the tag version required. This ensures the supporting c
 ```bash
 # list the avaiable version of the plugin
 helm repo update
-helm search repo pureStorageDriver -l
+helm search repo pure-pso -l
 
 # select a target chart version to upgrade as
-helm upgrade pure-storage-driver pure/pureStorageDriver --namespace <pso-namespace> -f <your_own_dir>/values.yaml --version <target chart version>
+helm upgrade pure-pso pure/pure-pso --namespace <pso-namespace> -f <your_own_dir>/values.yaml --version <target chart version>
 ```
 
 ## Release Notes

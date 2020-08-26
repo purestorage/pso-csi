@@ -226,7 +226,9 @@ The following table lists the configurable parameters and their default values.
 | `images.database.cockroachOperator.tag`        | The image tag to pull                                                                                                                                      | `v1.0.1      `                                |
 | `images.database.deployer.name`                | The image name of the cockroach db deployer                                                                                                                | `purestorage/dbdeployer           `           |
 | `images.database.deployer.pullPolicy`          | Image pull policy                                                                                                                                          | `Always      `                                |
-| `images.database.cockroachOperator.tag`        | The image tag to pull                                                                                                                                      | `v1.0.1      `                                |
+| `images.database.deployer.tag`                 | The image tag to pull                                                                                                                                      | `v1.0.1      `                                |
+| `images.database.psctl.name`                   | The image name of PSCTL                                                                                                                                    | `purestorage/psctl                `           |
+| `images.database.psctl.tag`                    | The image tag to pull                                                                                                                                      | `v1.0.0      `                                |
 
 *Examples:
 
@@ -265,6 +267,7 @@ Strict attention must be paid to the versions of image you provide locally as PS
 | quay.io/k8scsi/csi-node-driver-registrar | v1.3.0  |
 | purestorage/cockroach-operator           | v1.0.1  |
 | purestorage/dbdeployer                   | v1.0.1  |
+| purestorage/psctl                        | v1.0.0  |
 | purestorage/k8s                          | v6.0.1  |
 | cockroachdb/cockroach                    | v19.2.3 |
 

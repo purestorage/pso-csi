@@ -55,6 +55,10 @@ spec:
               value: {{ .Values.clusterID }}
             - name: PURE_FLASHARRAY_SAN_TYPE
               value: {{ .Values.flasharray.sanType }}
+            - name: PSCTL_IMAGE
+              value: {{ .Values.images.database.psctl.name }}
+            - name: PSCTL_TAG
+              value: {{ .Values.images.database.psctl.tag }}
           securityContext:
             privileged: true
           volumeMounts:

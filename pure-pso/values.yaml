@@ -97,6 +97,9 @@ images:
       name: purestorage/cockroach-operator
       tag: v1.0.1
       pullPolicy: Always
+    psctl:
+      name: purestorage/psctl
+      tag: v1.0.0
 
 # specify the service account name for this app
 clusterrolebinding:

@@ -176,6 +176,6 @@ database:
   # This value is recommended to be larger than Kubernetes liveness probe setting time in our db pod, 
   # so K8S gets chance to restart the pod if it's unhealthy before we take it down.
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes
-  maxSuspectSeconds: 600
+  maxSuspectSeconds: 1800
   # The length of time a db node is allowed to be in Startup before being suspect
-  maxStartupSeconds: 300
+  maxStartupSeconds: 600

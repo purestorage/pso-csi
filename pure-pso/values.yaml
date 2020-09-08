@@ -100,6 +100,9 @@ images:
     psctl:
       name: purestorage/psctl
       tag: v1.0.0
+    cockroachdb:
+      name: cockroachdb/cockroach
+      tag: v19.2.3
 
 # specify the service account name for this app
 clusterrolebinding:

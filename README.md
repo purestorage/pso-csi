@@ -34,6 +34,7 @@ Some of these requirements have changed since PSO 5.x, and not following them _w
   - Minimum Helm version required is 3.1.0.
   - Amazon EKS 1.17.6
   - OpenShift 4.4+
+    - [Note: Please read and action these pre-requisites for OpenShift deployments](docs/openshift_mc.md)
 - #### Other software dependencies for all cluster nodes:
   - Latest linux multipath software package for your operating system (Required) [Note: Multipath on Amazon EKS](docs/eks-multipathd-fix.md)
   - Latest Filesystem utilities/drivers (XFS by default, Required)

@@ -59,6 +59,8 @@ spec:
               value: {{ .Values.images.database.psctl.name }}
             - name: PSCTL_TAG
               value: {{ .Values.images.database.psctl.tag }}
+            - name: COCKROACHDB_IMAGE
+              value: {{ .Values.images.database.cockroachdb.name }}:{{ .Values.images.database.cockroachdb.tag }}
           securityContext:
             privileged: true
           volumeMounts:

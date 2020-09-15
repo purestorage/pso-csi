@@ -1,5 +1,13 @@
 # Changelog
 
+## v6.0.2 (09/15/2020)
+
+#### Bugfixes:
+
+* Added values to specify `psctl` and `cockroach` image tags and names to enable dark sites.
+* Increased node replacement threshold to prevent unnecessary database node migrations.
+* Added OpenShift `MachineConfig` to enable Red Hat Container OS deployments.
+
 ## v6.0.1 (08/24/2020)
 
 #### Enhancements:

@@ -13,6 +13,8 @@ spec:
   ports:
     - name: dummy
       port: 12345
+    - name: csiport
+      port: 5555
 ---
 # Why does this need to be a statefulset?
 # Because we need only one copy of the controller running
@@ -57,6 +59,8 @@ spec:
               readOnly: true
             - name: certs
               mountPath: /cockroach/cockroach-certs
+            - name: csi-certs
+              mountPath: /csi-certs
             - name: configmap-volume
               mountPath: /etc/config
           env:
@@ -79,6 +83,12 @@ spec:
             value: {{ printf "pso-db-public.%s" .Release.Namespace }}
           - name: PURE_DATASTORE_CERTS_DIR
             value: /cockroach/cockroach-certs
+          - name: PURE_CSI_CERTS_DIR
+            value: /csi-certs
+          - name: PURE_CSI_CERT_FILE
+            value: node.crt
+          - name: PURE_CSI_KEY_FILE
+            value: node.key
           - name: PURE_FLASHARRAY_SAN_TYPE
             value: {{ .Values.flasharray.sanType | upper }}
           securityContext:
@@ -180,6 +190,10 @@ spec:
         - name: certs
           secret:
             secretName: pso-cockroach-client-certs
+            defaultMode: 0600
+        - name: csi-certs
+          secret:
+            secretName: pso-csi-server-certs
             defaultMode: 0600
         - name: configmap-volume
           configMap:

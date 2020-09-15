@@ -4,6 +4,10 @@ metadata:
   name: pure-csi
 spec:
   attachRequired: true
+  podInfoOnMount: true
+  volumeLifecycleModes:
+    - Persistent
+    - Ephemeral
 ---
 kind: DaemonSet
 apiVersion: {{ template "daemonset.apiVersion" . }}
@@ -85,6 +89,8 @@ spec:
              value: {{ .Values.flasharray.sanType | upper }}
            - name: PURE_K8S_NAMESPACE
              value: {{ .Values.clusterID }}
+           - name: PURE_CONTROLLER_ENDPOINT
+             value: {{ printf "pso-csi-controller.%s:5555" .Release.Namespace }}
            - name: PURE_DEFAULT_BLOCK_FS_TYPE
              value: {{ .Values.flasharray.defaultFSType }}
            - name: PURE_DEFAULT_BLOCK_FS_OPT
@@ -110,6 +116,10 @@ spec:
              value: {{ printf "pso-db-public.%s" .Release.Namespace }}
            - name: PURE_DATASTORE_CERTS_DIR
              value: /cockroach/cockroach-certs
+           - name: PURE_CSI_CERTS_DIR
+             value: /csi-certs
+           - name: PURE_CSI_CLIENT_CERT
+             value: ca.crt
           securityContext:
             privileged: true
           ports:
@@ -151,6 +161,8 @@ spec:
               name: csi-data-dir
             - mountPath: /cockroach/cockroach-certs
               name: certs
+            - mountPath: /csi-certs
+              name: csi-certs
 
         - name: liveness-probe
           volumeMounts:
@@ -199,6 +211,10 @@ spec:
             secretName: pso-cockroach-client-certs
             defaultMode: 0600
           name: certs
+        - secret:
+            secretName: pso-csi-client-certs
+            defaultMode: 0600
+          name: csi-certs
 {{- if .Values.nodeServer -}}
     {{- with .Values.nodeServer.nodeSelector | default .Values.nodeSelector }}
       nodeSelector:

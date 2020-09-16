@@ -6,9 +6,18 @@ This page provides link to some external blog posts that reference Pure Service 
 
 Blogs that are hosted outside of the official Pure Storage blogsite are the general musings and thoughts of people, who may be Pure employees, but these thoughts and musings are entirely their own.
 
+Please note that some links may relate to older versions of PSO.
+
 No support or approval by Pure Storage is given or implied.
 
-* [PSO Analytics: Visibility into how Kubernetes Applications use Storage](https://medium.com/@joshua_robinson/pso-analytics-visibility-into-how-kubernetes-applications-use-storage-e7bda52c3bf)
+* [How to deliver Persistent Storage to your OLCNE Kubernetes Cluster](https://ronekins.com/2020/09/14/how-to-deliver-persistent-storage-to-your-olcne-kubernetes-cluster/)
+* [QoS with Pure Service Orchestrator v6 to keep apps from running amok](https://blog.2vcps.io/2020/09/03/qos-with-pure-service-orchestrator-v6-to-keep-apps-from-running-amok/)
+* [Introducing Pure Service Orchestrator 6.0: The Stateful One](https://blog.purestorage.com/pure-service-orchestrator-6-0/)
+* [Pure Service Orchestrator 6 is now GA!](https://blog.2vcps.io/2020/08/20/pure-service-orchestrator-6-is-now-ga/)
+* [Kubernetes PVC mounted by External Devices](https://blog.2vcps.io/2020/08/03/kubernetes-pvc-mounted-by-external-devices/)
+* [Pure Storage Orchestrator and VMware Velero Sneak Peek](https://blog.purestorage.com/vmware-velero-and-pure-service-orchestrator)
+* [Flex is Dead ... Long Live CSI](https://blog.2vcps.io/2020/06/10/flex-is-dead-long-live-csi/)
+* [What's New with PSO 5.1 and 5.2](https://blog.2vcps.io/2020/06/03/whats-new-in-pso-5-1-and-5-2)
 * [Kubernetes Topology&nbsp;for StatefulSet Storage Redundancy with PSO](https://blog.2vcps.io/2020/04/18/kubernetes-topology-for-statefulset-storage-redundancy-with-pso/)
 * [Kasten: Raising the Bar for Kubernetes Backup and Mobility](https://blog.purestorage.com/kasten-kubernetes-backup-mobility/)
 * [PSO wrt DKS & UCP](https://blog.2vcps.io/2020/03/19/pso-wrt-dks-ucp/)

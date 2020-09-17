@@ -72,6 +72,9 @@ spec:
             - "-endpoint=$(CSI_ENDPOINT)"
             - "-nodeid=$(KUBE_NODE_NAME)"
             - "-servertype=node"
+            - "-certpath=$(PURE_CSI_CERTS_DIR)"
+            - "-certfilename=$(PURE_CSI_CERT_FILE)"
+            - "-rpcport=$(PURE_RPC_PORT)"
 {{- if eq .Values.app.debug true}}
             - "-debug"
 {{- end}}
@@ -89,8 +92,6 @@ spec:
              value: {{ .Values.flasharray.sanType | upper }}
            - name: PURE_K8S_NAMESPACE
              value: {{ .Values.clusterID }}
-           - name: PURE_CONTROLLER_ENDPOINT
-             value: {{ printf "pso-csi-controller.%s:5555" .Release.Namespace }}
            - name: PURE_DEFAULT_BLOCK_FS_TYPE
              value: {{ .Values.flasharray.defaultFSType }}
            - name: PURE_DEFAULT_BLOCK_FS_OPT
@@ -118,8 +119,11 @@ spec:
              value: /cockroach/cockroach-certs
            - name: PURE_CSI_CERTS_DIR
              value: /csi-certs
-           - name: PURE_CSI_CLIENT_CERT
-             value: ca.crt
+           - name: PURE_CSI_CERT_FILE
+             value: node.crt
+           # Port for remote machine to access RPC, certificate will be enabled by default.
+           - name: PURE_RPC_PORT
+             value: "5556"
           securityContext:
             privileged: true
           ports:

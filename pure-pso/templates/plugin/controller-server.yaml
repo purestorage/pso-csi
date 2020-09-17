@@ -14,7 +14,7 @@ spec:
     - name: dummy
       port: 12345
     - name: csiport
-      port: 5555
+      port: 5556
 ---
 # Why does this need to be a statefulset?
 # Because we need only one copy of the controller running
@@ -48,6 +48,10 @@ spec:
             - "-endpoint=$(CSI_ENDPOINT)"
             - "-nodeid=$(KUBE_NODE_NAME)"
             - "-servertype=controller"
+            - "-certpath=$(PURE_CSI_CERTS_DIR)"
+            - "-certfilename=$(PURE_CSI_CERT_FILE)"
+            - "-keyfilename=$(PURE_CSI_KEY_FILE)"
+            - "-rpcport=$(PURE_RPC_PORT)"
 {{- if eq .Values.app.debug true}}
             - "-debug"
 {{- end}}
@@ -89,6 +93,9 @@ spec:
             value: node.crt
           - name: PURE_CSI_KEY_FILE
             value: node.key
+          # Port for remote machine to access RPC, certificate will be enabled by default.
+          - name: PURE_RPC_PORT
+            value: "5556"
           - name: PURE_FLASHARRAY_SAN_TYPE
             value: {{ .Values.flasharray.sanType | upper }}
           securityContext:

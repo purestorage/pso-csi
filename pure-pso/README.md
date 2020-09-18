@@ -273,6 +273,8 @@ Strict attention must be paid to the versions of image you provide locally as PS
 | purestorage/k8s                          | v6.0.2  |
 | cockroachdb/cockroach                    | v19.2.3 |
 
+A [helper script](https://raw.githubusercontent.com/purestorage/pso-csi/master/mirror_pso_containers.sh) has been provided to assist with populating your local registry with the correct images.
+
 ## Assigning Pods to Nodes
 
 It is possible to make the CSI Node Plugin, CSI Controller Plugin, and PSO Database run only on specific nodes

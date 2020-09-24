@@ -13,6 +13,8 @@ spec:
   ports:
     - name: dummy
       port: 12345
+    - name: csiport
+      port: 5556
 ---
 # Why does this need to be a statefulset?
 # Because we need only one copy of the controller running
@@ -46,6 +48,10 @@ spec:
             - "-endpoint=$(CSI_ENDPOINT)"
             - "-nodeid=$(KUBE_NODE_NAME)"
             - "-servertype=controller"
+            - "-certpath=$(PURE_CSI_CERTS_DIR)"
+            - "-certfilename=$(PURE_CSI_CERT_FILE)"
+            - "-keyfilename=$(PURE_CSI_KEY_FILE)"
+            - "-rpcport=$(PURE_RPC_PORT)"
 {{- if eq .Values.app.debug true}}
             - "-debug"
 {{- end}}
@@ -57,6 +63,8 @@ spec:
               readOnly: true
             - name: certs
               mountPath: /cockroach/cockroach-certs
+            - name: csi-certs
+              mountPath: /csi-certs
             - name: configmap-volume
               mountPath: /etc/config
           env:
@@ -79,6 +87,15 @@ spec:
             value: {{ printf "pso-db-public.%s" .Release.Namespace }}
           - name: PURE_DATASTORE_CERTS_DIR
             value: /cockroach/cockroach-certs
+          - name: PURE_CSI_CERTS_DIR
+            value: /csi-certs
+          - name: PURE_CSI_CERT_FILE
+            value: rpc.crt
+          - name: PURE_CSI_KEY_FILE
+            value: rpc.key
+          # Port for remote machine to access RPC, certificate will be enabled by default.
+          - name: PURE_RPC_PORT
+            value: "5556"
           - name: PURE_FLASHARRAY_SAN_TYPE
             value: {{ .Values.flasharray.sanType | upper }}
           securityContext:
@@ -180,6 +197,10 @@ spec:
         - name: certs
           secret:
             secretName: pso-cockroach-client-certs
+            defaultMode: 0600
+        - name: csi-certs
+          secret:
+            secretName: pso-csi-server-certs
             defaultMode: 0600
         - name: configmap-volume
           configMap:

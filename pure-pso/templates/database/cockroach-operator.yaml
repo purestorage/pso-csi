@@ -32,7 +32,7 @@ spec:
             - name: ROLE_BINDING_NAME
               value: pso-db-role
             - name: SECRET_NAMES
-              value: pso-cockroach-node-certs,pso-cockroach-client-certs
+              value: pso-cockroach-node-certs,pso-cockroach-client-certs,pso-csi-server-certs,pso-csi-client-certs
 {{- if eq .Values.orchestrator.name "openshift" }}
             - name: SCC_NAME
               value: pso-scc

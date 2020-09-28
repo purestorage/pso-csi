@@ -1,0 +1,9 @@
+apiVersion: snapshot.storage.k8s.io/v1beta1
+kind: VolumeSnapshot
+metadata:
+  name: backend-snapshot
+spec:
+  source:
+    # TODO: Put your own snapshot content object name here.
+    # Make sure it's identical with the name in "backendcontent.yaml".
+    volumeSnapshotContentName: backend-content

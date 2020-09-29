@@ -32,7 +32,7 @@ More details on using Read-Write-Many (RWX) volumes with Kubernetes can be found
 
 ## PSO use of StorageClass
 
-Whilst there are some default `StorageClass` definitions provided by the PSO installation, refer [here](../docs/custom-storageclasses.md) for more details on these default storage classes and how to create your own custom storage classes that can be used by PSO.
+There are some `StorageClass` definitions provided by the PSO installation. Refer [here](../docs/custom-storageclasses.md) for more details on these storage classes and how to create your own custom storage classes that can be used by PSO.
 
 ## Installation
 

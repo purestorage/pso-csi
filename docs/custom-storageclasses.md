@@ -10,30 +10,9 @@ For more information on `StorageClass` go [here](https://kubernetes.io/docs/conc
 
 ## Provided Storage Classes
 
-As part of the installation of PSO, three storage classes are created which can be used to simply create persistent volumes on a file or a block backend device within the federated storage pool using all the default settings PSO has provided.
+As part of the installation of PSO, two storage classes are created which can be used to simply create persistent volumes on a file or a block backend device within the federated storage pool using all the default settings PSO has provided.
 
-Two of these are called `pure-file` and `pure-block` and, as their names suggest, they will create persistent volumes from the block providing or file providing backends within the federated pool of backend devices. At all times the load-balancing algorithm within PSO will ensure that the persistent volume is created on the most appropriate backend given the block or file requirement, even if there are multiple block or file providing appliances in the pool.
-
-The third `StorageClass` is simply called `pure`. This is provided primarily as a legacy class to provide backwards capability with early PSO releases. By default this storage class uses block storage appliances to provision block-based persistent volumes, however, this can be modified in the PSO configuration `values.yaml`.
-
-## Default `StorageClass`
-
-Within the PSO configuration file is a setting to enable the `pure` `StorageClass` as the default class for the Kubernetes cluster. To enable `pure` as the default class set the following parameter in `values.yaml`
-
-```yaml
-  storageClass:
-    isPureDefault: true
-```
-
-As mentioned above, the `pure` class uses block-based backend appliances to provision persistent volumes from. It is possible to change this default setting to use file-backed appliances from the pool.
-
-You may wish to do this if you only have FlashBlades in your PSO configuration, as these can only provide file-based persistent volumes.
-
-To change the backend type used by the `pure` `StorageClass` to file rather than block, change the following line within the values.yaml configuration file:
-
-```yaml
-  pureBackend: file
-```
+These are called `pure-file` and `pure-block` and, as their names suggest, they will create persistent volumes from the block providing or file providing backends within the federated pool of backend devices. At all times the load-balancing algorithm within PSO will ensure that the persistent volume is created on the most appropriate backend given the block or file requirement, even if there are multiple block or file providing appliances in the pool.
 
 ## Creating your own Storage Classes for PSO to use
 

@@ -12,7 +12,7 @@ These features use native Kubernetes APIs to call the feature-set in the underly
 
 ## Dependencies
 
-The following dependencies must be true before the snapshot and clone functionality can be used:
+**The following dependencies must be true before the snapshot and clone functionality can be used:**
 
 * For the snapshot feature PSO does not install the Snapshot CRDs by default through Helm. Please ensure the Snapshot CRDs and Controller by your Kubernetes deployment. If they aren't then refer to the [Kuberenetes CSI Snapshot documentation](https://kubernetes-csi.github.io/docs/snapshot-controller.html) for installation details.
 

@@ -117,6 +117,9 @@ Check the PVC conditions:
 
 ```bash
 # kubectl get pvc pure-claim -o yaml
+```
+
+```yaml
 ...
 status:
   conditions:

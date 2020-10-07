@@ -1,5 +1,14 @@
 # Changelog
 
+## v6.0.3 (10/07/2020)
+
+#### Enhancements:
+
+* Enabled support to import snapshots from Pure Flash Array(FA). This applies to snapshots that were created directly on the Flash Array outside of K8S
+* Added support for Platform9.
+* Improved handling of NFS versions and support for mounting volumes that were provisioned prioir to NFS v4.1 upgrade
+* Fixed race condition issue in cockrachdb operator that created more pods than needed
+
 ## v6.0.2 (09/15/2020)
 
 #### Bugfixes:

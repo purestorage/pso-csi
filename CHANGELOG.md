@@ -8,6 +8,7 @@
 * Added support for Platform9.
 * Improved handling of NFS versions and support for mounting volumes that were provisioned prioir to NFS v4.1 upgrade
 * Fixed race condition issue in cockrachdb operator that created more pods than needed
+* Fixed Issue90: Log level in values.yaml not honored
 
 ## v6.0.2 (09/15/2020)
 

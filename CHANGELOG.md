@@ -9,6 +9,7 @@
 * Improved handling of NFS versions and support for mounting volumes that were provisioned prioir to NFS v4.1 upgrade
 * Fixed race condition issue in cockrachdb operator that created more pods than needed
 * Fixed Issue90: Log level in values.yaml not honored
+* Support for REST API v2.0
 
 ## v6.0.2 (09/15/2020)
 

@@ -5,13 +5,14 @@ This helm chart installs the Pure Service Orchestrator CSI plugin on a Kubernete
 ## Important Notes
 1. **Please create a new values.yaml file for PSO 6.x!** The format of the values file has changed since PSO 5.x and it is imperative you account for these differences.
 2. Pure Service Orchestrator deploys a CockroachDB datastore replicated across the provided storage backends. More information on how the datastore works can be found [here](../docs/pso-datastore.md).
-3. Currently, there is **no upgrade supported** from previous versions that do not deploy the datastore (PSO 5.x and lower).
-4. You **MUST** supply a unique `clusterID` in values.yaml. This was previously called `namespace.pure`. `clusterID` must be less than or equal to 22 characters in length. `clusterID` must be unique between **all** Kubernetes clusters using your Pure devices or naming conflicts will result. **WARNING** Do not change `clusterID` once it has been set during the initial installation of PSO on a cluster.
-5. `helm uninstall` will perform the initial uninstallation, but some pods will continue to clean up post-installation. They should go away after cleanup is complete.
-6. Note that PSO CSI only supports the Beta version snapshotter APIs. The snapshotter CRDs for the Beta version APIs have been upgraded, therefore use only release-2.0 CRDs as detailed below.
-7. **An NTP implementation (such as ntpd or chronyd) must be installed and running on all Kubernetes cluster nodes**
-8. PSO 6.x requires at least 3+ nodes running the database, and 5+ nodes is recommended. They may run other workloads (they don't have to be dedicated), but for fault tolerance, the database will be spread across these nodes. 
-9. **[For Kubernetes version less than 1.17.6/1.18.6 please refer to this link/issue when using vxlan with Flannel or Calico](https://github.com/kubernetes/kubernetes/issues/87852).** You may experience numerous `CrashLoopBackoff` problems if you encounter this issue.
+3. By default, PSO sets CockroachDB datastore to consume 50% of memory per node, which is recommended by CockroachDB. However, you can use [database.resources](https://github.com/purestorage/pso-csi/blob/master/pure-pso/values.yaml#L173-L176) in the `values.yaml` to constrain the CPU and memory usage.
+4. Currently, there is **no upgrade supported** from previous versions that do not deploy the datastore (PSO 5.x and lower).
+5. You **MUST** supply a unique `clusterID` in values.yaml. This was previously called `namespace.pure`. `clusterID` must be less than or equal to 22 characters in length. `clusterID` must be unique between **all** Kubernetes clusters using your Pure devices or naming conflicts will result. **WARNING** Do not change `clusterID` once it has been set during the initial installation of PSO on a cluster.
+6. `helm uninstall` will perform the initial uninstallation, but some pods will continue to clean up post-installation. They should go away after cleanup is complete.
+7. Note that PSO CSI only supports the Beta version snapshotter APIs. The snapshotter CRDs for the Beta version APIs have been upgraded, therefore use only release-2.0 CRDs as detailed below.
+8. **An NTP implementation (such as ntpd or chronyd) must be installed and running on all Kubernetes cluster nodes**
+9. PSO 6.x requires at least 3+ nodes running the database, and 5+ nodes is recommended. They may run other workloads (they don't have to be dedicated), but for fault tolerance, the database will be spread across these nodes. 
+10. **[For Kubernetes version less than 1.17.6/1.18.6 please refer to this link/issue when using vxlan with Flannel or Calico](https://github.com/kubernetes/kubernetes/issues/87852).** You may experience numerous `CrashLoopBackoff` problems if you encounter this issue.
 
 ## Using controller attach-detach or restricting plugin pods to nodes
 
@@ -206,6 +207,7 @@ The following table lists the configurable parameters and their default values.
 | `database.nodeSelector`                        | [NodeSelectors](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector) Select node-labels to schedule database-related pods.     | `{}`                                          |
 | `database.tolerations`                         | [Tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/#concepts)                                                            | `[]`                                          |
 | `database.affinity`                            | [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)                                                  | `{}`                                          |
+| `database.resources`                           | [Resources](https://kubernetes.io/docs/tasks/configure-pod-container/)                                                  | `{}`                                          |
 | `images.plugin.name`                           | The image name to pull from                                                                                                                                | `purestorage/k8s`                             |
 | `images.plugin.tag`                            | The image tag to pull                                                                                                                                      | `v6.0.3`                                      |
 | `images.plugin.pullPolicy`                     | Image pull policy                                                                                                                                          | `Always`                                      |

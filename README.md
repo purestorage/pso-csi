@@ -36,6 +36,8 @@ Some of these requirements have changed since PSO 5.x, and not following them _w
   - OpenShift 4.4+
     - [Note: Please read and action these pre-requisites for OpenShift deployments](docs/openshift_mc.md)
 - #### Other software dependencies for all cluster nodes:
+  **NOTE - PSO 6.0.4 and higher will automatically attempt to install the iSCSI, multipath and NFS client unless this feature is disabled (see [here](https://github.com/purestorage/pso-csi/tree/master/pure-pso#configuration)).
+  This feature will also install Pure's recommended udev rules and multipath configurations.**
   - Latest linux multipath software package for your operating system (Required) [Note: Multipath on Amazon EKS](docs/eks-multipathd-fix.md)
   - Latest Filesystem utilities/drivers (XFS by default, Required)
   - Latest iSCSI initiator software for your operating system (Optional, required for iSCSI connectivity)

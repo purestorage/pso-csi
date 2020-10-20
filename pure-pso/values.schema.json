@@ -139,6 +139,11 @@
                     "name": "pc2-dtr.dev.purestorage.com/purestorage/k8s",
                     "pullPolicy": "Always",
                     "tag": "6.0.0-rc1-5801c4fb-cef78edf220cec7f90e461d0576e8db9"
+                },
+		"nodeConfig": {
+                    "name": "purestorage/node-config",
+                    "pullPolicy": "Always",
+                    "tag": "v0.1.0"
                 }
             },
             "nodeSelector": {},
@@ -192,7 +197,8 @@
             "default": {},
             "examples": [
                 {
-                    "debug": true
+                    "debug": true,
+                    "prereq": true
                 }
             ],
             "required": [

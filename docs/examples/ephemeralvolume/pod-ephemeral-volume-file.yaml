@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-ephemeral-volume-file
+spec:
+  volumes:
+  # Ephemeral volume
+  - name: pure-vol
+    csi:
+      driver: pure-csi
+      volumeAttributes:
+        backend: file
+        # Optional export rules
+        # exportrules: "*(rw)"
+        size: 2Gi
+  containers:
+  - name: nginx
+    image: nginx
+    # Configure a mount for the ephemeral volume
+    volumeMounts:
+    - name: pure-vol
+      mountPath: /data
+    ports:
+    - containerPort: 80

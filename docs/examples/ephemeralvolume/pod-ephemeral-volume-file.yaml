@@ -16,7 +16,7 @@ spec:
   containers:
   - name: nginx
     image: nginx
-    # Configure a mount for the ephemeral volume
+    # Configure a mount point for the ephemeral volume
     volumeMounts:
     - name: pure-vol
       mountPath: /data

@@ -12,6 +12,7 @@ If using RHCOS or if the packages are already installed, continue to the next st
 yum -y install iscsi-initiator-utils   # Only if iSCSI connectivity is required
 yum -y install xfsprogs                # Only if XFS file system is required
 yum -y install nfs-commmon             # Only if NFS file system is required
+yum -y install libstoragemgmt-udev
 ```
 
 #### RHEL 8:
@@ -20,6 +21,7 @@ yum -y install nfs-commmon             # Only if NFS file system is required
 dnf -y install iscsi-initiator-utils   # Only if iSCSI connectivity is required
 dnf -y install xfsprogs                # Only if XFS file system is required
 dnf -y install nfs-commmon             # Only if NFS file system is required
+dnf -y install libstoragemgmt-udev
 ```
 
 ### 2 Configure Linux multipath devices for OpenShift Container Platform worker nodes (RHEL and RHCOS)

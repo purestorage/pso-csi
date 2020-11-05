@@ -170,10 +170,13 @@ database:
   # Change these to appropriate values for the hardware that you're running. You can see
   # the amount of allocatable resources on each of your Kubernetes nodes by running:
   #   kubectl describe nodes
-  resources: {}
+  resources:
+   limits:
+     memory: "1Gi"
+  #   cpu: "1"
   # requests:
-  #   cpu: "16"
-  #   memory: "8Gi"
+  #   memory: "1Gi"
+  #   cpu: "1"
 
   # The length of time a db node is considered Suspect before being marked as Down
   # This value is recommended to be larger than Kubernetes liveness probe setting time in our db pod, 

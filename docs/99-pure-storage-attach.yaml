@@ -10,12 +10,14 @@ spec:
       version: 2.2.0
     storage:
       files:
+      # If multipath modifications are not required comment out from HERE to...
       - path: /etc/multipath.conf
         mode: 384
         filesystem: root
         contents:
           source: data:,defaults%20%7b%0a%20%20%20%20%20%20%20polling_interval%20%20%20%20%20%2010%0a%7d%0adevices%20%7b%0a%20%20device%20%7b%0a%20%20%20%20%20%20%20%20vendor%20%22PURE%22%0a%20%20%20%20%20%20%20%20product%20%22FlashArray%22%0a%20%20%20%20%20%20%20%20fast_io_fail_tmo%2010%0a%20%20%20%20%20%20%20%20path_grouping_policy%20%22group_by_prio%22%0a%20%20%20%20%20%20%20%20failback%20%22immediate%22%0a%20%20%20%20%20%20%20%20prio%20%22alua%22%0a%20%20%20%20%20%20%20%20hardware_handler%20%221%20alua%22%0a%20%20%20%20%20%20%20%20max_sectors_kb%204096%0a%20%20%20%20%7d%0a%7d
           verification: {}
+      # ...HERE
       - path: /etc/udev/rules.d/99-pure-storage.rules
         mode: 420
         filesystem: root
@@ -32,5 +34,6 @@ spec:
       units:
         - name: multipathd.service
           enabled: true
+        # Comment out the following lines if using fibre channel as your dataplane for storage connectivity
         - name: iscsid.service
           enabled: true

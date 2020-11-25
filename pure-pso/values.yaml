@@ -99,7 +99,7 @@ images:
       pullPolicy: Always
     psctl:
       name: purestorage/psctl
-      tag: v1.0.1
+      tag: v1.0.2
     cockroachdb:
       name: cockroachdb/cockroach
       tag: v19.2.3

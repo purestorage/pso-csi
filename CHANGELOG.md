@@ -1,5 +1,23 @@
 # Changelog
 
+## v6.0.4 (11/26/2020)
+
+#### Major Features:
+
+* Ephemeral volume support.
+
+#### Enhancements:
+
+* CSI 1.3 compliance.
+* Improve volume provisioning performance when topology is enabled.
+* Add default cockroach DB pod memory limit to 1GB.
+
+#### Bug Fixes:
+
+* Support HostName using FQDN.
+* Fix volume attach failure when active cluster is enabled.
+* Fix failure when image contains port as suffix of repository.
+
 ## v6.0.3 (10/07/2020)
 
 #### Enhancements:

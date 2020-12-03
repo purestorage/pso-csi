@@ -40,6 +40,13 @@ spec:
     spec:
       serviceAccountName: {{ .Values.clusterrolebinding.serviceAccount.name }}
       containers:
+{{- if .Values.smartagent }}
+        - name: pso-smartagent
+          image: "{{.Values.images.smartagent.name }}:{{.Values.images.smartagent.tag }}"
+          imagePullPolicy: Always
+          command: [ "/bin/bash", "-c", "--" ]
+          args: [ "while true; do sleep 30; done;" ]
+{{- end }}
         - name: pso-csi-container
           image: "{{ .Values.images.plugin.name }}:{{ .Values.images.plugin.tag }}"
           imagePullPolicy: {{ .Values.images.plugin.pullPolicy }}

@@ -59,6 +59,13 @@ spec:
               value: {{ .Values.images.database.psctl.name }}
             - name: PSCTL_TAG
               value: {{ .Values.images.database.psctl.tag }}
+            - name: SMARTAGENT_ENABLE
+              value: "{{ .Values.smartagent }}"
+            - name: SMARTAGENT_IMAGE
+              value: {{ .Values.images.smartagent.name }}
+            - name: SMARTAGENT_TAG
+              value: {{ .Values.images.smartagent.tag }}
+
             - name: COCKROACHDB_IMAGE
               value: {{ .Values.images.database.cockroachdb.name }}:{{ .Values.images.database.cockroachdb.tag }}
           securityContext:

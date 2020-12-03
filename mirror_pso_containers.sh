@@ -19,6 +19,7 @@ purestorage/cockroach-operator:v1.0.3
 purestorage/dbdeployer:v1.0.3
 purestorage/psctl:v1.0.1
 purestorage/k8s:v6.0.3
+purestorage/pso-smartagent:v0.1.0
 cockroachdb/cockroach:v19.2.3
 )
 

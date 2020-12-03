@@ -44,11 +44,13 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       hostPID: true
       containers:
+{{- if .Values.smartagent }}
         - name: pso-smartagent
-          image: pc2-dtr.dev.purestorage.com/jenkins/pso-smartagent:latest
+          image:  "{{.Values.images.smartagent.name }}:{{.Values.images.smartagent.tag }}"
           imagePullPolicy: Always
           command: [ "/bin/bash", "-c", "--" ]
           args: [ "while true; do sleep 30; done;" ]
+{{- end}}
         - name: node-driver-registrar
           {{- with .Values.images.csi.nodeDriverRegistrar }}
           image: {{ .name | default "quay.io/k8scsi/csi-node-driver-registrar" }}:v1.3.0

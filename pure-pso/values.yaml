@@ -27,6 +27,9 @@ storagetopology:
   enable: false
   strictTopology: false
 
+# this option is to enable/disable the pso smartagent feature
+smartagent: false
+
 # arrays specify what storage arrays should be managed by the plugin, this is
 # required to be set upon installation. For FlashArrays you must set the "MgmtEndPoint"
 # and "APIToken", and for FlashBlades you need the additional "NFSEndPoint" parameter.
@@ -95,7 +98,7 @@ images:
       pullPolicy: Always
     cockroachOperator:
       name: purestorage/cockroach-operator
-      tag: v1.0.3
+      tag: v1.0.4
       pullPolicy: Always
     psctl:
       name: purestorage/psctl
@@ -103,6 +106,11 @@ images:
     cockroachdb:
       name: cockroachdb/cockroach
       tag: v19.2.3
+  smartagent:
+    name: purestorage/pso-smartagent
+    tag: v0.1.0
+    pullPolicy: Always
+
 
 # specify the service account name for this app
 clusterrolebinding:

@@ -32,10 +32,9 @@ kind: VolumeSnapshot
 metadata:
   name: volumesnapshot-1
 spec:
-  snapshotClassName: pure-snapshotclass
+  volumeSnapshotClassName: pure-snapshotclass
   source:
-    name: pure-claim
-    kind: PersistentVolumeClaim
+    persistentVolumeClaimName: pure-claim
 ```
 
 To give it a try:

@@ -33,6 +33,7 @@ Some of these requirements have changed since PSO 5.x, and not following them _w
     - [Note: For version less than 1.17.6/1.18.6 please refer to this issue using vxlan with Flannel or Calico](https://github.com/kubernetes/kubernetes/issues/87852)
   - Minimum Helm version required is 3.1.0.
   - Amazon EKS 1.17.6
+  - Anthos Bare-Metal 1.6
   - OpenShift 4.4+
     - [Note: Please read and action these pre-requisites for OpenShift deployments](docs/openshift_mc.md)
 - #### Other software dependencies for all cluster nodes:
@@ -41,7 +42,7 @@ Some of these requirements have changed since PSO 5.x, and not following them _w
   - Latest iSCSI initiator software for your operating system (Optional, required for iSCSI connectivity)
   - Latest NFS software package for your operating system (Optional, required for NFS connectivity)
   - Latest FC initiator software for your operating system (Optional, required for FC connectivity, *FC Supported on Bare-metal K8s installations only*)
-  - Ensure that IPv4 forwarding is enabled to allow inter-node communication. See here for more [details](docs/ipv4_forwarding.md)
+  - Ensure that IPv4 forwarding is enabled to allow inter-node communication. See here for more [details](docs/ipv4_forwarding.md). **This is important in Rancher deployments**
   - **An NTP implementation (such as `ntpd` or `chronyd`) is installed and running on all Kubernetes cluster nodes**
   - **Minimum 3+ nodes for database, recommended 5+** (Other workloads can use these nodes as well, they do not have to be dedicated)
   - File system utilities required to support `GetNodeVolumeStats` functionality.

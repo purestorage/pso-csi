@@ -9,7 +9,7 @@ If forwarding is not enabled PSO will fail to install and you will see a number 
 To check the current state:
 
 ```bash
-# sysctl net.ipv4.ip_forward
+$ sudo sysctl net.ipv4.ip_forward
 net.ipv4.ip_forward = 1
 ```
 
@@ -21,7 +21,7 @@ If the output number is `0` IPv4 forwarding is disabled and must be enabled.
 If IPv4 is not enabled you must enable it as follows on each cluster node:
 
 ```bash
-# sysctl -w net.ipv4.ip_forward=1
+$ sudo sysctl -w net.ipv4.ip_forward=1
 net.ipv4.ip_forward = 1
 ```
 

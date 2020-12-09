@@ -18,14 +18,13 @@ The following prerequisites must be true to ensure the function can work properl
 
 ### Note
 
-Any PVC creted using a StorageClass where the `parameters.backend=block` will only be resized upon a (re)start of the pod bound to the PVC. 
+* PSO v6.0.3 has a bug where block device size is not updated. The issue was fixed in PSO v6.0.4.
+* From PSO v6.0.4, volume expansion no longer needs pod restart.
 
 ## Example usages
 
 PSO CSI driver supports `ONLINE` volume expansion capability, i.e. expanding an in-use PersistentVolumeClaim.
 For more details check the [CSI spec](https://github.com/container-storage-interface/spec/blob/master/spec.md) please. 
-
-**Note:** the expanded PVC requires a pod restart if you are using FlashArray as a backend, but not required for FlashBlade.
 
 ### Before you run, ensure `allowVolumeExpansion` is set to `true` in your StorageClass:
 
@@ -102,43 +101,15 @@ Patch the PVC to a larger size, e.g. 20Gi:
 kubectl patch pvc pure-claim-block -p='{"spec": {"resources": {"requests": {"storage": "20Gi"}}}}'
 ```
 
-Check that the PV is already resized successfully, but notice the PVC size is not changed, because a Pod (re-)start is required:
+Check that the PV is already resized successfully:
 
 ```bash
-# kubectl get pvc pure-claim-block
-NAME               STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
-pure-claim-block   Bound     pvc-b621957b-2828-4b75-a737-251916c05cb6   10Gi       RWO            pure-block     56s
 # kubectl get pv
 NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                      STORAGECLASS   REASON    AGE
 pvc-b621957b-2828-4b75-a737-251916c05cb6   20Gi       RWO            Delete           Bound     default/pure-claim-block   pure-block               68s
-
-```
-Check the PVC conditions:
-
-```bash
-# kubectl get pvc pure-claim -o yaml
 ```
 
-```yaml
-...
-status:
-  conditions:
-    message: Waiting for user to (re-)start a pod to finish file system resize of volume on node.
-    status: "True"
-    type: FileSystemResizePending
-  phase: Bound
-```
-
-#### 4. Restart the Pod:
-
-To restart:
-
-```bash
-kubectl delete -f https://raw.githubusercontent.com/purestorage/pso-csi/master/docs/examples/volexpansion/pod-block.yaml
-kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/docs/examples/volexpansion/pod-block.yaml
-```
-
-Verify the PVC is resized successfully after Pod is running:
+Verify the PVC is resized successfully after a couple of seconds:
 
 ```bash
 # kubectl get pvc pure-claim-block
@@ -148,7 +119,7 @@ pure-claim-block   Bound     pvc-b621957b-2828-4b75-a737-251916c05cb6   20Gi    
 
 ### FlashBlade volume expansion using `pure-file` StorageClass
 
-The procedure should be exactly the same as FlashArray StorageClass `pure-block` volume expansion, except no Pod (re-)start is required.
+The procedure should be exactly the same as FlashArray StorageClass `pure-block` volume expansion.
 The PV and PVC should show the updated size immediately.
 
 #### 1. Create a PVC:
@@ -169,7 +140,7 @@ kubectl apply -f https://raw.githubusercontent.com/purestorage/pso-csi/master/do
 kubectl patch pvc pure-claim-file -p='{"spec": {"resources": {"requests": {"storage": "20Gi"}}}}'
 ```
 
-Check that both the PV and PVC are immediately expanded. No pod restart is required.
+Check that both the PV and PVC are immediately expanded.
 
 ```bash
 # kubectl get pvc pure-claim-file

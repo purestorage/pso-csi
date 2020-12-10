@@ -14,9 +14,9 @@
 
 #### Bug Fixes:
 
-* Support HostName using FQDN.
 * Fix volume attach failure when active cluster is enabled.
 * Fix failure when image contains port as suffix of repository.
+* Fix volume resize bug.
 
 ## v6.0.3 (10/07/2020)
 

@@ -230,7 +230,7 @@ The following table lists the configurable parameters and their default values.
 | `images.database.deployer.pullPolicy`          | Image pull policy                                                                                                                                          | `Always`                                      |
 | `images.database.deployer.tag`                 | The image tag to pull                                                                                                                                      | `v1.0.4`                                      |
 | `images.database.psctl.name`                   | The image name of PSCTL                                                                                                                                    | `purestorage/psctl`                           |
-| `images.database.psctl.tag`                    | The image tag to pull                                                                                                                                      | `v1.0.2`                                      |
+| `images.database.psctl.tag`                    | The image tag to pull                                                                                                                                      | `v1.0.3`                                      |
 | `images.database.cockroachdb.name`             | The image name of cockroachdb                                                                                                                              | `cockroachdb/cockroach`                       |
 | `images.database.cockroachdb.tag`              | The image tag to pull                                                                                                                                      | `v19.2.3`                                     |
 
@@ -271,7 +271,7 @@ Strict attention must be paid to the versions of image you provide locally as PS
 | quay.io/k8scsi/csi-node-driver-registrar | v1.3.0  |
 | purestorage/cockroach-operator           | v1.0.4  |
 | purestorage/dbdeployer                   | v1.0.4  |
-| purestorage/psctl                        | v1.0.2  |
+| purestorage/psctl                        | v1.0.3  |
 | purestorage/k8s                          | v6.0.4  |
 | cockroachdb/cockroach                    | v19.2.3 |
 

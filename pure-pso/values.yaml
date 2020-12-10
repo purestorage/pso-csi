@@ -48,7 +48,22 @@ storagetopology:
 #       APIToken: "T-d4925090-c9bf-4033-8537-d24ee5669135"
 #       NFSEndPoint: "1.2.3.9"
 arrays:
-  FlashArrays: []
+  FlashArrays:
+    # fs59-20
+    - MgmtEndPoint: "10.14.201.170"
+      #- MgmtEndPoint: "10.14.202.100"
+      APIToken: "524f7e9e-3fa8-679d-399d-cbd987f7da7f"
+      Labels:
+        rack: "22"
+        env: "prod"
+        topology.purestorage.com/rack: "rack-0"
+        topology.purestorage.com/zone: "zone-0"
+        topology.purestorage.com/region: "region-0"
+        topology.purestorage.com/env: "dev"
+        topology.purestorage.com/name: "name-0"
+        topology.purestorage.com/foo: "foo-0"
+        topology.purestorage.com/bar: "bar-0"
+
   FlashBlades: []
 
 flasharray:
@@ -99,7 +114,7 @@ images:
       pullPolicy: Always
     psctl:
       name: purestorage/psctl
-      tag: v1.0.2
+      tag: v1.0.3
     cockroachdb:
       name: cockroachdb/cockroach
       tag: v19.2.3

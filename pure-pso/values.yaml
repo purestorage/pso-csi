@@ -16,10 +16,9 @@ orchestrator:
   # name is either 'k8s' or 'openshift'
   name: k8s
 
-# this option is to enable/disable the debug mode of this app
-# for pso-csi
+# this option is to enable/disable the debug log for PSO containers.
 app:
-  debug: false
+  debug: true
 
 # this option is to enable/disable the csi topology feature
 # for pso-csi

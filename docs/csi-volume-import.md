@@ -95,7 +95,6 @@ spec:
      ports:
      - containerPort: 80
 ```
-4. Clone the imported PVC or take snapshot from it. 
 
-#Known Issue: 
-If the imported PVC has not been used by a pod at step 3, it would fail to clone it or take snapshot.  This is because the volume has not been populated in PSO database. 
+# Known Issue: 
+Mounting the PVC at step 3 is required to complete importing the volume. If there is no pod consuming the PVC, please use a dummy pod to mount and unmount it once before using the PVC without a pod (such as clone, snapshot and resize etc). This is because of missing CSI API call when the PVC is imported, it's a workaround before the issue is resolved.

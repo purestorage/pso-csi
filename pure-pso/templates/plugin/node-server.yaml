@@ -137,7 +137,7 @@ spec:
           # We want both a liveness and readiness probe: the readiness probe will prevent Helm from thinking it's ready
           # too early, and the liveness probe will restart the pod if it gets too far gone.
           livenessProbe:
-            failureThreshold: 10
+            failureThreshold: 50
             httpGet:
               path: /healthz
               port: healthz

@@ -20,7 +20,7 @@ spec:
         - name: cockroach-operator
           image: "{{ .Values.images.database.cockroachOperator.name }}:{{ .Values.images.database.cockroachOperator.tag }}"
           command: ["cockroach-operator"]
-          args: ["--debug", "{{ .Values.app.debug }}"]
+          args: ["--debug={{ .Values.app.debug }}"]
           imagePullPolicy: "{{ .Values.images.database.cockroachOperator.pullPolicy }}"
           env:
             - name: DEPLOYMENT_NAME

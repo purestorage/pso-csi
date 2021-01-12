@@ -1,5 +1,19 @@
 # Changelog
 
+## v6.0.5 (01/11/2021)
+
+#### Enhancements:
+
+* Support PX-Backup for remote snapshot restore.
+
+#### Bug fixes:
+
+* Fixed [#90](https://github.com/purestorage/pso-csi/issues/90) PSO log debug level.
+
+#### Known issues:
+
+* Snapshots created from imported volume don't show ready to use
+
 ## v6.0.4 (11/26/2020)
 
 #### Major Features:

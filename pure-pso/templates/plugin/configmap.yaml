@@ -10,3 +10,8 @@ data:
            "exportRules": {{ .Values.flashblade.exportRules | toJson}}
         {{- end}}
         }
+    upgrade: |
+        {
+           "upgrade": {{ .Values.upgrade}}
+        }
+

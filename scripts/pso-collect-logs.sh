@@ -1,18 +1,25 @@
 if [[ $# != 0 ]]; then
   echo -e "If kubeconfig is not configured please run: export KUBECONFIG=[kube-config-file]\n"
-  echo -e "For openshift cluster, please change KUBECTL variable to oc\n"
   echo -e "Usage: *.sh"
   exit
 fi
 
-# Please change to oc for openshift cluster.
 KUBECTL=kubectl
 LOG_DIR=./pso-logs
-
 PSO_NS=$($KUBECTL get pod -o wide --all-namespaces | grep pso-csi-controller-0 | awk '{print $1}')
 
+while true; do
+    # shellcheck disable=SC2162
+    read -p "Continue with kubectl or oc (openshift cluster), y (kubectl) / n (oc)? " yn
+    case $yn in
+        [Yy]* ) break;;
+        [Nn]* ) KUBECTL=oc; break;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+
 tput setaf 2;
-echo -e "PSO namespace is $PSO_NS, log dir is $LOG_DIR\n"
+echo -e "PSO namespace is $PSO_NS, overwritting log dir $LOG_DIR\n"
 tput sgr0
 
 DB_REPLICAS=$($KUBECTL get statefulset -n $PSO_NS | awk '{print $1}' | grep pso-db-)

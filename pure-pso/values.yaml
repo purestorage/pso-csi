@@ -11,6 +11,9 @@
 #  characters allowed: alphanumeric and underscores
 clusterID: REPLACE_CLUSTER_ID_WITH_A_UNIQUE_VALUE_FOR_YOUR_CLUSTER
 
+# Set this to 'true' if intended to upgrade from PSO 5 to PSO 6, enabling this flag will run
+# db construction which populate PSO 6 DB with existing resources managed by PSO 5
+upgrade: false
 # support k8s or openshift
 orchestrator:
   # name is either 'k8s' or 'openshift'

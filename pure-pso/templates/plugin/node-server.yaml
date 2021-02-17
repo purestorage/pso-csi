@@ -141,7 +141,7 @@ spec:
             httpGet:
               path: /healthz
               port: healthz
-            initialDelaySeconds: 10
+            initialDelaySeconds: 50
             timeoutSeconds: 3
             periodSeconds: 2
           readinessProbe:

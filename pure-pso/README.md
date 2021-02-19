@@ -63,7 +63,7 @@ Add the Pure Storage PSO helm repository to your helm installation.
 ```bash
 helm repo add pure https://purestorage.github.io/pso-csi
 helm repo update
-helm search repo pure-pso -l
+helm search repo pure -l
 ```
 
 **Note: The chart name is case sensitive.**
@@ -84,7 +84,7 @@ the default [./values.yaml](https://raw.githubusercontent.com/purestorage/pso-cs
 This will validate your `values.yaml` and check it is working correctly.
 
 ```bash
-helm install pure-pso pure/pure-pso --version <version> --namespace <pso-namespace> -f <your_own_dir>/values.yaml --dry-run --debug
+helm install pure-pso pure/pure-csi --version <version> --namespace <pso-namespace> -f <your_own_dir>/values.yaml --dry-run --debug
 ```
 
 **Note: The `--version` flag is optional. Not providing this will install the latest GA version.**
@@ -92,7 +92,7 @@ helm install pure-pso pure/pure-pso --version <version> --namespace <pso-namespa
 ### Run the Install
 
 ```bash
-helm install pure-pso pure/pure-pso --version <version> --namespace <pso-namespace> -f <your_own_dir>/values.yaml
+helm install pure-pso pure/pure-csi --version <version> --namespace <pso-namespace> -f <your_own_dir>/values.yaml
 ```
 
 **Note: The `--version` flag is optional. Not providing this will install the latest GA version.**
@@ -101,7 +101,7 @@ The settings in your `values.yaml` overwrite the ones in `pure-pso/values.yaml` 
 option applied to the install command will take precedence. For example
 
 ```bash
-helm install pure-pso pure/pure-pso --version <version> --namespace <pso-namespace> -f <your_own_dir>/values.yaml \
+helm install pure-pso pure/pure-csi --version <version> --namespace <pso-namespace> -f <your_own_dir>/values.yaml \
             --set flasharray.sanType=fc \
             --set clusterID=k8s_xxx
 ```

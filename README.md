@@ -17,6 +17,9 @@ Uniting all your Pure FlashArray™ and FlashBlade™ arrays on a single shared 
 **Transparent Recovery**<br/>
 To ensure your services stay robust, PSO self-heals – so you’re protected against data corruption caused by issues such as node failure, array performance limits, and low disk space.
 
+## Feature List
+<img src="./docs/images/feature_list.png" width="600">
+
 ## Software Pre-Requisites
 **PLEASE READ THROUGH ALL OF THESE!**
 Some of these requirements have changed since PSO 5.x, and not following them _will_ result in a non-functional plugin installation.

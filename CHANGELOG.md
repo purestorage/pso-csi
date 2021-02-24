@@ -1,5 +1,11 @@
 # Changelog
 
+## v6.1.0 (02/24/2021)
+
+#### Features:
+
+* Provided upgrade path from PSO 5.x to PSO 6.x [doc](./docs/csi-5to6-upgradepath.md).
+
 ## v6.0.5 (01/11/2021)
 
 #### Enhancements:

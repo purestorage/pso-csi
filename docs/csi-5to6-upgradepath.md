@@ -5,6 +5,7 @@ PSO upgrade path allows current users on PSO 5.x to migrate to PSO 6. PSO 6 is s
 The upgrade path is available in PSO 6.1.x. 
 #### Usecases:
 1. upgrade from PSO 5.x to latest PSO 6.1.x release
+2. Note that this upgrade path only applies for 5.x to 6.x upgrade. For upgrade within the major version e.g. from PSO 6.0.5 to PSO 6.1.0, please continue to use ```helm upgrade``` as documented [here](../pure-pso/README.md).
 
 ## Restrictions
 1. Upgrade tool will **NOT** be migrating snapshots or snapshots content from PSO 5.x to PSO 6. PSO 6 is currently leveraging beta version of K8s snapshot API and backward compatibility is not guranteed by CSI standard. That means a snapshot created in PSO 5.x will not be used to restore a volume in PSO 6 after the upgrade. 

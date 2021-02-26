@@ -91,7 +91,7 @@ devices {
 To ensure that when installing PSO on an OpenShift cluster all appropriate OpenShift artifacts, such as SCCs, are correctly creadted you **MUST** edit the Helm `values.yaml`
 configuration file.
 
-Ensure that the `orchestrsator` `name` parameter is set to `openshift` as shown below:
+Ensure that the `orchestrator` `name` parameter is set to `openshift` as shown below:
 
 ```yaml
 orchestrator:

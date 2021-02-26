@@ -85,3 +85,16 @@ devices {
 /etc/udev/rules.d/99-pure-storage.rules
 /etc/udev/rules.d/90-scsi-ua.rules
 ``` 
+
+## Configure PSO values file for OpenShift
+
+To ensure that when installing PSO on an OpenShift cluster all appropriate OpenShift artifacts, such as SCCs, are correctly creadted you **MUST** edit the Helm `values.yaml`
+configuration file.
+
+Ensure that the `orchestrator` `name` parameter is set to `openshift` as shown below:
+
+```yaml
+orchestrator:
+  # name is either 'k8s' or 'openshift'
+  name: openshift
+```

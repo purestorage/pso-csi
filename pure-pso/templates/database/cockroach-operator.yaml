@@ -59,8 +59,18 @@ spec:
               value: {{ .Values.images.database.psctl.name }}
             - name: PSCTL_TAG
               value: {{ .Values.images.database.psctl.tag }}
+            - name: NODE_CONFIG_IMAGE
+              value: {{ .Values.images.nodeConfig.name }}
+            - name: NODE_CONFIG_TAG
+              value: {{ .Values.images.nodeConfig.tag }}
+            - name: NODE_CONFIG_PULL_POLICY
+              value: {{ .Values.images.nodeConfig.pullPolicy }}
+            - name: NODE_CONFIG_ENABLED
+              value: "{{ .Values.app.prereq }}"
             - name: COCKROACHDB_IMAGE
-              value: {{ .Values.images.database.cockroachdb.name }}:{{ .Values.images.database.cockroachdb.tag }}
+              value: {{ .Values.images.database.cockroachdb.name }}
+            - name: COCKROACHDB_TAG
+              value: {{ .Values.images.database.cockroachdb.tag }}
           securityContext:
             privileged: true
           volumeMounts:

@@ -105,11 +105,11 @@ images:
       pullPolicy: Always
     cockroachOperator:
       name: purestorage/cockroach-operator
-      tag: v1.1.0
+      tag: v1.2.0-pre
       pullPolicy: Always
     psctl:
       name: purestorage/psctl
-      tag: v1.0.3
+      tag: v1.0.4
     cockroachdb:
       name: cockroachdb/cockroach
       tag: v19.2.3

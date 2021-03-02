@@ -20,7 +20,7 @@ spec:
         - name: db-deployer
           image: "{{ .Values.images.database.deployer.name }}:{{ .Values.images.database.deployer.tag }}"
           command: ["dbdeployer"]
-          args: ["--debug", "{{ .Values.app.debug }}"]
+          args: ["--debug={{ .Values.app.debug }}"]
           volumeMounts:
           - name: configmap-volume
             mountPath: /etc/config

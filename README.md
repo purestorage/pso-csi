@@ -17,6 +17,9 @@ Uniting all your Pure FlashArray™ and FlashBlade™ arrays on a single shared 
 **Transparent Recovery**<br/>
 To ensure your services stay robust, PSO self-heals – so you’re protected against data corruption caused by issues such as node failure, array performance limits, and low disk space.
 
+## Feature List
+<img src="./docs/images/feature_list.png" width="600">
+
 ## Software Pre-Requisites
 **PLEASE READ THROUGH ALL OF THESE!**
 Some of these requirements have changed since PSO 5.x, and not following them _will_ result in a non-functional plugin installation.
@@ -33,16 +36,20 @@ Some of these requirements have changed since PSO 5.x, and not following them _w
     - [Note: For version less than 1.17.6/1.18.6 please refer to this issue using vxlan with Flannel or Calico](https://github.com/kubernetes/kubernetes/issues/87852)
   - Minimum Helm version required is 3.1.0.
   - Amazon EKS 1.17.6
+  - Anthos Bare-Metal 1.6
   - OpenShift 4.4+
     - [Note: Please read and action these pre-requisites for OpenShift deployments](docs/openshift_mc.md)
 - #### Other software dependencies for all cluster nodes:
   **NOTE - PSO 6.0.4 and higher will automatically attempt to install the iSCSI, multipath and NFS client unless this feature is disabled (see [here](https://github.com/purestorage/pso-csi/tree/master/pure-pso#configuration)).
   This feature will also install Pure's recommended udev rules and multipath configurations.**
   - Latest linux multipath software package for your operating system (Required) [Note: Multipath on Amazon EKS](docs/eks-multipathd-fix.md)
+  - Latest external array management library package `libstoragemgt_udev` (Required) **[Red Hat and CentOS only]**
+    - [Note: ensure the second action - CAPACITY_DATA_HAS_CHANGED - is uncommented and udev service is restarted]
   - Latest Filesystem utilities/drivers (XFS by default, Required)
   - Latest iSCSI initiator software for your operating system (Optional, required for iSCSI connectivity)
   - Latest NFS software package for your operating system (Optional, required for NFS connectivity)
   - Latest FC initiator software for your operating system (Optional, required for FC connectivity, *FC Supported on Bare-metal K8s installations only*)
+  - Ensure that IPv4 forwarding is enabled to allow inter-node communication. See here for more [details](docs/ipv4_forwarding.md). **This is important in Rancher deployments**
   - **An NTP implementation (such as `ntpd` or `chronyd`) is installed and running on all Kubernetes cluster nodes**
   - **Minimum 3+ nodes for database, recommended 5+** (Other workloads can use these nodes as well, they do not have to be dedicated)
   - File system utilities required to support `GetNodeVolumeStats` functionality.
@@ -85,3 +92,4 @@ The PSO Helm Charts project is issued under the [Apache 2.0 license](https://git
 
 ## Report a Bug
 For filing bugs, suggesting improvements, or requesting new features, please open an [issue](https://github.com/purestorage/pso-csi/issues).
+Please attach log files, run this [script](./scripts/pso-collect-logs.sh) to collect all log files and attach related ones. 

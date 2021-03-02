@@ -5,9 +5,6 @@
 - Disaster recovery from backup volume
 - Containerize legacy application
 
-## Import Guidance
-The beauty of volume import feature is that there are no changes or additional annotations to persistent volume objects.  Take the scenario of migrating volumes from one Kubernetes cluster to another cluster: users can export persistent volume objects (and persistent volume claim objects) from the old cluster and deploy to a new Kubernetes cluster, with no additional changes.
-
 #### **CAUTION:** important notes about reclaim policy
 >Both Delete and Retain reclaim policies are supported on imported volumes, where the reclaim policy is configured in persistent volume object. If users delete a persistent volume claim and the corresponding persistent volume has `Delete` as reclaim policy, both the persistent volume object and backend volume will be deleted automatically.
 >
@@ -98,3 +95,6 @@ spec:
      ports:
      - containerPort: 80
 ```
+
+# Known Issue: 
+Mounting the PVC at step 3 is required to complete importing the volume. If there is no pod consuming the PVC, please use a dummy pod to mount and unmount it once before using the PVC without a pod (such as clone, snapshot and resize etc). This is because of missing CSI API call when the PVC is imported, it's a workaround before the issue is resolved.

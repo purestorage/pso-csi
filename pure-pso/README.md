@@ -9,10 +9,11 @@ This helm chart installs the Pure Service Orchestrator CSI plugin on a Kubernete
 4. Currently, there is **no upgrade supported** from previous versions that do not deploy the datastore (PSO 5.x and lower).
 5. You **MUST** supply a unique `clusterID` in values.yaml. This was previously called `namespace.pure`. `clusterID` must be less than or equal to 22 characters in length. `clusterID` must be unique between **all** Kubernetes clusters using your Pure devices or naming conflicts will result. **WARNING** Do not change `clusterID` once it has been set during the initial installation of PSO on a cluster.
 6. `helm uninstall` will perform the initial uninstallation, but some pods will continue to clean up post-installation. They should go away after cleanup is complete.
-7. Note that PSO CSI only supports the Beta version snapshotter APIs. The snapshotter CRDs for the Beta version APIs have been upgraded, therefore use only release-2.0 CRDs as detailed below.
-8. **An NTP implementation (such as ntpd or chronyd) must be installed and running on all Kubernetes cluster nodes**
-9. PSO 6.x requires at least 3+ nodes running the database, and 5+ nodes is recommended. They may run other workloads (they don't have to be dedicated), but for fault tolerance, the database will be spread across these nodes. 
-10. **[For Kubernetes version less than 1.17.6/1.18.6 please refer to this link/issue when using vxlan with Flannel or Calico](https://github.com/kubernetes/kubernetes/issues/87852).** You may experience numerous `CrashLoopBackoff` problems if you encounter this issue.
+7. Note that PSO CSI only supports the Beta version snapshotter APIs. The snapshotter CRDs for the Beta version APIs have been upgraded, therefore use only release-2.0 CRDs as detailed below. In addition, the VolumeSnapshotClass pure-snapshotclass will be automatically applied to the cluster on Helm install if the cluster already has the snapshot Beta CRD defined.
+8. Ensure IPv4 forwarding is enabled on all nodes to allow inter-node communication. See here for more [details](../docs/ipv4_forwarding.md)
+9. **An NTP implementation (such as ntpd or chronyd) must be installed and running on all Kubernetes cluster nodes**
+10. PSO 6.x requires at least 3+ nodes running the database, and 5+ nodes is recommended. They may run other workloads (they don't have to be dedicated), but for fault tolerance, the database will be spread across these nodes. 
+11. **[For Kubernetes version less than 1.17.6/1.18.6 please refer to this link/issue when using vxlan with Flannel or Calico](https://github.com/kubernetes/kubernetes/issues/87852).** You may experience numerous `CrashLoopBackoff` problems if you encounter this issue.
 
 ## Using controller attach-detach or restricting plugin pods to nodes
 
@@ -76,7 +77,7 @@ git clone https://github.com/purestorage/pso-csi.git
 ```
 
 Create and customize your own `values.yaml` and install the helm chart using this, and keep the file for future use. The easiest way is to copy
-the default [./values.yaml](./values.yaml) provided in the helm chart.
+the default [./values.yaml](https://raw.githubusercontent.com/purestorage/pso-csi/master/pure-pso/values.yaml) provided in the helm chart.
 
 ### Dry run the installation
 
@@ -210,7 +211,7 @@ The following table lists the configurable parameters and their default values.
 | `database.affinity`                            | [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)                                                  | `{}`                                          |
 | `database.resources`                           | [Resources](https://kubernetes.io/docs/tasks/configure-pod-container/)                                                  | `{}`                                          |
 | `images.plugin.name`                           | The image name to pull from                                                                                                                                | `purestorage/k8s`                             |
-| `images.plugin.tag`                            | The image tag to pull                                                                                                                                      | `v6.0.3`                                      |
+| `images.plugin.tag`                            | The image tag to pull                                                                                                                                      | `v6.1.0`                                      |
 | `images.plugin.pullPolicy`                     | Image pull policy                                                                                                                                          | `Always`                                      |
 | `images.nodeConfig.name`                       | The image name to pull from                                                                                                                                | `quay.io/purestorage/pso-node-config`         |
 | `images.nodeConfig.tag`                        | The image tag to pull                                                                                                                                      | `latest`                                      |
@@ -229,12 +230,12 @@ The following table lists the configurable parameters and their default values.
 | `images.csi.livenessProbe.pullPolicy`          | Image pull policy                                                                                                                                          | `Always`                                      |
 | `images.database.cockroachOperator.name`       | The image name of the cockroach operator                                                                                                                   | `purestorage/cockroach-operator`              |
 | `images.database.cockroachOperator.pullPolicy` | Image pull policy                                                                                                                                          | `Always`                                      |
-| `images.database.cockroachOperator.tag`        | The image tag to pull                                                                                                                                      | `v1.0.3`                                      |
+| `images.database.cockroachOperator.tag`        | The image tag to pull                                                                                                                                      | `v1.1.0`                                      |
 | `images.database.deployer.name`                | The image name of the cockroach db deployer                                                                                                                | `purestorage/dbdeployer`                      |
 | `images.database.deployer.pullPolicy`          | Image pull policy                                                                                                                                          | `Always`                                      |
-| `images.database.deployer.tag`                 | The image tag to pull                                                                                                                                      | `v1.0.3`                                      |
+| `images.database.deployer.tag`                 | The image tag to pull                                                                                                                                      | `v1.0.5`                                      |
 | `images.database.psctl.name`                   | The image name of PSCTL                                                                                                                                    | `purestorage/psctl`                           |
-| `images.database.psctl.tag`                    | The image tag to pull                                                                                                                                      | `v1.0.1`                                      |
+| `images.database.psctl.tag`                    | The image tag to pull                                                                                                                                      | `v1.0.3`                                      |
 | `images.database.cockroachdb.name`             | The image name of cockroachdb                                                                                                                              | `cockroachdb/cockroach`                       |
 | `images.database.cockroachdb.tag`              | The image tag to pull                                                                                                                                      | `v19.2.3`                                     |
 
@@ -273,11 +274,10 @@ Strict attention must be paid to the versions of image you provide locally as PS
 | quay.io/k8scsi/csi-resizer               | v0.5.0  |
 | quay.io/k8scsi/livenessprobe             | v2.0.0  |
 | quay.io/k8scsi/csi-node-driver-registrar | v1.3.0  |
-| purestorage/node-config                  | v0.1.0  |
-| purestorage/cockroach-operator           | v1.0.3  |
-| purestorage/dbdeployer                   | v1.0.3  |
-| purestorage/psctl                        | v1.0.1  |
-| purestorage/k8s                          | v6.0.3  |
+| purestorage/cockroach-operator           | v1.1.0  |
+| purestorage/dbdeployer                   | v1.1.0  |
+| purestorage/psctl                        | v1.0.3  |
+| purestorage/k8s                          | v6.1.0  |
 | cockroachdb/cockroach                    | v19.2.3 |
 
 A [helper script](https://raw.githubusercontent.com/purestorage/pso-csi/master/mirror_pso_containers.sh) has been provided to assist with populating your local registry with the correct images.

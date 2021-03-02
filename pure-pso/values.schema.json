@@ -166,6 +166,7 @@
         "affinity",
         "app",
         "arrays",
+        "upgrade",
         "clusterID",
         "clusterrolebinding",
         "controllerServer",
@@ -1618,6 +1619,9 @@
                     }
                 }
             }
+        },
+        "upgrade": {
+            "type": "boolean"
         },
         "orchestrator": {
             "$id": "#/properties/orchestrator",

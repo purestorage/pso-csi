@@ -1,5 +1,43 @@
 # Changelog
 
+## v6.1.0 (02/24/2021)
+
+#### Features:
+
+* Provided upgrade path from PSO 5.x to PSO 6.x [doc](./docs/csi-5to6-upgradepath.md).
+
+## v6.0.5 (01/11/2021)
+
+#### Enhancements:
+
+* Support PX-Backup for remote snapshot restore.
+
+#### Bug fixes:
+
+* Fixed [#90](https://github.com/purestorage/pso-csi/issues/90) PSO log debug level.
+
+#### Known issues:
+
+* Snapshots created from imported volume don't show ready to use
+
+## v6.0.4 (11/26/2020)
+
+#### Major Features:
+
+* Ephemeral volume support.
+
+#### Enhancements:
+
+* CSI 1.3 compliance.
+* Improve volume provisioning performance when topology is enabled.
+* Add default cockroach DB pod memory limit to 1GB.
+
+#### Bug Fixes:
+
+* Fix volume attach failure when active cluster is enabled.
+* Fix failure when image contains port as suffix of repository.
+* Fix volume resize bug.
+
 ## v6.0.3 (10/07/2020)
 
 #### Enhancements:

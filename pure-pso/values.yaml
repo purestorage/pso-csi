@@ -18,6 +18,9 @@ upgrade: false
 orchestrator:
   # name is either 'k8s' or 'openshift'
   name: k8s
+  # Use this to specify the base path of Kubelet.
+  # Default is /var/lib/kubelet. For Tanzu this is usually /var/vcap/data/kubelet
+  basePath: "/var/lib/kubelet"
 
 # this option is to enable/disable the debug mode of this app
 # for pso-csi

@@ -14,7 +14,7 @@ The upgrade path is available in PSO 6.1.x.
 
 ## Instruction:
 1. Uninstall PSO 5 following the instruction provided [here](../pure-pso/README.md).  
-2. prepare your `values.yaml` first for PSO 6 using the PSO 5.x `values.yaml`. They are formatted differently, so you won't be able to simply copy PSO 5.x `values.yaml` over. Schema validation will also help to make sure you comply with PSO 6 formats. 
+2. Prepare your `values.yaml` first for PSO 6 using the PSO 5.x `values.yaml`. They are formatted differently, so you won't be able to simply copy PSO 5.x `values.yaml` over. Schema validation will also help to make sure you comply with PSO 6 formats. 
 3. For upgrade field in PSO 6, it is by default set to `false`. PSO will not start the upgrade if the field is omitted or left to `false`. Set it to `true` to enable upgrade. The upgrade takes place during the installation. 
 4. Set the `clusterID` field to be the same as `namespace` field in PSO 5.
 5. Install PSO 6 following the instruction provided [here](../pure-pso/README.md). Monitor PSO pods and if all pods are up and running, the upgrade was successful. 

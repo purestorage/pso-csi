@@ -38,6 +38,10 @@ There are some `StorageClass` definitions provided by the PSO installation. Refe
 
 ## Installation
 
+### Upgrading from PSO 5.x
+
+Please use the instructions [here](../docs/csi-5to6-upgradepath.md).
+
 ### Configure NTP
 
 The PSO CSI driver requires all compute node clocks to be within 500ms.
@@ -105,8 +109,7 @@ helm install pure-pso pure/pure-pso --version <version> --namespace <pso-namespa
             --set flasharray.sanType=fc \
             --set clusterID=k8s_xxx
 ```
-### Upgrade from PSO 5
-Please see instruction [here](../docs/csi-5to6-upgradepath.md).  
+
 ### Post-Installation
 After installing, you should see pods like the following:
 
@@ -296,10 +299,13 @@ More information can be found at the documentation for [controller attach-detach
 To uninstall, run `helm delete -n <pso-namespace> pure-pso`. Most resources will be immediately removed, but
 the `cockroach-operator` pod will remain to do more cleanup. Once cleanup is complete, it will remove itself.
 
-## Upgrading
+## Upgrading within Major verstion
 
-**It is not recommended to upgrade by setting the `images.plugin.tag` in the image section of values.yaml. Use the version of
-the helm repository with the tag version required. This ensures the supporting changes are present in the templates.**
+**It is not recommended to upgrade by setting the `images.plugin.tag` values in the image section of `values.yaml`.**
+
+**Use the appropriate version of `values.yaml` from the helm repository with the tag version required.**
+
+**This ensures the supporting changes are present in the templates.**
 
 ```bash
 # list the avaiable version of the plugin

@@ -105,7 +105,8 @@ helm install pure-pso pure/pure-pso --version <version> --namespace <pso-namespa
             --set flasharray.sanType=fc \
             --set clusterID=k8s_xxx
 ```
-
+### Upgrade from PSO 5
+Please see instruction [here](../docs/csi-5to6-upgradepath.md).  
 ### Post-Installation
 After installing, you should see pods like the following:
 

@@ -9,6 +9,8 @@
 
 <a href="#check4">4. Debug unhealthy PVCs/PVs</a>
 
+<a href="#check5">5. Debug network issue</a>
+
 ### <a name="check1">1. Check if Kubernetes cluster is healthy</a>
 1.1. Check Kubernetes version.
 
@@ -147,4 +149,16 @@ kubectl get pod --all-namespaces -o wide
 * Look at the log of the PSO node pod.
 ```
 kubectl logs -n [pso-namespace] pso-csi-node-[suffix] pso-csi-container
+```
+
+### <a name="check5">5. Debug network issue</a>
+
+5.1. Add smart-agent container to PSO pods, the container has debugging tools. Make sure kube config has been configured to access the Kubernetes cluster, then run this [script](../scripts/patch-smart-agent.sh).
+```
+bash scripts/patch-smart-agent.sh
+```
+
+5.2. Run this [script](../scripts/pso-network-debug.sh) to test network connectivity, share the output to PSO team.
+```
+bash scripts/pso-network-debug.sh
 ```

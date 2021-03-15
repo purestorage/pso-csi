@@ -5,18 +5,14 @@ if [[ $# != 0 ]]; then
 fi
 
 KUBECTL=kubectl
+
+if [ -n "$(which oc)" ]; then
+  echo "oc exists, use oc instead of kubectl"
+  KUBECTL=oc
+fi
+
 LOG_DIR=./pso-logs
 PSO_NS=$($KUBECTL get pod -o wide --all-namespaces | grep pso-csi-controller-0 | awk '{print $1}')
-
-while true; do
-    # shellcheck disable=SC2162
-    read -p "Continue with kubectl or oc (openshift cluster), y (kubectl) / n (oc)? " yn
-    case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) KUBECTL=oc; break;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
 
 tput setaf 2;
 echo -e "PSO namespace is $PSO_NS, overwritting log dir $LOG_DIR\n"
@@ -55,7 +51,7 @@ done
 echo "collect info for all pods"
 $KUBECTL get pod --all-namespaces -o wide > $LOG_DIR/all-pods.log
 echo -e "\n" >> $LOG_DIR/all-pods.log
-$KUBECTL describe pod -n $PSO_NS >> $LOG_DIR/all-pods.log
+$KUBECTL describe pod --all-namespaces >> $LOG_DIR/all-pods.log
 
 echo "collect logs for all nodes"
 $KUBECTL get node -o wide > $LOG_DIR/all-nodes.log
@@ -75,4 +71,11 @@ $KUBECTL get all -o wide -n $PSO_NS > $LOG_DIR/all-resource.log
 echo -e "\n" >> $LOG_DIR/all-resource.log
 # Supress potential error: Error from server (NotFound): the server could not find the requested resource
 $KUBECTL describe all -n $PSO_NS >> $LOG_DIR/all-resource.log 2>/dev/null
+
+COMPRESS_FILE=pso-logs-$(date "+%Y.%m.%d-%H.%M.%S").tar.gz
+tput setaf 2;
+echo -e "Compressing log folder $LOG_DIR into $COMPRESS_FILE"
+tput sgr0
+tar -czvf $COMPRESS_FILE $LOG_DIR
+
 

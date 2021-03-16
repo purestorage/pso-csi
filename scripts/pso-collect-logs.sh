@@ -19,11 +19,19 @@ echo -e "PSO namespace is $PSO_NS, overwritting log dir $LOG_DIR\n"
 tput sgr0
 
 DB_REPLICAS=$($KUBECTL get statefulset -n $PSO_NS | awk '{print $1}' | grep pso-db-)
-
 PODS=$($KUBECTL get pod -n $PSO_NS | awk '{print $1}' | grep -e pso-db- -e pso-csi-)
 
 rm $LOG_DIR -r
 mkdir $LOG_DIR
+
+if [[ $KUBECTL == "oc" ]]; then
+  echo "collect scc info"
+  # Get log for scc which only exists in openshift cluster, in case oc exists but the cluster is k8s cluster
+  # we will get "resource type does not exist", which is ok.
+  oc get scc -o wide > $LOG_DIR/scc.log 2>/dev/null
+  echo -e "\n" >> $LOG_DIR/scc.log
+  oc describe scc >> $LOG_DIR/scc.log 2>/dev/null
+fi
 
 for pod in $PODS
 do

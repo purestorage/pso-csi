@@ -98,3 +98,15 @@ orchestrator:
   # name is either 'k8s' or 'openshift'
   name: openshift
 ```
+
+## Ensure OpenShift SCC is Authorized for the PSO Service Account
+
+Ensure that the PSO service account has access to the OpenShift Privilaged Security Context Constraint (SCC).
+
+```bash
+oc adm policy add-scc-to-user privileged -z <service-account> -n <namespace>
+```
+
+where `service-account` is as defined in the `values.yaml` file. Default = `pure`
+
+and `namespace` is the namespace in which PSO will be installed.

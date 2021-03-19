@@ -23,5 +23,6 @@ spec:
 $KUBECTL patch deployment -n $PSO_NS pso-db-deployer --patch "$PATCH_CONTAINER"
 $KUBECTL patch deployment -n $PSO_NS pso-db-cockroach-operator --patch "$PATCH_CONTAINER"
 $KUBECTL patch statefulset -n $PSO_NS pso-csi-controller --patch "$PATCH_CONTAINER"
+$KUBECTL patch daemonset -n $PSO_NS pso-csi-node --patch "$PATCH_CONTAINER"
 $KUBECTL patch statefulset -n $PSO_NS $(kubectl get statefulset -n $PSO_NS | awk '{print $1}' | grep pso-db-) --patch "$PATCH_CONTAINER"
 

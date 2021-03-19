@@ -1,7 +1,29 @@
-if [[ $# != 0 ]]; then
-  echo -e "If kubeconfig is not configured please run: export KUBECONFIG=[kube-config-file]\n"
-  echo -e "Usage: *.sh"
-  exit
+FULL_MODE="false"
+while [ -n "$1" ]; do # while loop starts
+  case "$1" in
+
+  -full)
+    echo "-full option specified"
+    FULL_MODE="true";;
+
+  --help)
+    echo -e "Usage: *.bash [OPTION]"
+    echo -e "If kubeconfig is not configured please run: export KUBECONFIG=[kube-config-file]\n"
+    echo -e "-full: full log mode, collect pod information outside of PSO and kube-system namespace, please make sure there is no sensitive information."
+    exit;;
+
+  *)
+    echo "Option $1 not recognized"
+    exit;;
+
+  esac
+  shift
+done
+
+if [ "$FULL_MODE" == "false" ]; then
+    tput setaf 2;
+    echo -e "Will not collect user application info, if there is PVC mount issue, please run with -full option to collect info for all pods in all namespaces, make sure there is no sensitive info."
+    tput sgr0
 fi
 
 KUBECTL=kubectl
@@ -56,10 +78,19 @@ do
   fi
 done
 
-echo "collect info for all pods"
-$KUBECTL get pod --all-namespaces -o wide > $LOG_DIR/all-pods.log
-echo -e "\n" >> $LOG_DIR/all-pods.log
-$KUBECTL describe pod --all-namespaces >> $LOG_DIR/all-pods.log
+if [ "$FULL_MODE" == "true" ]; then
+  echo "collect info for all pods in all namespaces"
+  $KUBECTL get pod --all-namespaces -o wide > $LOG_DIR/all-pods.log
+  echo -e "\n" >> $LOG_DIR/all-pods.log
+  $KUBECTL describe pod --all-namespaces >> $LOG_DIR/all-pods.log
+else
+  echo "collect info for pods in PSO namespace $PSO_NS and kube-system namespace"
+  $KUBECTL get pod -n $PSO_NS -o wide > $LOG_DIR/all-pods.log
+  $KUBECTL get pod -n kube-system -o wide >> $LOG_DIR/all-pods.log
+  echo -e "\n" >> $LOG_DIR/all-pods.log
+  $KUBECTL describe pod -n $PSO_NS >> $LOG_DIR/all-pods.log
+  $KUBECTL describe pod -n kube-system >> $LOG_DIR/all-pods.log
+fi
 
 echo "collect logs for all nodes"
 $KUBECTL get node -o wide > $LOG_DIR/all-nodes.log
@@ -84,6 +115,6 @@ COMPRESS_FILE=pso-logs-$(date "+%Y.%m.%d-%H.%M.%S").tar.gz
 tput setaf 2;
 echo -e "Compressing log folder $LOG_DIR into $COMPRESS_FILE"
 tput sgr0
-tar -czvf $COMPRESS_FILE $LOG_DIR
+tar -czvf $COMPRESS_FILE $LOG_DIR >/dev/null
 
 

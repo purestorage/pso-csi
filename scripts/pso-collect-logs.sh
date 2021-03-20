@@ -2,18 +2,18 @@ FULL_MODE="false"
 while [ -n "$1" ]; do # while loop starts
   case "$1" in
 
-  -full)
-    echo "-full option specified"
+  --full)
+    echo "--full option specified"
     FULL_MODE="true";;
 
   --help)
     echo -e "Usage: *.bash [OPTION]"
     echo -e "If kubeconfig is not configured please run: export KUBECONFIG=[kube-config-file]\n"
-    echo -e "-full: full log mode, collect pod information outside of PSO and kube-system namespace, please make sure there is no sensitive information."
+    echo -e "--full: full log mode, collect pod information outside of PSO and kube-system namespace, please make sure there is no sensitive information."
     exit;;
 
   *)
-    echo "Option $1 not recognized"
+    echo "Option $1 not recognized, use --help for more information."
     exit;;
 
   esac
@@ -22,7 +22,7 @@ done
 
 if [ "$FULL_MODE" == "false" ]; then
     tput setaf 2;
-    echo -e "Will not collect user application info, if there is PVC mount issue, please run with -full option to collect info for all pods in all namespaces, make sure there is no sensitive info."
+    echo -e "Will not collect user application info, if there is PVC mount issue, please run with --full option to collect info for all pods in all namespaces, make sure there is no sensitive info."
     tput sgr0
 fi
 

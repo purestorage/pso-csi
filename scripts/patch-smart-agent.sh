@@ -18,6 +18,8 @@ spec:
             - sh
             - -c
             - while true; do sleep 1; done
+          securityContext:
+            privileged: true          
 "
 
 $KUBECTL patch deployment -n $PSO_NS pso-db-deployer --patch "$PATCH_CONTAINER"

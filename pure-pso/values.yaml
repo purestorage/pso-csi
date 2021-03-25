@@ -115,7 +115,7 @@ images:
       tag: v1.0.4
     cockroachdb:
       name: cockroachdb/cockroach
-      tag: v19.2.3
+      tag: v20.2.6
 
 # specify the service account name for this app
 clusterrolebinding:

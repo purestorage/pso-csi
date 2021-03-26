@@ -83,6 +83,10 @@ git clone https://github.com/purestorage/pso-csi.git
 Create and customize your own `values.yaml` and install the helm chart using this, and keep the file for future use. The easiest way is to copy
 the default [./values.yaml](https://raw.githubusercontent.com/purestorage/pso-csi/master/pure-pso/values.yaml) provided in the helm chart.
 
+### OpenShift Pre-Requisites
+
+Please review the steps detailed [here](../docs/openshift_mc.md) for OpenShist specific additional steps.
+
 ### Dry run the installation
 
 This will validate your `values.yaml` and check it is working correctly.

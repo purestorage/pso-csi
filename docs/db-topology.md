@@ -10,7 +10,6 @@ PSO uses cockroach DB to store metadata, by default the DB has 5 replicas, each 
 DBTopology:
   # true:  Each DB replica is required  to run on a worker node with the same topology labels as the backend array
   # false: Each DB replica is preferred to run on a worker node with the same topology labels as the backend array,
-  #        Kubernetes scheduler will try best effort, if no worker node with matching topology labels is found, 
-  #        it may run on any worker node.
+  #        Kubernetes scheduler will try best effort based on topology labels and available resource on worker nodes.
   enforce: false
 ```

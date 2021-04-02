@@ -36,6 +36,13 @@ storagetopology:
   enable: false
   strictTopology: false
 
+# this option is to configure topology affinity for cockroach db replicas
+DBTopology:
+  # true:  Each DB replica is required  to run on a worker node with the same topology labels as the backend array
+  # false: Each DB replica is preferred to run on a worker node with the same topology labels as the backend array,
+  #        Kubernetes scheduler will try best effort based on topology labels and available resource on worker nodes.
+  enforce: false
+
 # arrays specify what storage arrays should be managed by the plugin, this is
 # required to be set upon installation. For FlashArrays you must set the "MgmtEndPoint"
 # and "APIToken", and for FlashBlades you need the additional "NFSEndPoint" parameter.

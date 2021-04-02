@@ -159,6 +159,9 @@
                 "enable": false,
                 "strictTopology": false
             },
+            "DBTopology": {
+                "enforce": false
+            },
             "tolerations": []
         }
     ],
@@ -178,6 +181,7 @@
         "nodeServer",
         "orchestrator",
         "storagetopology",
+        "DBTopology",
         "tolerations"
     ],
     "additionalProperties": true,
@@ -1680,6 +1684,32 @@
                     "$id": "#/properties/storagetopology/properties/strictTopology",
                     "type": "boolean",
                     "title": "The strictTopology schema",
+                    "default": false,
+                    "examples": [
+                        false
+                    ]
+                }
+            }
+        },
+        "DBTopology": {
+            "$id": "#/properties/DBTopology",
+            "type": "object",
+            "title": "The DBTopology schema",
+            "default": {},
+            "examples": [
+                {
+                    "enforce": false
+                }
+            ],
+            "required": [
+                "enforce"
+            ],
+            "additionalProperties": true,
+            "properties": {
+                "enforce": {
+                    "$id": "#/properties/DBTopology/properties/enforce",
+                    "type": "boolean",
+                    "title": "The enforce schema",
                     "default": false,
                     "examples": [
                         false

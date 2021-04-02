@@ -71,6 +71,8 @@ spec:
               value: {{ .Values.images.database.cockroachdb.name }}
             - name: COCKROACHDB_TAG
               value: {{ .Values.images.database.cockroachdb.tag }}
+            - name: ENFORCE_DB_TOPOLOGY
+              value: "{{ .Values.DBTopology.enforce }}"
           securityContext:
             privileged: true
           volumeMounts:

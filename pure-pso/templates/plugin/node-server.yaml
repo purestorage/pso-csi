@@ -43,15 +43,6 @@ spec:
       # https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
       dnsPolicy: ClusterFirstWithHostNet
       hostPID: true
-{{- if eq .Values.app.prereq true}}
-      initContainers:
-        - name: pso-node-config
-          image: "{{ .Values.images.nodeConfig.name }}:{{ .Values.images.nodeConfig.tag }}"
-          imagePullPolicy: {{ .Values.images.nodeConfig.pullPolicy }}
-          command:  ["/bin/sh", "-c", "/node-configure.sh"]
-          securityContext:
-            privileged: true
-{{- end}}
       containers:
         - name: node-driver-registrar
           {{- with .Values.images.csi.nodeDriverRegistrar }}

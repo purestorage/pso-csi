@@ -26,9 +26,6 @@ orchestrator:
 # for pso-csi
 app:
   debug: false
-  # this option defines whether Pure node-specific pre-requisites are installed on all
-  # nodes running PSO
-  prereq: true
 
 # this option is to enable/disable the csi topology feature
 # for pso-csi
@@ -84,10 +81,6 @@ images:
   plugin:
     name: purestorage/k8s
     tag: v6.1.0
-    pullPolicy: Always
-  nodeConfig:
-    name: purestorage/node-config
-    tag: v0.1.0
     pullPolicy: Always
   csi:
     provisioner:

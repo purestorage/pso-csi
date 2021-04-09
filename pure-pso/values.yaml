@@ -26,9 +26,6 @@ orchestrator:
 # for pso-csi
 app:
   debug: false
-  # this option defines whether Pure node-specific pre-requisites are installed on all
-  # nodes running PSO
-  prereq: true
 
 # this option is to enable/disable the csi topology feature
 # for pso-csi
@@ -85,10 +82,6 @@ images:
     name: purestorage/k8s
     tag: v6.1.0
     pullPolicy: Always
-  nodeConfig:
-    name: purestorage/node-config
-    tag: v0.1.0
-    pullPolicy: Always
   csi:
     provisioner:
       name: quay.io/k8scsi/csi-provisioner
@@ -115,11 +108,11 @@ images:
       pullPolicy: Always
     cockroachOperator:
       name: purestorage/cockroach-operator
-      tag: v1.2.0-pre
+      tag: v1.1.0
       pullPolicy: Always
     psctl:
       name: purestorage/psctl
-      tag: v1.0.4
+      tag: v1.0.3
     cockroachdb:
       name: cockroachdb/cockroach
       tag: v20.2.6

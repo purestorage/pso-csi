@@ -15,11 +15,11 @@ quay.io/k8scsi/csi-attacher:v2.2.0
 quay.io/k8scsi/csi-resizer:v0.5.0
 quay.io/k8scsi/livenessprobe:v2.0.0
 quay.io/k8scsi/csi-node-driver-registrar:v1.3.0
-purestorage/cockroach-operator:v1.1.0
-purestorage/dbdeployer:v1.1.0
+purestorage/cockroach-operator:v1.1.1
+purestorage/dbdeployer:v1.1.1
 purestorage/psctl:v1.0.3
-purestorage/k8s:v6.1.0
-cockroachdb/cockroach:v19.2.3
+purestorage/k8s:v6.1.1
+cockroachdb/cockroach:v20.2.6
 )
 
 newImageRepo="${REGISTRY_URL}\/library"

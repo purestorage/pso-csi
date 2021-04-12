@@ -4,14 +4,14 @@
 
 #### Bug fixes and enhancements:
 
-* [NSTK-2256] Add missing toleration to db pods
-* [NSTK-2259] Support DB pods StatefulSet node-affinity and topology
+* Add missing toleration to db pods
+* [Support DB pods StatefulSet node-affinity and topology](https://github.com/purestorage/pso-csi/blob/master/docs/db-topology.md)
 * [#90](https://github.com/purestorage/pso-csi/issues/90) Enhance PSO log debug level
 * [#141](https://github.com/purestorage/pso-csi/issues/141) Set Default Cockroach DB version to v20.2.6	
 
 #### Known issues:
 * Snapshots created from imported volume don't show ready to use.
-* db volume is mounted as read-only and result in CrashLoopBackOff status of a db pod.
+* Database volume is mounted as read-only and result in CrashLoopBackOff status of a db pod.
 
 ## v6.1.0 (02/24/2021)
 

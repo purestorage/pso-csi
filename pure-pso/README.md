@@ -204,7 +204,7 @@ The following table lists the configurable parameters and their default values.
 | `flashblade.exportRules`                       | NFS Export Rules. Please refer the FlashBlade User Guide.                                                                                                  | ""                                            |
 | `flashblade.snapshotDirectoryEnabled`          | Enable/Disable FlashBlade snapshots                                                                                                                        | `false`                                       |
 | `orchestrator.name`                            | Orchestrator type, such as openshift, k8s                                                                                                                  | `k8s`                                         |
-| *`arrays`                                      | Array list of all the backend FlashArrays and FlashBlades                                                                                                  | may be set by user, see two examples below    |
+| *`arrays`                                      | Array list of all the backend FlashArrays and FlashBlades                                                                                                  | may be set by user, see examples below        |
 | `nodeSelector`                                 | [NodeSelectors](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector) Select node-labels to schedule all PSO CSI pods.          | `{}`                                          |
 | `tolerations`                                  | [Tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/#concepts)                                                            | `[]`                                          |
 | `affinity`                                     | [Affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)                                                  | `{}`                                          |
@@ -251,7 +251,7 @@ The following table lists the configurable parameters and their default values.
 *Examples:
 
 1. Helm values  
-To have helm create and manage the secret holding the API tokens use the following in your values file.  
+To have Helm create and manage the secret holding the API tokens use the following in your values file:  
 ```yaml
 arrays:
   FlashArrays:
@@ -270,7 +270,7 @@ arrays:
 
 2. Manual secret  
 If you wish to manage the secret holding the API tokens yourself do the following;  
-Create a kubernetes secret called `pure-provisioner-secret` with a single key `pure.json` containing json formatted like so  
+Create a Kubernetes secret called `pure-provisioner-secret` in the same namespace as your PSO installation with a single key `pure.json` containing json formatted like so:  
 ```json
 {
   "FlashArrays": [
@@ -297,10 +297,12 @@ Create a kubernetes secret called `pure-provisioner-secret` with a single key `p
   ]
 }
 ```
-Set the helm value `existingSecret` to true  
+Set the helm value `existingSecret` to true:  
 ```yaml
 existingSecret: true
 ```
+To create the Kubernetes secret from a file, use the following command
+`kubectl create secret generic pure-provisioner-secret -n <PSO namespace> --from-file=pure.json=<Pure JSON file>`
 
 ## Dark-Site Installation
 

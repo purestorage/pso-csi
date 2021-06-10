@@ -91,4 +91,4 @@ The PSO Helm Charts project is issued under the [Apache 2.0 license](https://git
 
 ## Report a Bug
 For filing bugs, suggesting improvements, or requesting new features, please open an [issue](https://github.com/purestorage/pso-csi/issues).
-For bugs, please run this [script](./scripts/pso-collect-logs.sh) to collect all logs and send to [pso-support@purestorage.com](mailto:pso-support@purestorage.com) along with the issue ID. 
+For bugs, please run this [script](./scripts/pso-collect-logs.sh) to collect all logs and send to [support@purestorage.com](mailto:support@purestorage.com) along with the issue ID. 

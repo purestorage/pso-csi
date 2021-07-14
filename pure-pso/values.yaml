@@ -40,6 +40,9 @@ DBTopology:
   #        Kubernetes scheduler will try best effort based on topology labels and available resource on worker nodes.
   enforce: false
 
+# If you wish to manage the secret "pure-provisioner-secret" yourself set this to true.
+existingSecret: false
+
 # arrays specify what storage arrays should be managed by the plugin, this is
 # required to be set upon installation. For FlashArrays you must set the "MgmtEndPoint"
 # and "APIToken", and for FlashBlades you need the additional "NFSEndPoint" parameter.

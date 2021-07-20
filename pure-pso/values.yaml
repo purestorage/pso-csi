@@ -65,7 +65,7 @@ arrays:
   FlashBlades: []
 
 flasharray:
-  # support ISCSI or FC, not case sensitive
+  # support ISCSI, FC or NVMEOF-RDMA, not case sensitive
   sanType: ISCSI
   defaultFSType: xfs
   defaultFSOpt: "-q"
@@ -80,7 +80,7 @@ flashblade:
 images:
   plugin:
     name: purestorage/k8s
-    tag: v6.1.1
+    tag: v6.2.0-rc1
     pullPolicy: Always
   csi:
     provisioner:
@@ -104,15 +104,15 @@ images:
   database:
     deployer:
       name: purestorage/dbdeployer
-      tag: v1.1.1
+      tag: v1.2.0-rc1
       pullPolicy: Always
     cockroachOperator:
       name: purestorage/cockroach-operator
-      tag: v1.1.1
+      tag: v1.2.0-rc1
       pullPolicy: Always
     psctl:
       name: purestorage/psctl
-      tag: v1.0.3
+      tag: v1.1.0-rc1
     cockroachdb:
       name: cockroachdb/cockroach
       tag: v20.2.6
@@ -195,6 +195,6 @@ database:
   # This value is recommended to be larger than Kubernetes liveness probe setting time in our db pod, 
   # so K8S gets chance to restart the pod if it's unhealthy before we take it down.
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes
-  maxSuspectSeconds: 1800
+  maxSuspectSeconds: 3600
   # The length of time a db node is allowed to be in Startup before being suspect
   maxStartupSeconds: 600

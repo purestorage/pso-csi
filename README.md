@@ -47,6 +47,7 @@ Some of these requirements have changed since PSO 5.x, and not following them _w
   - Latest iSCSI initiator software for your operating system (Optional, required for iSCSI connectivity)
   - Latest NFS software package for your operating system (Optional, required for NFS connectivity)
   - Latest FC initiator software for your operating system (Optional, required for FC connectivity, *FC Supported on Bare-metal K8s installations only*)
+  - Latest NVMe initiator software for your operating system (Optional, required for NVMe connectivity, *NVMe Supported on Bare-metal K8s installations only*), check [here](./docs/flasharray-nvmeof.md) for more details 
   - Ensure that IPv4 forwarding is enabled to allow inter-node communication. See here for more [details](docs/ipv4_forwarding.md). **This is important in Rancher deployments**
   - **An NTP implementation (such as `ntpd` or `chronyd`) is installed and running on all Kubernetes cluster nodes**
   - All backend arrays accessed by PSO must sync to the same time source as the rest of the Kubernetes cluster.

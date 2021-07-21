@@ -1,5 +1,12 @@
 # Changelog
 
+## v6.2.0-rc1 (07/22/2021)
+
+#### Features:
+
+* FlashArray NVMeoF-RoCE support (NVMeoF using RDMA over Converged Ethernet)
+* If you want to try the NVMeoF-RoCE feature, a fresh PSO installation is required.
+
 ## v6.1.1 (04/12/2021)
 
 #### Bug fixes and enhancements:

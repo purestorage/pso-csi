@@ -2,8 +2,23 @@ apiVersion: v1
 entries:
   pure-pso:
   - apiVersion: v1
+    appVersion: 6.2.0
+    created: "2021-08-20T13:09:14.782131-07:00"
+    description: A Helm chart for Pure Service Orchestrator CSI driver
+    digest: 1d4331704665f37b4006af364ec6d29c6446656625479fd20f4f348aa55349ab
+    icon: https://raw.githubusercontent.com/purestorage/pso-csi/master/pure-pso/pure-storage.png
+    keywords:
+    - purestorage
+    maintainers:
+    - email: sales@purestorage.com
+      name: Pure Storage, Inc.
+    name: pure-pso
+    urls:
+    - https://purestorage.github.io/pso-csi/pure-pso-6.2.0.tgz
+    version: 6.2.0
+  - apiVersion: v1
     appVersion: 6.2.0-rc1
-    created: "2021-07-21T14:35:19.851278-07:00"
+    created: "2021-08-20T13:09:14.779602-07:00"
     description: A Helm chart for Pure Service Orchestrator CSI driver
     digest: f29fe09901dc6ed223ff4d0e587cae6f7b99940b3ddb9ed2f2e33b3651e27633
     icon: https://raw.githubusercontent.com/purestorage/pso-csi/master/pure-pso/pure-storage.png
@@ -18,7 +33,7 @@ entries:
     version: 6.2.0-rc1
   - apiVersion: v1
     appVersion: 6.1.1
-    created: "2021-07-21T14:35:19.849318-07:00"
+    created: "2021-08-20T13:09:14.776708-07:00"
     description: A Helm chart for Pure Service Orchestrator CSI driver
     digest: fc7be6616131f8df54064095c5660fda06295fb5fbe4239843019afe23e5ead2
     icon: https://raw.githubusercontent.com/purestorage/pso-csi/master/pure-pso/pure-storage.png
@@ -33,7 +48,7 @@ entries:
     version: 6.1.1
   - apiVersion: v1
     appVersion: 6.1.0
-    created: "2021-07-21T14:35:19.847441-07:00"
+    created: "2021-08-20T13:09:14.773585-07:00"
     description: A Helm chart for Pure Service Orchestrator CSI driver
     digest: fabb4b4afcffc7866492246806d70a6d86ce0b0ab815591f937f2325c14714a4
     icon: https://raw.githubusercontent.com/purestorage/pso-csi/master/pure-pso/pure-storage.png
@@ -48,7 +63,7 @@ entries:
     version: 6.1.0
   - apiVersion: v1
     appVersion: 6.0.5
-    created: "2021-07-21T14:35:19.845627-07:00"
+    created: "2021-08-20T13:09:14.770764-07:00"
     description: A Helm chart for Pure Service Orchestrator CSI driver
     digest: 804f5467ba2f64679f38019609d820261b7c86fcd104eec66a388fbd55c98e41
     icon: https://raw.githubusercontent.com/purestorage/pso-csi/master/pure-pso/pure-storage.png
@@ -63,7 +78,7 @@ entries:
     version: 6.0.5
   - apiVersion: v1
     appVersion: 6.0.4
-    created: "2021-07-21T14:35:19.842999-07:00"
+    created: "2021-08-20T13:09:14.767476-07:00"
     description: A Helm chart for Pure Service Orchestrator CSI driver
     digest: 8a5fc98b6227b76b6a001df42f2530483a76876c1d207724837c28a92ab5c7d6
     icon: https://raw.githubusercontent.com/purestorage/pso-csi/master/pure-pso/pure-storage.png
@@ -78,7 +93,7 @@ entries:
     version: 6.0.4
   - apiVersion: v1
     appVersion: 6.0.3
-    created: "2021-07-21T14:35:19.840555-07:00"
+    created: "2021-08-20T13:09:14.764132-07:00"
     description: A Helm chart for Pure Service Orchestrator CSI driver
     digest: 08687d6b18864ea67681e233c4e02ac779d14b484f792199d869a15838ed9ec5
     icon: https://raw.githubusercontent.com/purestorage/pso-csi/master/pure-pso/pure-storage.png
@@ -93,7 +108,7 @@ entries:
     version: 6.0.3
   - apiVersion: v1
     appVersion: 6.0.2
-    created: "2021-07-21T14:35:19.838174-07:00"
+    created: "2021-08-20T13:09:14.760827-07:00"
     description: A Helm chart for Pure Service Orchestrator CSI driver
     digest: da1a907ea323f5a789f1249be34d479f88190e8d4319cc77d5e4a10ca3c88e5f
     icon: https://raw.githubusercontent.com/purestorage/pso-csi/master/pure-pso/pure-storage.png
@@ -108,7 +123,7 @@ entries:
     version: 6.0.2
   - apiVersion: v1
     appVersion: 6.0.1
-    created: "2021-07-21T14:35:19.835682-07:00"
+    created: "2021-08-20T13:09:14.757854-07:00"
     description: A Helm chart for Pure Service Orchestrator CSI driver
     digest: 19a3e9ab423c7cee09559ec6f2002d0b722d59e49333a4412d22b4163baad5df
     icon: https://raw.githubusercontent.com/purestorage/pso-csi/master/pure-pso/pure-storage.png
@@ -124,7 +139,7 @@ entries:
   pureStorageDriver:
   - apiVersion: v1
     appVersion: 6.0.0
-    created: "2021-07-21T14:35:19.868074-07:00"
+    created: "2021-08-20T13:09:14.806156-07:00"
     description: A Helm chart for Pure Service Orchestrator CSI driver
     digest: 698a4743068697d6d73b85a0a027fec48f8f05a4ccc795b0f2f27c929a37902c
     icon: https://raw.githubusercontent.com/purestorage/pso-csi/master/pureStorageDriver/pure-storage.png
@@ -139,7 +154,7 @@ entries:
     version: 6.0.0
   - apiVersion: v1
     appVersion: 6.0.0-rc8
-    created: "2021-07-21T14:35:19.86643-07:00"
+    created: "2021-08-20T13:09:14.803854-07:00"
     description: A Helm chart for Pure Service Orchestrator CSI driver
     digest: 22590a3eb6510c22c550ff104eba06d687cca784aa9afd6c16204c56a99fc7e7
     icon: https://raw.githubusercontent.com/purestorage/pso-csi/master/pureStorageDriver/pure-storage.png
@@ -154,7 +169,7 @@ entries:
     version: 6.0.0-rc8
   - apiVersion: v1
     appVersion: 6.0.0-rc7
-    created: "2021-07-21T14:35:19.864562-07:00"
+    created: "2021-08-20T13:09:14.80126-07:00"
     description: A Helm chart for Pure Service Orchestrator CSI driver
     digest: a1bf7a582d0fdaf712246bae4d64ea10b6006b63df40eac1e91691422f1125c4
     icon: https://raw.githubusercontent.com/purestorage/pso-csi/master/pureStorageDriver/pure-storage.png
@@ -169,7 +184,7 @@ entries:
     version: 6.0.0-rc7
   - apiVersion: v1
     appVersion: 6.0.0-rc6
-    created: "2021-07-21T14:35:19.862894-07:00"
+    created: "2021-08-20T13:09:14.798679-07:00"
     description: A Helm chart for Pure Service Orchestrator CSI driver
     digest: 42c2a0e429fdaa65f24a9eb0ea0993137352f43b5a74ed8584985308251caa9a
     icon: https://raw.githubusercontent.com/purestorage/pso-csi/master/pureStorageDriver/pure-storage.png
@@ -184,7 +199,7 @@ entries:
     version: 6.0.0-rc6
   - apiVersion: v1
     appVersion: 6.0.0-rc5
-    created: "2021-07-21T14:35:19.860651-07:00"
+    created: "2021-08-20T13:09:14.796409-07:00"
     description: A Helm chart for Pure Service Orchestrator CSI driver
     digest: 45e05016171f57b8d67d2b299d0a9c088bb496f1ee67d0d5fed72c9f132f04c3
     icon: https://raw.githubusercontent.com/purestorage/pso-csi/master/pureStorageDriver/pure-storage.png
@@ -199,7 +214,7 @@ entries:
     version: 6.0.0-rc5
   - apiVersion: v1
     appVersion: 6.0.0-rc4
-    created: "2021-07-21T14:35:19.858918-07:00"
+    created: "2021-08-20T13:09:14.79382-07:00"
     description: A Helm chart for Pure Service Orchestrator CSI driver
     digest: 3c35282f9fa2f4248680823b171237c0ce090861399133cdb33c4e39b1b1599f
     icon: https://raw.githubusercontent.com/purestorage/pso-csi/master/pureStorageDriver/pure-storage.png
@@ -214,7 +229,7 @@ entries:
     version: 6.0.0-rc4
   - apiVersion: v1
     appVersion: 6.0.0-rc3
-    created: "2021-07-21T14:35:19.857286-07:00"
+    created: "2021-08-20T13:09:14.79073-07:00"
     description: A Helm chart for Pure Service Orchestrator CSI driver
     digest: 747ee465faba14b4e7e75b2cc5760966181db95002a8f404d1ef09f19d2c4005
     icon: https://raw.githubusercontent.com/purestorage/pso-csi/master/pureStorageDriver/pure-storage.png
@@ -229,7 +244,7 @@ entries:
     version: 6.0.0-rc3
   - apiVersion: v1
     appVersion: 6.0.0-rc2
-    created: "2021-07-21T14:35:19.85562-07:00"
+    created: "2021-08-20T13:09:14.788476-07:00"
     description: A Helm chart for Pure Service Orchestrator CSI driver
     digest: afc28d4b4ca9f3d4757dbaf682e3aa62adfe120918fa163e496cab8559b81d97
     icon: https://raw.githubusercontent.com/purestorage/pso-csi/master/pureStorageDriver/pure-storage.png
@@ -244,7 +259,7 @@ entries:
     version: 6.0.0-rc2
   - apiVersion: v1
     appVersion: 6.0.0-rc1
-    created: "2021-07-21T14:35:19.853241-07:00"
+    created: "2021-08-20T13:09:14.785979-07:00"
     description: A Helm chart for Pure Service Orchestrator CSI driver
     digest: ce49de6b4a03c35c9838eda5a255f6177f8027574b7be90f20e74eda25b3e8db
     icon: https://raw.githubusercontent.com/purestorage/pso-csi/master/pureStorageDriver/pure-storage.png
@@ -257,4 +272,4 @@ entries:
     urls:
     - https://purestorage.github.io/pso-csi/pureStorageDriver-6.0.0-rc1.tgz
     version: 6.0.0-rc1
-generated: "2021-07-21T14:35:19.83242-07:00"
+generated: "2021-08-20T13:09:14.751357-07:00"

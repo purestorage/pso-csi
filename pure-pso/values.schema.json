@@ -90,7 +90,8 @@
                 ],
                 "iSCSILoginTimeout": 20,
                 "preemptAttachments": "true",
-                "sanType": "ISCSI"
+                "sanType": "ISCSI",
+                "iSCSIAllowedCIDR": ""
             },
             "flashblade": {
                 "exportRules": "*(rw,no_root_squash)",
@@ -275,8 +276,7 @@
                     ]
                 }
             ],
-            "oneOf": [  
-                    
+            "oneOf": [
                 {
                     "properties":{
                         "FlashArrays": {"minItems": 1},
@@ -288,13 +288,13 @@
                         "FlashArrays": {"maxItems": 0},
                         "FlashBlades": {"minItems": 1}
                     }
-                },    
+                },
                 {
                     "properties":{
                         "FlashArrays": {"minItems": 1},
                         "FlashBlades": {"minItems": 1}
                     }
-                }            
+                }
 
             ],
             "additionalProperties": true,
@@ -916,7 +916,8 @@
                     ],
                     "iSCSILoginTimeout": 20,
                     "preemptAttachments": "true",
-                    "sanType": "ISCSI"
+                    "sanType": "ISCSI",
+                    "iSCSIAllowedCIDR": "10.0.0.0/24,10.1.0.0/16"
                 }
             ],
             "required": [
@@ -998,6 +999,15 @@
                     "default": "",
                     "examples": [
                         "ISCSI"
+                    ]
+                },
+                "iSCSIAllowedCIDR": {
+                    "$id": "#/properties/flasharray/properties/iSCSIAllowedCIDR",
+                    "type": "string",
+                    "title": "The iSCSIAllowedCIDR schema",
+                    "default": "",
+                    "examples": [
+                        "10.0.0.0/24,10.1.0.0/16"
                     ]
                 }
             }

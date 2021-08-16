@@ -55,6 +55,8 @@ spec:
               value: {{ .Values.clusterID }}
             - name: PURE_FLASHARRAY_SAN_TYPE
               value: {{ .Values.flasharray.sanType }}
+            - name: PURE_ISCSI_ALLOWED_CIDRS
+              value: {{ .Values.flasharray.iSCSIAllowedCIDR }}
             - name: PSCTL_IMAGE
               value: {{ .Values.images.database.psctl.name }}
             - name: PSCTL_TAG

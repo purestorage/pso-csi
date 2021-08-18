@@ -43,6 +43,11 @@ spec:
       # https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
       dnsPolicy: ClusterFirstWithHostNet
       hostPID: true
+      {{ if .Values.image.pullSecrets }}
+      imagePullSecrets:
+      {{- range .Values.application.pullSecrets }}
+      - name: {{ .name }}
+      {{- end }}
       containers:
         - name: node-driver-registrar
           {{- with .Values.images.csi.nodeDriverRegistrar }}

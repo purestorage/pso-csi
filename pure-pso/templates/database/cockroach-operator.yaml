@@ -16,6 +16,11 @@ spec:
 {{ include "pure-csi.labels" . | indent 8 }}
     spec:
       serviceAccountName: {{ .Values.clusterrolebinding.serviceAccount.name }}
+      {{ if .Values.image.pullSecrets }}
+      imagePullSecrets:
+      {{- range .Values.application.pullSecrets }}
+      - name: {{ .name }}
+      {{- end }}
       containers:
         - name: cockroach-operator
           image: "{{ .Values.images.database.cockroachOperator.name }}:{{ .Values.images.database.cockroachOperator.tag }}"

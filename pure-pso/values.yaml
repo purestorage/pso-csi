@@ -79,6 +79,7 @@ flashblade:
   snapshotDirectoryEnabled: "false"
   exportRules: "*(rw,no_root_squash)"
 images:
+  pullSecrets: []
   plugin:
     name: purestorage/k8s
     tag: v6.2.0-rc1

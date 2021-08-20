@@ -1,5 +1,20 @@
 # Changelog
 
+## v6.2.0 (08/16/2021)
+
+#### Features:
+
+* FlashArray NVMeoF-RoCE support (NVMeoF using RDMA over Converged Ethernet) officially goes GA
+* Enable FlashBlade filesystem hard limit by default upon creation (existing filesystems will not be affected)
+
+#### Bug fixes and enhancements:
+
+* Bug fix for using FC SAN type on FlashArray Purity 6.0+
+* Bug fix for DB reconstruction tool when found devices with no UUIDs
+* NVMeof-RoCE support bug fixes and improvements
+* Topology feature performance improvement
+* Bug fix for [#166](https://github.com/purestorage/pso-csi/issues/166) iSCSI CIDR not passed to pso-db pods 
+
 ## v6.2.0-rc1 (07/22/2021)
 
 #### Features:

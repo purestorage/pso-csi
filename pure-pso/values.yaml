@@ -82,35 +82,35 @@ images:
   plugin:
     name: purestorage/k8s
     tag: v6.2.0
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   csi:
     provisioner:
       name: quay.io/k8scsi/csi-provisioner
-      pullPolicy: Always
+      pullPolicy: IfNotPresent
     snapshotter:
       name: quay.io/k8scsi/csi-snapshotter
-      pullPolicy: Always
+      pullPolicy: IfNotPresent
     attacher:
       name: quay.io/k8scsi/csi-attacher
-      pullPolicy: Always
+      pullPolicy: IfNotPresent
     resizer:
       name: quay.io/k8scsi/csi-resizer
-      pullPolicy: Always
+      pullPolicy: IfNotPresent
     nodeDriverRegistrar:
       name: quay.io/k8scsi/csi-node-driver-registrar
-      pullPolicy: Always
+      pullPolicy: IfNotPresent
     livenessProbe:
       name: quay.io/k8scsi/livenessprobe
-      pullPolicy: Always
+      pullPolicy: IfNotPresent
   database:
     deployer:
       name: purestorage/dbdeployer
       tag: v1.2.0
-      pullPolicy: Always
+      pullPolicy: IfNotPresent
     cockroachOperator:
       name: purestorage/cockroach-operator
       tag: v1.2.0
-      pullPolicy: Always
+      pullPolicy: IfNotPresent
     psctl:
       name: purestorage/psctl
       tag: v1.1.0

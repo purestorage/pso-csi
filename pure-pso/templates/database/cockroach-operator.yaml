@@ -16,7 +16,7 @@ spec:
 {{ include "pure-csi.labels" . | indent 8 }}
     spec:
       serviceAccountName: {{ .Values.clusterrolebinding.serviceAccount.name }}
-      {{ if .Values.image.pullSecrets }}
+      {{ if .Values.images.pullSecrets }}
       imagePullSecrets:
       {{- range .Values.images.pullSecrets }}
       - name: {{ .name }}

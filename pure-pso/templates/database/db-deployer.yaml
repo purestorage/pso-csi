@@ -18,7 +18,7 @@ spec:
       serviceAccountName: {{ .Values.clusterrolebinding.serviceAccount.name }}
       {{ if .Values.image.pullSecrets }}
       imagePullSecrets:
-      {{- range .Values.application.pullSecrets }}
+      {{- range .Values.images.pullSecrets }}
       - name: {{ .name }}
       {{- end }}
       containers:

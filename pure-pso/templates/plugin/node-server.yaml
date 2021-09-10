@@ -43,7 +43,7 @@ spec:
       # https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
       dnsPolicy: ClusterFirstWithHostNet
       hostPID: true
-      {{ if .Values.image.pullSecrets }}
+      {{ if .Values.images.pullSecrets }}
       imagePullSecrets:
       {{- range .Values.images.pullSecrets }}
       - name: {{ .name }}

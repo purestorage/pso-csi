@@ -59,7 +59,6 @@ spec:
                     type: string
                   backendType:
                     enum:
-                    - Ephemeral
                     - FlashArray
                     - FlashBlade
                     - PVC
@@ -151,7 +150,6 @@ spec:
                         type: string
                       backendType:
                         enum:
-                          - Ephemeral
                           - FlashArray
                           - FlashBlade
                           - PVC
@@ -209,15 +207,6 @@ spec:
                 underreplicatedRanges:
                   format: int64
                   type: integer
-              required:
-                - asOf
-                - initialized
-                - status
-                - readyNodes
-                - totalRanges
-                - underreplicatedRanges
-                - unavailableRanges
-                - replicas
               type: object
       served: true
       storage: true

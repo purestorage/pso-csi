@@ -55,10 +55,11 @@ spec:
                 properties:
                   apiToken:
                     type: string
-                  backendId:
+                  backendID:
                     type: string
                   backendType:
                     enum:
+                    - Ephemeral
                     - FlashArray
                     - FlashBlade
                     - PVC
@@ -86,7 +87,7 @@ spec:
             replicas:
               items:
                 properties:
-                  backendId:
+                  backendID:
                     type: string
                   backendType:
                     type: string
@@ -146,10 +147,11 @@ spec:
                     properties:
                       apiToken:
                         type: string
-                      backendId:
+                      backendID:
                         type: string
                       backendType:
                         enum:
+                          - Ephemeral
                           - FlashArray
                           - FlashBlade
                           - PVC
@@ -177,7 +179,7 @@ spec:
                 replicas:
                   items:
                     properties:
-                      backendId:
+                      backendID:
                         type: string
                       backendType:
                         type: string

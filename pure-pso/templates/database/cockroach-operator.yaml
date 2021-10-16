@@ -19,7 +19,8 @@ spec:
       {{ if .Values.images.pullSecrets }}
       imagePullSecrets:
       {{- range .Values.images.pullSecrets }}
-      - name: {{ .name }}
+      - name: {{ . }}
+      {{- end }}
       {{- end }}
       containers:
         - name: cockroach-operator
@@ -72,6 +73,8 @@ spec:
               value: {{ .Values.images.database.cockroachdb.tag }}
             - name: ENFORCE_DB_TOPOLOGY
               value: "{{ .Values.DBTopology.enforce }}"
+            - name: IMAGE_PULL_SECRETS
+              value: {{ join "," .Values.images.pullSecrets }}
           securityContext:
             privileged: true
           volumeMounts:

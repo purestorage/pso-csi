@@ -39,10 +39,11 @@ spec:
 {{ include "pure-csi.labels" . | indent 8}}
     spec:
       serviceAccountName: {{ .Values.clusterrolebinding.serviceAccount.name }}
-      {{ if .Values.image.pullSecrets }}
+      {{- if .Values.images.pullSecrets }}
       imagePullSecrets:
-      {{- range .Values.application.pullSecrets }}
-      - name: {{ .name }}
+      {{- range .Values.images.pullSecrets }}
+      - name: {{ . }}
+      {{- end }}
       {{- end }}
       containers:
         - name: pso-csi-container

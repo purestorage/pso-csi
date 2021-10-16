@@ -46,7 +46,8 @@ spec:
       {{ if .Values.images.pullSecrets }}
       imagePullSecrets:
       {{- range .Values.images.pullSecrets }}
-      - name: {{ .name }}
+      - name: {{ . }}
+      {{- end }}
       {{- end }}
       containers:
         - name: node-driver-registrar

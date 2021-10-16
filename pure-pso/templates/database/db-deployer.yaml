@@ -19,7 +19,8 @@ spec:
       {{ if .Values.images.pullSecrets }}
       imagePullSecrets:
       {{- range .Values.images.pullSecrets }}
-      - name: {{ .name }}
+      - name: {{ . }}
+      {{- end }}
       {{- end }}
       containers:
         - name: db-deployer

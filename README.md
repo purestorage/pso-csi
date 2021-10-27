@@ -2,6 +2,8 @@
 
 <img src="./docs/images/pso_logo.png" width="250">
 
+## !!NOTICE!! - PSO is going to be EOL July 31, 2022. New customers should start with [Portworx](https://portworx.com/).
+
 _Using Google Anthos or OpenShift 3.11? Please use [PSO 5.x](https://github.com/purestorage/helm-charts) instead_
 
 ## What is PSO?

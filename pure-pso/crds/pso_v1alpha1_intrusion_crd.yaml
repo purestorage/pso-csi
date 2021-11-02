@@ -12,203 +12,114 @@ spec:
     categories:
     - all
   scope: Namespaced
-  subresources:
-    status: {}
-  additionalPrinterColumns:
-    - JSONPath: .status.status
-      description: The current status of the cluster
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+    subresources:
+      status: {}
+    additionalPrinterColumns:
+    - description: The current status of the cluster
+      jsonPath: .status.status
       name: Status
       type: string
-    - JSONPath: .status.readyNodes
-      description: The number of ready nodes in the cluster
+    - description: The number of ready nodes in the cluster
+      jsonPath: .status.readyNodes
       name: Ready
       type: string
-    - JSONPath: .status.totalRanges
-      description: The total number of ranges
+    - description: The total number of ranges
+      jsonPath: .status.totalRanges
       name: Ranges
       type: integer
-    - JSONPath: .status.underreplicatedRanges
-      description: The number of under-replicated ranges
+    - description: The number of under-replicated ranges
+      jsonPath: .status.underreplicatedRanges
       name: Under-Replicated
       type: integer
-    - JSONPath: .status.unavailableRanges
-      description: The number of unavailable ranges
+    - description: The number of unavailable ranges
+      jsonPath: .status.unavailableRanges
       name: Unavailable
       type: integer
-    - JSONPath: .status.asOf
-      description: When the status was last updated
+    - description: When the status was last updated
+      jsonPath: .status.asOf
       name: As-Of
       type: string
-  validation:
-    openAPIV3Schema:
-      properties:
-        apiVersion:
-          type: string
-        kind:
-          type: string
-        metadata:
-          type: object
-        spec:
-          properties:
-            replicas:
-              items:
-                properties:
-                  apiToken:
-                    type: string
-                  backendID:
-                    type: string
-                  backendType:
-                    enum:
-                    - Ephemeral
-                    - FlashArray
-                    - FlashBlade
-                    - PVC
-                    type: string
-                  mgmtEndpoint:
-                    type: string
-                  volume:
-                    type: string
-                required:
-                - backendType
-                - volume
-                type: object
-              type: array
-          required:
-          - replicas
-          type: object
-        status:
-          properties:
-            asOf:
-              type: string
-            initialized:
-              type: boolean
-            readyNodes:
-              type: string
-            replicas:
-              items:
-                properties:
-                  backendID:
-                    type: string
-                  backendType:
-                    type: string
-                  currentStatusStart:
-                    type: string
-                  decommission:
-                    type: string
-                  status:
-                    type: string
-                  volume:
-                    type: string
-                required:
-                - backendType
-                - currentStatusStart
-                - status
-                - volume
-                type: object
-              type: array
-            status:
-              type: string
-            totalRanges:
-              format: int64
-              type: integer
-            unavailableRanges:
-              format: int64
-              type: integer
-            underreplicatedRanges:
-              format: int64
-              type: integer
-          required:
-          - asOf
-          - initialized
-          - status
-          - readyNodes
-          - totalRanges
-          - underreplicatedRanges
-          - unavailableRanges
-          - replicas
-          type: object
-  version: v1alpha1
-  versions:
-    - name: v1alpha1
-      schema:
-        openAPIV3Schema:
-          type: object
-          properties:
-            apiVersion:
-              type: string
-            kind:
-              type: string
-            metadata:
-              type: object
-            spec:
-              properties:
-                replicas:
-                  items:
-                    properties:
-                      apiToken:
-                        type: string
-                      backendID:
-                        type: string
-                      backendType:
-                        enum:
-                          - Ephemeral
-                          - FlashArray
-                          - FlashBlade
-                          - PVC
-                        type: string
-                      mgmtEndpoint:
-                        type: string
-                      volume:
-                        type: string
-                    required:
-                      - backendType
-                      - volume
-                    type: object
-                  type: array
-              required:
-                - replicas
-              type: object
-            status:
-              properties:
-                asOf:
-                  type: string
-                initialized:
-                  type: boolean
-                readyNodes:
-                  type: string
-                replicas:
-                  items:
-                    properties:
-                      backendID:
-                        type: string
-                      backendType:
-                        type: string
-                      currentStatusStart:
-                        type: string
-                      decommission:
-                        type: string
-                      status:
-                        type: string
-                      volume:
-                        type: string
-                    required:
-                      - backendType
-                      - currentStatusStart
-                      - status
-                      - volume
-                    type: object
-                  type: array
-                status:
-                  type: string
-                totalRanges:
-                  format: int64
-                  type: integer
-                unavailableRanges:
-                  format: int64
-                  type: integer
-                underreplicatedRanges:
-                  format: int64
-                  type: integer
-              type: object
-      served: true
-      storage: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          apiVersion:
+            type: string
+          kind:
+            type: string
+          metadata:
+            type: object
+          spec:
+            type: object
+            properties:
+              replicas:
+                items:
+                  properties:
+                    apiToken:
+                      type: string
+                    backendID:
+                      type: string
+                    backendType:
+                      enum:
+                        - Ephemeral
+                        - FlashArray
+                        - FlashBlade
+                        - PVC
+                      type: string
+                    mgmtEndpoint:
+                      type: string
+                    volume:
+                      type: string
+                  required:
+                    - backendType
+                    - volume
+                  type: object
+                type: array
+            required:
+              - replicas
+          status:
+            type: object
+            properties:
+              asOf:
+                type: string
+              initialized:
+                type: boolean
+              readyNodes:
+                type: string
+              replicas:
+                items:
+                  properties:
+                    backendID:
+                      type: string
+                    backendType:
+                      type: string
+                    currentStatusStart:
+                      type: string
+                    decommission:
+                      type: string
+                    status:
+                      type: string
+                    volume:
+                      type: string
+                  required:
+                    - backendType
+                    - currentStatusStart
+                    - status
+                    - volume
+                  type: object
+                type: array
+              status:
+                type: string
+              totalRanges:
+                format: int64
+                type: integer
+              unavailableRanges:
+                format: int64
+                type: integer
+              underreplicatedRanges:
+                format: int64
+                type: integer

@@ -88,3 +88,14 @@ Return the appropriate apiVersion for statefulset.
 {{- print "apps/v1" -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Return the appropriate apiVersion for CSIDriver.
+*/}}
+{{- define "CSIDriver.apiVersion" -}}
+{{- if semverCompare "<1.22-0" .Capabilities.KubeVersion.GitVersion -}}
+{{- print "storage.k8s.io/v1beta1" -}}
+{{- else -}}
+{{- print "storage.k8s.io/v1" -}}
+{{- end -}}
+{{- end -}}

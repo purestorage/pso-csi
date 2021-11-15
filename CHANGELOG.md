@@ -1,5 +1,18 @@
 # Changelog
 
+## v6.2.1 (11/15/2021)
+
+
+#### Bug fixes and enhancements:
+
+* Fix KB unit issue for NodeGetVolumeStats CSI call
+* Support FlashBlade Safe Mode.
+* Upgrade apiextensions.k8s.io API version from v1beta1 to v1.
+* [#196](https://github.com/purestorage/pso-csi/pull/196) Update intrusions CRD v1 to be backward-compatible
+* Upgrade CSIDriver apiVersion from v1beta1 to v1
+* FibreChannel + NVME bug fixes.
+* Fix volume resize failures
+
 ## v6.2.0 (08/20/2021)
 
 #### Features:

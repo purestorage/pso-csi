@@ -81,7 +81,7 @@ flashblade:
 images:
   plugin:
     name: purestorage/k8s
-    tag: v6.2.0
+    tag: v6.2.1
     pullPolicy: IfNotPresent
   csi:
     provisioner:
@@ -105,11 +105,11 @@ images:
   database:
     deployer:
       name: purestorage/dbdeployer
-      tag: v1.2.0
+      tag: v1.2.1
       pullPolicy: IfNotPresent
     cockroachOperator:
       name: purestorage/cockroach-operator
-      tag: v1.2.0
+      tag: v1.2.1
       pullPolicy: IfNotPresent
     psctl:
       name: purestorage/psctl

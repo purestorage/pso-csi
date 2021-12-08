@@ -34,7 +34,7 @@ Some of these requirements have changed since PSO 5.x, and not following them _w
   - Ubuntu 18.04
   - Ubuntu 20.04
 - #### Environments Supported*:
-  - Kubernetes 1.17+
+  - Kubernetes 1.17-1.21
     - [Note: For version less than 1.17.6/1.18.6 please refer to this issue using vxlan with Flannel or Calico](https://github.com/kubernetes/kubernetes/issues/87852)
   - Minimum Helm version required is 3.1.0.
   - Amazon EKS 1.17.6

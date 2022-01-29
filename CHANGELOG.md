@@ -1,5 +1,12 @@
 # Changelog
 
+## v6.2.2 (02/01/2022)
+
+#### Bug fixes and enhancements:
+
+* Bug fix for using FlashArray NVMeoF-RDMA when other local NVMe controllers exist on hosts
+* Bug fix for FlashArray with both NVMeoF-FC and NVMeoF-RDMA configured
+
 ## v6.2.2-rc1 (01/28/2022)
 
 #### Bug fixes and enhancements:

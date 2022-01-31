@@ -26,6 +26,6 @@ do
     tput sgr0
     $KUBECTL exec -it $pod -c smart-agent -n $PSO_NS -- curl -k http://$item-0.pso-db.$PSO_NS:8080/health
     echo -e "\n\n"
-    $KUBECTL exec -it $pod -c smart-agent -n $PSO_NS -- ping $item-0.pso-db.$PSO_NS -w 2
+    $KUBECTL exec -it $pod -c smart-agent -n $PSO_NS -- ping $item-0.pso-db.$PSO_NS -c 2
   done
 done

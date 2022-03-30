@@ -42,7 +42,7 @@ Some of these requirements have changed since PSO 5.x, and not following them _w
   - OpenShift 4.4+
     - [Note: Please read and action these pre-requisites for OpenShift deployments](docs/openshift_mc.md)
 - #### Other software dependencies for all cluster nodes:
-  - Latest linux multipath software package for your operating system (Required) [Note: Multipath on Amazon EKS](docs/eks-multipathd-fix.md)
+  - Latest linux multipath software package for your operating system (Required) `user_friendly_names` must be set to `no` if present. [Note: Multipath on Amazon EKS](docs/eks-multipathd-fix.md)
   - Latest external array management library package `libstoragemgt_udev` (Required) **[Red Hat and CentOS only]**
     - [Note: ensure the second action - CAPACITY_DATA_HAS_CHANGED - is uncommented and udev service is restarted]
   - Latest Filesystem utilities/drivers (XFS by default, Required)

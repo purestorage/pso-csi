@@ -2,7 +2,7 @@
 # Cockroach DB reconstruction 
 
 ## Introduction
-The PSO product can recover the contents of the database to populate the entries for previously provisioned PVC objects for a specific clusterID, using the kubernetes PVC information and the volume information on the FB/FA appliance.  This procedure requires removal of the installed helm chart and fresh install with initialized, empty DB volumes.  Further detail on appliance preparation specifics follow. If you are running a PSO version prior to 6.2.1, it is strongly recommended to take the opportunity to install at least 6.2.1 for the improvements in the tools used in this procedure.
+The PSO product can recover the contents of the database to populate the entries of previously provisioned PSO PVC objects for a specific clusterID, using the kubernetes PVC information and the volume information on the FB/FA appliance.  This procedure requires removal of the installed helm chart and fresh install with initialized, empty DB volumes.  Further detail on appliance preparation specifics follow. If you are running a PSO version prior to 6.2.1, it is strongly recommended to take the opportunity to install at least 6.2.1 for the improvements in the tools used in this procedure.
 
 
 

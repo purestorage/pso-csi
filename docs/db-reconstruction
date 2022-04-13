@@ -1,0 +1,17 @@
+
+# Cockroach DB reconstruction 
+
+## Introduction
+The PSO product can recover the contents of the database to populate the entries for previously provisioned PVC objects for a specific clusterID, using the kubernetes PVC information and the volume information on the FB/FA appliance.  This procedure requires removal of the installed helm chart and fresh install with initialized, empty DB volumes.  Further detail on appliance preparation specifics follow.
+
+
+
+1. Uninstall PSO: at this point, everything will freeze, attached volumes stay attached, new volumes will fail to bind and new attachments will fail
+2. Destroy and eradicate all database volumes.  Optionally - these DB volumes can be renamed on the FlashArray ( PSO will ignore DB volumes with "-u" appended to the volume name.  This labels them as "unusable" and the CR DB will not attempt to initialize or used them. )  FlashBlade will not allow the volume to be renamed - so in the case of CR DB volumes residing on FlashBlade, the protocol must be disabled so the FlashBlade volume can be deleted and eridicated.
+
+3  Reinstall PSO: at this point, PSO will be functioning, but with an empty database. New provisions will work and those volumes will be fine, but old volume will not work as they are not in the database.
+
+4. On the first run of the reconstructor - there will likely be an error about missing CRD, so these should probably be installed after the helm install has completed -
+
+          CustomResourceDefinitions (CRDs), run the steps at https://kubernetes-csi.github.io/docs/snapshot-controller.html#deployment 
+          (specifically the "Install Snapshot Beta CRDs per cluster" step) 

@@ -14,7 +14,7 @@ This helm chart installs the Pure Service Orchestrator CSI plugin on a Kubernete
 9. **An NTP implementation (such as ntpd or chronyd) must be installed and running on all Kubernetes cluster nodes**
 10. PSO 6.x requires at least 3+ nodes running the database, and 5+ nodes is recommended. They may run other workloads (they don't have to be dedicated), but for fault tolerance, the database will be spread across these nodes. 
 11. **[For Kubernetes version less than 1.17.6/1.18.6 please refer to this link/issue when using vxlan with Flannel or Calico](https://github.com/kubernetes/kubernetes/issues/87852).** You may experience numerous `CrashLoopBackoff` problems if you encounter this issue.
-
+12. PSO 6.x has a known compatibility issue [#212](https://github.com/purestorage/pso-csi/issues/212) using k8s v1.22+. If you plan to use k8s v1.22+, please use Portworx. 
 ## Using controller attach-detach or restricting plugin pods to nodes
 
 More details on setting up controller attach-detach, or on restricting various plugin components to specific pods such

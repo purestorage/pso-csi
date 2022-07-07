@@ -125,7 +125,7 @@ spec:
         # This is the external provisioner sidecar
         - name: csi-provisioner
           {{- with .Values.images.csi.provisioner }}
-          image: {{ .name | default "quay.io/k8scsi/csi-provisioner" }}:v1.6.0
+          image: {{ .name | default "k8s.gcr.io/sig-storage/csi-provisioner" }}:v2.2.2
           imagePullPolicy: {{ .pullPolicy }}
           {{- end }}
           args:
@@ -140,7 +140,7 @@ spec:
 # Google Anthos (which is built on GKE) prohibits alpha snapshotters
         - name: csi-snapshotter
           {{- with .Values.images.csi.snapshotter }}
-          image: {{ .name | default "quay.io/k8scsi/csi-snapshotter" }}:v2.1.1
+          image: {{ .name | default "k8s.gcr.io/sig-storage/csi-snapshotter" }}:v3.0.3
           imagePullPolicy: {{ .pullPolicy }}
           {{- end }}
           args:
@@ -151,7 +151,7 @@ spec:
               mountPath: /csi
         - name: csi-attacher
           {{- with .Values.images.csi.attacher }}
-          image: {{ .name | default "quay.io/k8scsi/csi-attacher" }}:v2.2.0
+          image: {{ .name | default "k8s.gcr.io/sig-storage/csi-attacher" }}:v3.5.0
           imagePullPolicy: {{ .pullPolicy }}
           {{- end }}
           args:
@@ -165,7 +165,7 @@ spec:
 # Does not scale with more replicas, only one is elected as leader and running.
         - name: csi-resizer
           {{- with .Values.images.csi.resizer }}
-          image: {{ .name | default "quay.io/k8scsi/csi-resizer" }}:v0.5.0
+          image: {{ .name | default "k8s.gcr.io/sig-storage/csi-resizer" }}:v0.5.0
           imagePullPolicy: {{ .pullPolicy }}
           {{- end }}
           args:
@@ -180,14 +180,13 @@ spec:
           - mountPath: /csi
             name: socket-dir
           {{- with .Values.images.csi.livenessProbe }}
-          image: {{ .name | default "quay.io/k8scsi/livenessprobe" }}:v2.0.0
+          image: {{ .name | default "k8s.gcr.io/sig-storage/livenessprobe" }}:v2.5.0
           imagePullPolicy: {{ .pullPolicy }}
           {{- end }}
           args:
           - --csi-address=/csi/csi.sock
           - --probe-timeout=3s
           - --health-port=9899
-          - --v=0
       volumes:
         - name: socket-dir
           emptyDir: {}

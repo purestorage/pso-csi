@@ -221,17 +221,17 @@ The following table lists the configurable parameters and their default values.
 | `images.plugin.name`                           | The image name to pull from                                                                                                                                | `purestorage/k8s`                             |
 | `images.plugin.tag`                            | The image tag to pull                                                                                                                                      | `v6.2.2`                                      |
 | `images.plugin.pullPolicy`                     | Image pull policy                                                                                                                                          | `Always`                                      |
-| `images.csi.provisioner.name`                  | The image name of the csi-provisioner                                                                                                                      | `quay.io/k8scsi/csi-provisioner`              |
+| `images.csi.provisioner.name`                  | The image name of the csi-provisioner                                                                                                                      | `k8s.gcr.io/sig-storage/csi-provisioner`              |
 | `images.csi.provisioner.pullPolicy`            | Image pull policy                                                                                                                                          | `Always`                                      |
-| `images.csi.snapshotter.name`                  | The image name of the csi snapshotter                                                                                                                      | `quay.io/k8scsi/csi-snapshotter`              |
+| `images.csi.snapshotter.name`                  | The image name of the csi snapshotter                                                                                                                      | `k8s.gcr.io/sig-storage/csi-snapshotter`              |
 | `images.csi.snapshotter.pullPolicy`            | Image pull policy                                                                                                                                          | `Always`                                      |
-| `images.csi.attacher.name`                     | The image name of the csi-attacher                                                                                                                         | `quay.io/k8scsi/csi-attacher`                 |
+| `images.csi.attacher.name`                     | The image name of the csi-attacher                                                                                                                         | `k8s.gcr.io/sig-storage/csi-attacher`                 |
 | `images.csi.attacher.pullPolicy`               | Image pull policy                                                                                                                                          | `Always`                                      |
-| `images.csi.resizer.name`                      | The image name of the csi-resizer                                                                                                                          | `quay.io/k8scsi/csi-resizer`                  |
+| `images.csi.resizer.name`                      | The image name of the csi-resizer                                                                                                                          | `k8s.gcr.io/sig-storage/csi-resizer`                  |
 | `images.csi.resizer.pullPolicy`                | Image pull policy                                                                                                                                          | `Always`                                      |
-| `images.csi.nodeDriverRegistrar.name`          | The image name of the csi-node-driver-registrar                                                                                                            | `quay.io/k8scsi/csi-node-driver-registrar`    |
+| `images.csi.nodeDriverRegistrar.name`          | The image name of the csi-node-driver-registrar                                                                                                            | `k8s.gcr.io/sig-storage/csi-node-driver-registrar`    |
 | `images.csi.nodeDriverRegistrar.pullPolicy`    | Image pull policy                                                                                                                                          | `Always`                                      |
-| `images.csi.livenessProbe.name`                | The image name of the csi livenessprobe                                                                                                                    | `quay.io/k8scsi/livenessprobe`                |
+| `images.csi.livenessProbe.name`                | The image name of the csi livenessprobe                                                                                                                    | `k8s.gcr.io/sig-storage/livenessprobe`                |
 | `images.csi.livenessProbe.pullPolicy`          | Image pull policy                                                                                                                                          | `Always`                                      |
 | `images.database.cockroachOperator.name`       | The image name of the cockroach operator                                                                                                                   | `purestorage/cockroach-operator`              |
 | `images.database.cockroachOperator.pullPolicy` | Image pull policy                                                                                                                                          | `Always`                                      |
@@ -273,12 +273,12 @@ Strict attention must be paid to the versions of image you provide locally as PS
 
 | Image                                    | Tag     |
 |------------------------------------------|---------|
-| quay.io/k8scsi/csi-provisioner           | v1.6.0  |
-| quay.io/k8scsi/csi-snapshotter           | v2.1.1  |
-| quay.io/k8scsi/csi-attacher              | v2.2.0  |
-| quay.io/k8scsi/csi-resizer               | v0.5.0  |
-| quay.io/k8scsi/livenessprobe             | v2.0.0  |
-| quay.io/k8scsi/csi-node-driver-registrar | v1.3.0  |
+| k8s.gcr.io/sig-storage/csi-provisioner           | v2.2.2  |
+| k8s.gcr.io/sig-storage/csi-snapshotter           | v3.0.3  |
+| k8s.gcr.io/sig-storage/csi-attacher              | v3.5.0  |
+| k8s.gcr.io/sig-storage/csi-resizer               | v0.5.0  |
+| k8s.gcr.io/sig-storage/livenessprobe             | v2.5.0  |
+| k8s.gcr.io/sig-storage/csi-node-driver-registrar | v1.3.0  |
 | purestorage/cockroach-operator           | v1.2.2  |
 | purestorage/dbdeployer                   | v1.2.2  |
 | purestorage/psctl                        | v1.1.1  |

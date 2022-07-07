@@ -80,27 +80,27 @@ flashblade:
   exportRules: "*(rw,no_root_squash)"
 images:
   plugin:
-    name: purestorage/k8s
-    tag: v6.2.2
+    name: pc2-dtr.dev.purestorage.com/purestorage/k8s
+    tag: v6.2.2-7832681b4ff61398772a9f44f2a9f6e2
     pullPolicy: IfNotPresent
   csi:
     provisioner:
-      name: quay.io/k8scsi/csi-provisioner
+      name: k8s.gcr.io/sig-storage/csi-provisioner
       pullPolicy: IfNotPresent
     snapshotter:
-      name: quay.io/k8scsi/csi-snapshotter
+      name: k8s.gcr.io/sig-storage/csi-snapshotter
       pullPolicy: IfNotPresent
     attacher:
-      name: quay.io/k8scsi/csi-attacher
+      name: k8s.gcr.io/sig-storage/csi-attacher
       pullPolicy: IfNotPresent
     resizer:
-      name: quay.io/k8scsi/csi-resizer
+      name: k8s.gcr.io/sig-storage/csi-resizer
       pullPolicy: IfNotPresent
     nodeDriverRegistrar:
-      name: quay.io/k8scsi/csi-node-driver-registrar
+      name: k8s.gcr.io/sig-storage/csi-node-driver-registrar
       pullPolicy: IfNotPresent
     livenessProbe:
-      name: quay.io/k8scsi/livenessprobe
+      name: k8s.gcr.io/sig-storage/livenessprobe
       pullPolicy: IfNotPresent
   database:
     deployer:

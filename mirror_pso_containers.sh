@@ -9,12 +9,12 @@
 REGISTRY_URL=<your local registry address, including port if required>
 
 LIST=(
-quay.io/k8scsi/csi-provisioner:v1.6.0
-quay.io/k8scsi/csi-snapshotter:v2.1.1
-quay.io/k8scsi/csi-attacher:v2.2.0
-quay.io/k8scsi/csi-resizer:v0.5.0
-quay.io/k8scsi/livenessprobe:v2.0.0
-quay.io/k8scsi/csi-node-driver-registrar:v1.3.0
+k8s.gcr.io/sig-storage/csi-provisioner:v2.2.2
+k8s.gcr.io/sig-storage/csi-snapshotter:v3.0.3
+k8s.gcr.io/sig-storage/csi-attacher:v3.5.0
+k8s.gcr.io/sig-storage/csi-resizer:v0.5.0
+k8s.gcr.io/sig-storage/livenessprobe:v2.5.0
+k8s.gcr.io/sig-storage/csi-node-driver-registrar:v1.3.0
 purestorage/cockroach-operator:v1.2.2
 purestorage/dbdeployer:v1.2.2
 purestorage/psctl:v1.1.1

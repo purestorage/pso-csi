@@ -17,8 +17,8 @@ k8s.gcr.io/sig-storage/livenessprobe:v2.5.0
 k8s.gcr.io/sig-storage/csi-node-driver-registrar:v1.3.0
 purestorage/cockroach-operator:v1.2.2
 purestorage/dbdeployer:v1.2.2
-purestorage/psctl:v1.1.1
-purestorage/k8s:v6.2.2
+purestorage/psctl:v1.1.2
+purestorage/k8s:v6.2.3
 cockroachdb/cockroach:v20.2.6
 )
 

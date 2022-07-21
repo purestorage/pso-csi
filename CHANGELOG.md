@@ -1,5 +1,13 @@
 # Changelog
 
+## v6.2.3 (07/21/2022)
+
+#### Bug fixes and enhancements:
+
+* Update CSI sidecar versions and permission for supporting k8s 1.22
+* Update the purestorage/k8s image version to 6.2.3
+* Update the purestorage/psctl image version to 1.1.2
+
 ## v6.2.2 (02/01/2022)
 
 #### Bug fixes and enhancements:

@@ -81,7 +81,7 @@ flashblade:
 images:
   plugin:
     name: pc2-dtr.dev.purestorage.com/purestorage/k8s
-    tag: v6.2.2-7832681b4ff61398772a9f44f2a9f6e2
+    tag: v6.2.3
     pullPolicy: IfNotPresent
   csi:
     provisioner:
@@ -113,7 +113,7 @@ images:
       pullPolicy: IfNotPresent
     psctl:
       name: purestorage/psctl
-      tag: v1.1.1
+      tag: v1.1.2
     cockroachdb:
       name: cockroachdb/cockroach
       tag: v20.2.6

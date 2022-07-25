@@ -81,26 +81,26 @@ flashblade:
 images:
   plugin:
     name: purestorage/k8s
-    tag: v6.2.2
+    tag: v6.2.3
     pullPolicy: IfNotPresent
   csi:
     provisioner:
-      name: quay.io/k8scsi/csi-provisioner
+      name: k8s.gcr.io/sig-storage/csi-provisioner
       pullPolicy: IfNotPresent
     snapshotter:
-      name: quay.io/k8scsi/csi-snapshotter
+      name: k8s.gcr.io/sig-storage/csi-snapshotter
       pullPolicy: IfNotPresent
     attacher:
-      name: quay.io/k8scsi/csi-attacher
+      name: k8s.gcr.io/sig-storage/csi-attacher
       pullPolicy: IfNotPresent
     resizer:
-      name: quay.io/k8scsi/csi-resizer
+      name: k8s.gcr.io/sig-storage/csi-resizer
       pullPolicy: IfNotPresent
     nodeDriverRegistrar:
-      name: quay.io/k8scsi/csi-node-driver-registrar
+      name: k8s.gcr.io/sig-storage/csi-node-driver-registrar
       pullPolicy: IfNotPresent
     livenessProbe:
-      name: quay.io/k8scsi/livenessprobe
+      name: k8s.gcr.io/sig-storage/livenessprobe
       pullPolicy: IfNotPresent
   database:
     deployer:
@@ -113,7 +113,7 @@ images:
       pullPolicy: IfNotPresent
     psctl:
       name: purestorage/psctl
-      tag: v1.1.1
+      tag: v1.1.2
     cockroachdb:
       name: cockroachdb/cockroach
       tag: v20.2.6

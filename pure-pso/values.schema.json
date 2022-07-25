@@ -100,27 +100,27 @@
             "images": {
                 "csi": {
                     "attacher": {
-                        "name": "quay.io/k8scsi/csi-attacher",
+                        "name": "k8s.gcr.io/sig-storage/csi-attacher",
                         "pullPolicy": "Always"
                     },
                     "livenessProbe": {
-                        "name": "quay.io/k8scsi/livenessprobe",
+                        "name": "k8s.gcr.io/sig-storage/livenessprobe",
                         "pullPolicy": "Always"
                     },
                     "nodeDriverRegistrar": {
-                        "name": "quay.io/k8scsi/csi-node-driver-registrar",
+                        "name": "k8s.gcr.io/sig-storage/csi-node-driver-registrar",
                         "pullPolicy": "Always"
                     },
                     "provisioner": {
-                        "name": "quay.io/k8scsi/csi-provisioner",
+                        "name": "k8s.gcr.io/sig-storage/csi-provisioner",
                         "pullPolicy": "Always"
                     },
                     "resizer": {
-                        "name": "quay.io/k8scsi/csi-resizer",
+                        "name": "k8s.gcr.io/sig-storage/csi-resizer",
                         "pullPolicy": "Always"
                     },
                     "snapshotter": {
-                        "name": "quay.io/k8scsi/csi-snapshotter",
+                        "name": "k8s.gcr.io/sig-storage/csi-snapshotter",
                         "pullPolicy": "Always"
                     }
                 },
@@ -1058,27 +1058,27 @@
                 {
                     "csi": {
                         "attacher": {
-                            "name": "quay.io/k8scsi/csi-attacher",
+                            "name": "k8s.gcr.io/sig-storage/csi-attacher",
                             "pullPolicy": "Always"
                         },
                         "livenessProbe": {
-                            "name": "quay.io/k8scsi/livenessprobe",
+                            "name": "k8s.gcr.io/sig-storage/livenessprobe",
                             "pullPolicy": "Always"
                         },
                         "nodeDriverRegistrar": {
-                            "name": "quay.io/k8scsi/csi-node-driver-registrar",
+                            "name": "k8s.gcr.io/sig-storage/csi-node-driver-registrar",
                             "pullPolicy": "Always"
                         },
                         "provisioner": {
-                            "name": "quay.io/k8scsi/csi-provisioner",
+                            "name": "k8s.gcr.io/sig-storage/csi-provisioner",
                             "pullPolicy": "Always"
                         },
                         "resizer": {
-                            "name": "quay.io/k8scsi/csi-resizer",
+                            "name": "k8s.gcr.io/sig-storage/csi-resizer",
                             "pullPolicy": "Always"
                         },
                         "snapshotter": {
-                            "name": "quay.io/k8scsi/csi-snapshotter",
+                            "name": "k8s.gcr.io/sig-storage/csi-snapshotter",
                             "pullPolicy": "Always"
                         }
                     },
@@ -1116,27 +1116,27 @@
                     "examples": [
                         {
                             "attacher": {
-                                "name": "quay.io/k8scsi/csi-attacher",
+                                "name": "k8s.gcr.io/sig-storage/csi-attacher",
                                 "pullPolicy": "Always"
                             },
                             "livenessProbe": {
-                                "name": "quay.io/k8scsi/livenessprobe",
+                                "name": "k8s.gcr.io/sig-storage/livenessprobe",
                                 "pullPolicy": "Always"
                             },
                             "nodeDriverRegistrar": {
-                                "name": "quay.io/k8scsi/csi-node-driver-registrar",
+                                "name": "k8s.gcr.io/sig-storage/csi-node-driver-registrar",
                                 "pullPolicy": "Always"
                             },
                             "provisioner": {
-                                "name": "quay.io/k8scsi/csi-provisioner",
+                                "name": "k8s.gcr.io/sig-storage/csi-provisioner",
                                 "pullPolicy": "Always"
                             },
                             "resizer": {
-                                "name": "quay.io/k8scsi/csi-resizer",
+                                "name": "k8s.gcr.io/sig-storage/csi-resizer",
                                 "pullPolicy": "Always"
                             },
                             "snapshotter": {
-                                "name": "quay.io/k8scsi/csi-snapshotter",
+                                "name": "k8s.gcr.io/sig-storage/csi-snapshotter",
                                 "pullPolicy": "Always"
                             }
                         }
@@ -1158,7 +1158,7 @@
                             "default": {},
                             "examples": [
                                 {
-                                    "name": "quay.io/k8scsi/csi-attacher",
+                                    "name": "k8s.gcr.io/sig-storage/csi-attacher",
                                     "pullPolicy": "Always"
                                 }
                             ],
@@ -1174,7 +1174,7 @@
                                     "title": "The name schema",
                                     "default": "",
                                     "examples": [
-                                        "quay.io/k8scsi/csi-attacher"
+                                        "k8s.gcr.io/sig-storage/csi-attacher"
                                     ]
                                 },
                                 "pullPolicy": {
@@ -1196,7 +1196,7 @@
                             "default": {},
                             "examples": [
                                 {
-                                    "name": "quay.io/k8scsi/livenessprobe",
+                                    "name": "k8s.gcr.io/sig-storage/livenessprobe",
                                     "pullPolicy": "Always"
                                 }
                             ],
@@ -1212,7 +1212,7 @@
                                     "title": "The name schema",
                                     "default": "",
                                     "examples": [
-                                        "quay.io/k8scsi/livenessprobe"
+                                        "k8s.gcr.io/sig-storage/livenessprobe"
                                     ]
                                 },
                                 "pullPolicy": {
@@ -1234,7 +1234,7 @@
                             "default": {},
                             "examples": [
                                 {
-                                    "name": "quay.io/k8scsi/csi-node-driver-registrar",
+                                    "name": "k8s.gcr.io/sig-storage/csi-node-driver-registrar",
                                     "pullPolicy": "Always"
                                 }
                             ],
@@ -1250,7 +1250,7 @@
                                     "title": "The name schema",
                                     "default": "",
                                     "examples": [
-                                        "quay.io/k8scsi/csi-node-driver-registrar"
+                                        "k8s.gcr.io/sig-storage/csi-node-driver-registrar"
                                     ]
                                 },
                                 "pullPolicy": {
@@ -1272,7 +1272,7 @@
                             "default": {},
                             "examples": [
                                 {
-                                    "name": "quay.io/k8scsi/csi-provisioner",
+                                    "name": "k8s.gcr.io/sig-storage/csi-provisioner",
                                     "pullPolicy": "Always"
                                 }
                             ],
@@ -1288,7 +1288,7 @@
                                     "title": "The name schema",
                                     "default": "",
                                     "examples": [
-                                        "quay.io/k8scsi/csi-provisioner"
+                                        "k8s.gcr.io/sig-storage/csi-provisioner"
                                     ]
                                 },
                                 "pullPolicy": {
@@ -1310,7 +1310,7 @@
                             "default": {},
                             "examples": [
                                 {
-                                    "name": "quay.io/k8scsi/csi-resizer",
+                                    "name": "k8s.gcr.io/sig-storage/csi-resizer",
                                     "pullPolicy": "Always"
                                 }
                             ],
@@ -1326,7 +1326,7 @@
                                     "title": "The name schema",
                                     "default": "",
                                     "examples": [
-                                        "quay.io/k8scsi/csi-resizer"
+                                        "k8s.gcr.io/sig-storage/csi-resizer"
                                     ]
                                 },
                                 "pullPolicy": {
@@ -1348,7 +1348,7 @@
                             "default": {},
                             "examples": [
                                 {
-                                    "name": "quay.io/k8scsi/csi-snapshotter",
+                                    "name": "k8s.gcr.io/sig-storage/csi-snapshotter",
                                     "pullPolicy": "Always"
                                 }
                             ],
@@ -1364,7 +1364,7 @@
                                     "title": "The name schema",
                                     "default": "",
                                     "examples": [
-                                        "quay.io/k8scsi/csi-snapshotter"
+                                        "k8s.gcr.io/sig-storage/csi-snapshotter"
                                     ]
                                 },
                                 "pullPolicy": {

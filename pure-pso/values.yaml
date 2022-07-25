@@ -80,7 +80,7 @@ flashblade:
   exportRules: "*(rw,no_root_squash)"
 images:
   plugin:
-    name: pc2-dtr.dev.purestorage.com/purestorage/k8s
+    name: purestorage/k8s
     tag: v6.2.3
     pullPolicy: IfNotPresent
   csi:

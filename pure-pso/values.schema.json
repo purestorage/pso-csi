@@ -137,7 +137,7 @@
                     }
                 },
                 "plugin": {
-                    "name": "pc2-dtr.dev.purestorage.com/purestorage/k8s",
+                    "name": "purestorage/k8s",
                     "pullPolicy": "Always",
                     "tag": "6.0.0-rc1-5801c4fb-cef78edf220cec7f90e461d0576e8db9"
                 }
@@ -1095,7 +1095,7 @@
                         }
                     },
                     "plugin": {
-                        "name": "pc2-dtr.dev.purestorage.com/purestorage/k8s",
+                        "name": "purestorage/k8s",
                         "pullPolicy": "Always",
                         "tag": "6.0.0-rc1-5801c4fb-cef78edf220cec7f90e461d0576e8db9"
                     }
@@ -1513,7 +1513,7 @@
                     "default": {},
                     "examples": [
                         {
-                            "name": "pc2-dtr.dev.purestorage.com/purestorage/k8s",
+                            "name": "purestorage/k8s",
                             "pullPolicy": "Always",
                             "tag": "6.0.0-rc1-5801c4fb-cef78edf220cec7f90e461d0576e8db9"
                         }
@@ -1531,7 +1531,7 @@
                             "title": "The name schema",
                             "default": "",
                             "examples": [
-                                "pc2-dtr.dev.purestorage.com/purestorage/k8s"
+                                "purestorage/k8s"
                             ]
                         },
                         "pullPolicy": {

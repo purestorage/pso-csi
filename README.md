@@ -2,7 +2,7 @@
 
 <img src="./docs/images/pso_logo.png" width="250">
 
-## !!NOTICE!! - PSO is going to be EOL July 31 and End of Support by Oct 31, 2022. New customers should start with [Portworx](https://portworx.com/).
+## !!NOTICE!! - PSO is going to be EOL July 31 and End of Support by Oct 31, 2022. New customers should start with [Portworx](https://portworx.com/). Use the [PSO2PX](https://github.com/purestorage/pso-csi/tree/master/pso2px) Tool to migrate PSO to Portworx.
 
 _Using Google Anthos or OpenShift 3.11? Please use [PSO 5.x](https://github.com/purestorage/helm-charts) instead_
 

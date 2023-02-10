@@ -1,0 +1,129 @@
+# PSO to PX Tool Spec
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pso2px-tool
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: pso2px-tool
+rules:
+  - verbs:
+      - '*'
+    apiGroups:
+      - core.libopenstorage.org
+    resources:
+      - '*'
+  - verbs:
+      - get
+      - list
+      - create
+      - update
+      - delete
+    apiGroups:
+      - storage.k8s.io
+    resources:
+      - storageclasses
+      - csinodes
+      - csidrivers
+  - verbs:
+      - get
+      - list
+      - create
+      - delete
+      - update
+      - patch
+    apiGroups:
+      - ''
+    resources:
+      - persistentvolumeclaims
+      - persistentvolumes
+      - namespaces
+  - verbs:
+      - get
+      - list
+    apiGroups:
+      - ''
+    resources:
+      - secrets
+      - pods
+  - verbs:
+      - create
+    apiGroups:
+      - ''
+    resources:
+      - pods/exec
+  - verbs:
+      - get
+      - list
+    apiGroups:
+      - apps
+    resources:
+      - deployments
+      - statefulsets
+      - replicasets
+      - daemonsets
+  - verbs:
+      - get
+      - list
+    apiGroups:
+      - batch
+    resources:
+      - jobs
+      - cronjobs
+---  
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: pso2px-tool
+subjects:
+- kind: ServiceAccount
+  name: pso2px-tool
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: pso2px-tool
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pso2px
+  labels:
+    app: pso2px
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: node-role.kubernetes.io/control-plane
+            operator: DoesNotExist
+          - key: node-role.kubernetes.io/master
+            operator: DoesNotExist
+  containers:
+  - name: pso2px
+    image: portworx/pso2px:v1.1.1
+    imagePullPolicy: Always
+    volumeMounts:
+    - mountPath: /csi.sock
+      name: csi-volume
+    - mountPath: /usr/local/pso2px/k8s_backups
+      name: backup-path
+    - mountPath: /usr/local/pso2px/logs
+      name: log-path
+  volumes:
+    - name: csi-volume
+      hostPath:
+        path: /var/lib/kubelet/csi-plugins/pxd.portworx.com/csi.sock
+    - name: backup-path
+      hostPath:
+        path: /usr/local/pso2px/k8s_backups
+        type: DirectoryOrCreate
+    - name: log-path
+      hostPath:
+        path: /usr/local/pso2px/logs
+        type: DirectoryOrCreate
+  serviceAccount: pso2px-tool
+  serviceAccountName: pso2px-tool
